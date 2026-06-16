@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy-deep: #0A1A52;
+  --bronze: #b08c53;
+  --ink-deep: #080b11;
+  --frame-inset: 16px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --frame-inset: 22px;
+  }
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #ffffff;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: #ffffff;
+  color: var(--navy-deep);
+  font-feature-settings: "ss01", "cv01";
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--bronze);
+  color: var(--ink-deep);
+}
+
+:focus-visible {
+  outline: none;
+}
+
+/* Film-grain overlay */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.vertical-rl {
+  writing-mode: vertical-rl;
+}
+
+/* ------------------------------------------------------------------ */
+/* Floating partner-logo dock                                          */
+/* ------------------------------------------------------------------ */
+
+/* Seamless horizontal loop: the track holds two identical logo groups
+   and slides left by exactly one group (-50%), so the second group
+   takes over the instant the first leaves — no visible seam. */
+@keyframes logo-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.logo-marquee-track {
+  animation: logo-marquee 46s linear infinite;
+}
+
+/* Pause when the viewer hovers so they can read a mark */
+.logo-dock:hover .logo-marquee-track {
+  animation-play-state: paused;
+}
+
+/* The dock itself breathes — a slow, shallow rise and fall that reads as
+   "floating" without pulling focus. */
+@keyframes logo-dock-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+.logo-dock-float {
+  animation: logo-dock-float 6.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee-track,
+  .logo-dock-float {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Network vocabulary — trace anchors and current                      */
+/* ------------------------------------------------------------------ */
+
+/* Invisible routing anchor on the registry trace; renders nothing. */
+.node-dot {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  margin-left: -5px;
+  margin-top: -2px;
+  pointer-events: none;
+}
+
+/* Charges racing along the energized portion of the trace */
+@keyframes trace-pulse {
+  to { stroke-dashoffset: -104; }
+}
+
+.trace-pulse {
+  animation: trace-pulse 1.15s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trace-pulse {
+    animation: none;
+    stroke: transparent;
+  }
+}
