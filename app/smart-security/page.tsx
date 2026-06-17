@@ -27,8 +27,18 @@ const PATHS = [
     title: "Smart Business",
     line: "Access control, surveillance, and monitoring built for how your business runs.",
     image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&q=80",
-    alt: "A modern commercial office interior",
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&q=80",
+    alt: "Modern corporate towers in a downtown business district",
+  },
+  {
+    href: "/smart-marine",
+    n: "03",
+    eyebrow: "For the water",
+    title: "Smart Marine",
+    line: "Automation, security, and connectivity engineered for life aboard.",
+    image:
+      "https://images.unsplash.com/photo-1500627964684-141351970a7f?w=1400&q=80",
+    alt: "A sailboat under sail on calm open water",
   },
 ];
 
@@ -48,12 +58,12 @@ export default function SmartSecurityPage() {
 
       {/* The two paths */}
       <section className="mx-auto max-w-[1600px] px-5 pb-20 sm:px-8 md:px-11 md:pb-28">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
           {PATHS.map((p) => (
             <Link
               key={p.href}
               href={p.href}
-              className="group relative flex min-h-[60vh] flex-col justify-end overflow-hidden rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/50 focus-visible:ring-offset-4 md:min-h-[72vh]"
+              className="group relative flex min-h-[58vh] flex-col justify-end overflow-hidden rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/50 focus-visible:ring-offset-4 md:min-h-[68vh]"
             >
               {/* Image */}
               <Image

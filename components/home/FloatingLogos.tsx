@@ -30,7 +30,7 @@ function Chip({
 }) {
   return (
     <li className="flex shrink-0 items-center" aria-hidden={decorative || undefined}>
-      <div className="flex h-16 items-center rounded-2xl border border-navy/10 bg-white px-6 shadow-[0_8px_24px_-12px_rgba(10,26,82,0.35)]">
+      <div className="flex h-12 items-center rounded-xl border border-navy/10 bg-white px-4 shadow-[0_8px_24px_-12px_rgba(10,26,82,0.35)] sm:h-16 sm:rounded-2xl sm:px-6">
         <Image
           src={b.src}
           alt={decorative ? "" : b.alt}

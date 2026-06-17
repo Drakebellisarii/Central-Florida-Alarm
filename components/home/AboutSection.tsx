@@ -29,10 +29,10 @@ export function AboutSection() {
   }, []);
 
   return (
-    <section className="relative flex h-[100dvh] flex-col overflow-hidden bg-white shadow-[0_-20px_80px_rgba(0,0,0,0.25)] lg:flex-row">
+    <section className="relative flex min-h-[100dvh] flex-col bg-white shadow-[0_-20px_80px_rgba(0,0,0,0.25)] lg:flex-row">
 
       {/* ── Left — text ───────────────────────────────────────────────── */}
-      <div className="flex flex-col justify-center overflow-hidden px-8 pb-10 pt-4 md:px-12 lg:w-1/2 lg:px-14 xl:px-16">
+      <div className="flex flex-col px-6 py-20 sm:px-8 md:px-12 lg:w-1/2 lg:justify-center lg:px-14 lg:py-16 xl:px-16">
 
         <motion.div
           initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
@@ -102,21 +102,21 @@ export function AboutSection() {
           transition={{ duration: 0.8, ease: EASE, delay: 0.25 }}
           className="mt-10 border-t border-slate-100 pt-8"
         >
-          <div className="flex flex-wrap items-center justify-center gap-10">
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
             <Image
               src="/images/GOBA.png"
               alt="Greater Orlando Builders Association"
               width={120}
               height={60}
-              className="h-24 w-auto object-contain opacity-80 transition-all duration-300 hover:opacity-100"
+              className="h-16 w-auto object-contain opacity-80 transition-all duration-300 hover:opacity-100 sm:h-20 lg:h-24"
             />
-            <span className="h-16 w-px bg-slate-200" />
+            <span className="h-12 w-px bg-slate-200 sm:h-16" />
             <Image
               src="/images/MCBC_Logo.jpg"
               alt="Master Custom Builder Council"
               width={200}
               height={60}
-              className="h-24 w-auto object-contain opacity-80 transition-all duration-300 hover:opacity-100"
+              className="h-16 w-auto object-contain opacity-80 transition-all duration-300 hover:opacity-100 sm:h-20 lg:h-24"
             />
           </div>
         </motion.div>

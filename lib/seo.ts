@@ -16,6 +16,8 @@ export const BUSINESS = {
   phoneHref: "tel:+14078398485",
   email: "info@centralfloridaautomation.com",
   emailHref: "mailto:info@centralfloridaautomation.com",
+  officeEmail: "info@cfalarm.com",
+  salesEmail: "Kory@smarthome.biz",
   street: "5125 Adanson St, Suite 200",
   city: "Orlando",
   state: "FL",

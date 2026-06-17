@@ -63,7 +63,7 @@ export function PageHero({
       <div className="relative mx-auto max-w-[1500px] px-5 pb-16 pt-36 sm:px-8 md:px-11 md:pb-20 md:pt-44">
         <Breadcrumbs items={crumbs} tone={light ? "onDark" : "warm"} />
         <h1
-          className={`mt-10 max-w-4xl font-display text-[clamp(2.6rem,6vw,5rem)] font-light leading-[1.0] tracking-tight ${
+          className={`mt-10 max-w-4xl font-display text-[clamp(2.1rem,7vw,5rem)] font-light leading-[1.05] tracking-tight ${
             light ? "text-white" : "text-bone"
           }`}
         >

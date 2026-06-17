@@ -1,5 +1,6 @@
 import { Hero } from "@/components/home/Hero";
 import { AboutSection } from "@/components/home/AboutSection";
+import { IntegrateCreed } from "@/components/home/IntegrateCreed";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { ServiceAreasSection } from "@/components/home/ServiceAreasSection";
@@ -23,12 +24,13 @@ export default function HomePage() {
       <Hero />
       <div
         id="nav-solid-marker"
-        className="relative z-20 -mt-[100dvh] h-[100dvh]"
+        className="relative z-20 -mt-[100dvh]"
       >
         <AboutSection />
       </div>
 
       {/* Rest of the site — normal scroll from here */}
+      <IntegrateCreed />
       <ServicesSection />
       <TestimonialsSection />
       <ServiceAreasSection />

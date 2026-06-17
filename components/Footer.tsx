@@ -1,11 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram, Youtube, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, Youtube, Phone, MapPin, Mail } from "lucide-react";
 import { BUSINESS } from "@/lib/seo";
 import { SERVICE_NAV, AREA_NAV } from "@/lib/content";
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    `${BUSINESS.name}, ${BUSINESS.street}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}`
+  )}`;
 
   return (
     <footer className="relative border-t border-white/10 bg-navy-deep">
@@ -20,28 +23,59 @@ export function Footer() {
               height={99}
               className="h-20 w-auto"
             />
-            <p className="mt-6 max-w-xs font-display text-lg leading-snug text-white/60">
+            <p className="mt-6 font-sans text-[11px] uppercase tracking-eyebrow text-white/45">
+              Since 1968 &nbsp;&middot;&nbsp; One Mission &nbsp;&middot;&nbsp; Quality
+            </p>
+            <p className="mt-5 max-w-xs font-display text-lg leading-snug text-white/60">
               The systems disappear into the house. The trust is what you keep.
             </p>
 
             <address className="mt-8 not-italic">
-              <div className="flex items-start gap-3 text-white/50">
+              <a
+                href={mapsHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3 text-white/50 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+              >
                 <MapPin strokeWidth={1.25} className="mt-0.5 h-4 w-4 shrink-0" />
-                <p className="font-sans text-[14px] leading-relaxed">
+                <span className="font-sans text-[14px] leading-relaxed">
                   {BUSINESS.name}
                   <br />
                   {BUSINESS.street}
                   <br />
                   {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
-                </p>
-              </div>
+                </span>
+              </a>
               <a
                 href={BUSINESS.phoneHref}
-                className="mt-4 inline-flex items-center gap-3 font-sans text-[14px] text-white/60 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                className="mt-4 flex items-center gap-3 text-white/60 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
               >
-                <Phone strokeWidth={1.25} className="h-4 w-4" />
-                {BUSINESS.phone}
+                <Phone strokeWidth={1.25} className="h-4 w-4 shrink-0" />
+                <span className="font-sans text-[14px]">{BUSINESS.phone}</span>
               </a>
+              <div className="mt-3 flex items-start gap-3 text-white/60">
+                <Mail strokeWidth={1.25} className="mt-0.5 h-4 w-4 shrink-0" />
+                <div className="font-sans text-[14px] leading-relaxed">
+                  <p>
+                    <span className="text-white/35">Office</span>{" "}
+                    <a
+                      href={`mailto:${BUSINESS.officeEmail}`}
+                      className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                    >
+                      {BUSINESS.officeEmail}
+                    </a>
+                  </p>
+                  <p className="mt-1">
+                    <span className="text-white/35">Sales</span>{" "}
+                    <a
+                      href={`mailto:${BUSINESS.salesEmail}`}
+                      className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                    >
+                      {BUSINESS.salesEmail}
+                    </a>
+                  </p>
+                </div>
+              </div>
             </address>
 
             <div className="mt-7 flex items-center gap-4">
@@ -57,51 +91,34 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Services */}
-          <nav aria-label="Services" className="lg:col-span-3">
+          {/* Services — links disabled for now */}
+          <div className="lg:col-span-3">
             <h2 className="font-sans text-[11px] uppercase tracking-eyebrow text-white/40">
               Services
             </h2>
             <ul className="mt-5 space-y-3">
               {SERVICE_NAV.map((s) => (
-                <li key={s.href}>
-                  <Link
-                    href={s.href}
-                    className="font-sans text-[14px] text-white/55 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                  >
-                    {s.name}
-                  </Link>
+                <li key={s.href} className="font-sans text-[14px] text-white/55">
+                  {s.name}
                 </li>
               ))}
             </ul>
-          </nav>
+          </div>
 
-          {/* Areas */}
-          <nav aria-label="Service areas" className="lg:col-span-2">
+          {/* Areas — links disabled for now */}
+          <div className="lg:col-span-2">
             <h2 className="font-sans text-[11px] uppercase tracking-eyebrow text-white/40">
               Service Areas
             </h2>
             <ul className="mt-5 space-y-3">
               {AREA_NAV.map((a) => (
-                <li key={a.href}>
-                  <Link
-                    href={a.href}
-                    className="font-sans text-[14px] text-white/55 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                  >
-                    {a.name}
-                  </Link>
+                <li key={a.href} className="font-sans text-[14px] text-white/55">
+                  {a.name}
                 </li>
               ))}
-              <li>
-                <Link
-                  href="/contact"
-                  className="font-sans text-[14px] text-white/55 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                >
-                  Contact
-                </Link>
-              </li>
+              <li className="font-sans text-[14px] text-white/55">Contact</li>
             </ul>
-          </nav>
+          </div>
 
           {/* Credentials */}
           <div className="lg:col-span-3">

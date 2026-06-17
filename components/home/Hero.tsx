@@ -12,7 +12,7 @@ import Image from "next/image";
 import { NavSentinel } from "@/components/NavSentinel";
 
 const SUBTITLE =
-  "Since 1968 we have worked beside architects, builders, and interior designers, weaving light, sound, climate, and security into homes that simply respond.";
+  "Since 1968 we have worked beside architects, contractors, and interior designers, to enhance the convenience, safety and lifestyle of your home!";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -179,19 +179,19 @@ export function Hero() {
             <h1 className="font-display font-light leading-[0.95] tracking-[-0.025em]">
               <motion.span
                 {...lineIn(0.5)}
-                className="block text-[clamp(2.6rem,5.5vw,5.5rem)] text-white"
+                className="block text-[clamp(2.1rem,7vw,5.5rem)] text-white"
               >
                 Central Florida&apos;s leader
               </motion.span>
               <motion.span
                 {...lineIn(1.25)}
-                className="block text-[clamp(2.6rem,5.5vw,5.5rem)] text-white/80"
+                className="block text-[clamp(2.1rem,7vw,5.5rem)] text-white/80"
               >
                 in smart home automation
               </motion.span>
               <motion.span
                 {...lineIn(2.0)}
-                className="block text-[clamp(2.6rem,5.5vw,5.5rem)] text-white/50"
+                className="block text-[clamp(2.1rem,7vw,5.5rem)] text-white/50"
               >
                 since 1968.
               </motion.span>

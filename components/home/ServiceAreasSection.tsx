@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { gsap, prefersReducedMotion } from "@/lib/motion";
 
 const AREAS = [
@@ -106,25 +106,30 @@ export function ServiceAreasSection() {
               </p>
             </div>
 
+            {/* Mobile: a collapsible dropdown keeps the long list from
+                dominating the small screen. Tablet and up get the full grid. */}
+            <details className="group/areas mt-6 border-t border-navy/15 pt-4 md:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between py-1 font-sans text-[12px] uppercase tracking-wide2 text-navy [&::-webkit-details-marker]:hidden">
+                <span>Communities we serve ({AREAS.length})</span>
+                <ChevronDown
+                  strokeWidth={1.5}
+                  className="h-4 w-4 transition-transform duration-300 group-open/areas:rotate-180"
+                />
+              </summary>
+              <div className="mt-2 grid grid-cols-1 gap-x-8 sm:grid-cols-2">
+                {AREAS.map((area) => (
+                  <AreaRow key={area} area={area} />
+                ))}
+              </div>
+            </details>
+
+            {/* Tablet / desktop: the full ruled list, revealed on scroll. */}
             <div
               data-area-list
-              className="mt-6 grid grid-cols-1 gap-x-8 border-t border-navy/15 pt-4 sm:grid-cols-2"
+              className="mt-6 hidden grid-cols-1 gap-x-8 border-t border-navy/15 pt-4 sm:grid-cols-2 md:grid"
             >
               {AREAS.map((area) => (
-                <div
-                  key={area}
-                  data-area-row
-                  className="group flex items-center gap-4 border-b border-navy/[0.08] py-2.5"
-                >
-                  <span className="relative flex h-[7px] w-[7px] shrink-0">
-                    <span className="absolute inset-0 rounded-full bg-navy/15 transition-colors duration-500 group-hover:bg-navy/40" />
-                    <span className="absolute inset-[2px] rounded-full bg-navy/40 transition-all duration-500 group-hover:bg-navy-logo group-hover:shadow-[0_0_8px_2px_rgba(1,22,137,0.25)]" />
-                  </span>
-                  <span className="font-display text-[16px] font-light text-navy-deep/70 transition-colors duration-500 group-hover:text-navy-deep">
-                    {area}
-                  </span>
-                  <span className="ml-auto h-px w-0 bg-navy/30 transition-all duration-700 ease-expo group-hover:w-10" />
-                </div>
+                <AreaRow key={area} area={area} animate />
               ))}
             </div>
 
@@ -170,12 +175,32 @@ export function ServiceAreasSection() {
   );
 }
 
+/* A single community in the list. `animate` tags it for the scroll-in stagger;
+   the mobile dropdown copies stay untagged so they don't animate while hidden. */
+function AreaRow({ area, animate = false }: { area: string; animate?: boolean }) {
+  return (
+    <div
+      {...(animate ? { "data-area-row": "" } : {})}
+      className="group flex items-center gap-4 border-b border-navy/[0.08] py-2.5"
+    >
+      <span className="relative flex h-[7px] w-[7px] shrink-0">
+        <span className="absolute inset-0 rounded-full bg-navy/15 transition-colors duration-500 group-hover:bg-navy/40" />
+        <span className="absolute inset-[2px] rounded-full bg-navy/40 transition-all duration-500 group-hover:bg-navy-logo group-hover:shadow-[0_0_8px_2px_rgba(1,22,137,0.25)]" />
+      </span>
+      <span className="font-display text-[16px] font-light text-navy-deep/70 transition-colors duration-500 group-hover:text-navy-deep">
+        {area}
+      </span>
+      <span className="ml-auto h-px w-0 bg-navy/30 transition-all duration-700 ease-expo group-hover:w-10" />
+    </div>
+  );
+}
+
 /* A quiet cyanotype-style drafting sheet rendered in navy ink on the warm
    paper: a fine grid plus technical line work — a compass circle, a door
    swing, golden-ratio subdivisions, dimension lines, and a plan network. */
-function ArchitecturalBackdrop() {
+export function ArchitecturalBackdrop({ className = "" }: { className?: string }) {
   return (
-    <div aria-hidden="true" className="absolute inset-0">
+    <div aria-hidden="true" className={`absolute inset-0 ${className}`}>
       {/* Drafting grid — fine module lines with a heavier major every 8th */}
       <div
         className="absolute inset-0"
