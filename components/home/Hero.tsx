@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
   useReducedMotion,
@@ -12,12 +12,26 @@ import Image from "next/image";
 import { NavSentinel } from "@/components/NavSentinel";
 
 const SUBTITLE =
-  "Since 1968 we have worked beside architects, contractors, and interior designers, to enhance the convenience, safety and lifestyle of your home!";
+  "Since 1968 we have worked beside architects, contractors, and interior designers, to enhance the convenience, safety and lifestyle of your home";
 
 export function Hero() {
   const reduce = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // On mobile / tablet (< 1024 px) the browser restricts video.currentTime
+  // manipulation, so we fall back to a simple autoplay loop and collapse the
+  // scroll runway to a single viewport height.
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const apply = () => setIsDesktop(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  const isScrollScrub = !reduce && isDesktop;
 
   // Scroll progress across the whole pinned region (0 at the top, 1 once the
   // container's bottom edge reaches the bottom of the viewport).
@@ -30,7 +44,7 @@ export function Hero() {
   // begins sliding up (it starts at 200/300 ≈ 0.66 — its -mt-[100dvh] over a
   // 300dvh runway). Finishing the scrub right at that point removes the dead
   // stretch where the hero sat pinned with nothing left to play.
-  const clipProgress = useTransform(scrollYProgress, [0, 0.66], [0, 1], {
+  const clipProgress = useTransform(scrollYProgress, [0, 0.75], [0, 1], {
     clamp: true,
   });
 
@@ -59,7 +73,7 @@ export function Hero() {
   // Drive the video's currentTime from the smoothed scroll value every frame.
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || reduce) return;
+    if (!video || !isScrollScrub) return;
 
     video.pause();
 
@@ -102,7 +116,7 @@ export function Hero() {
       cancelAnimationFrame(raf);
       video.removeEventListener("loadedmetadata", onMeta);
     };
-  }, [reduce, smoothProgress]);
+  }, [isScrollScrub, smoothProgress]);
 
   return (
     // The tall container is the scroll runway. The sticky child stays locked
@@ -110,7 +124,7 @@ export function Hero() {
     // scroll distance into video playhead position.
     <div
       ref={containerRef}
-      className={`relative ${reduce ? "h-[100dvh]" : "h-[300dvh]"}`}
+      className={`relative h-[100dvh] ${!reduce ? "lg:h-[400dvh]" : ""}`}
     >
       <section className="sticky top-0 z-10 flex h-[100dvh] flex-col justify-end overflow-hidden bg-navy-deep">
         <NavSentinel />
@@ -123,8 +137,8 @@ export function Hero() {
             playsInline
             preload="auto"
             poster="/images/hero-scroll-poster.jpg"
-            autoPlay={reduce ? true : undefined}
-            loop={reduce ? true : undefined}
+            autoPlay={!isScrollScrub ? true : undefined}
+            loop={!isScrollScrub ? true : undefined}
             className="absolute inset-0 h-full w-full object-cover"
           >
             <source src="/Hero-Scroll.mp4" type="video/mp4" />
@@ -133,7 +147,7 @@ export function Hero() {
 
         {/* ── Color grade ─────────────────────────────────────────────── */}
         <div aria-hidden="true" className="absolute inset-0 bg-black/40" />
-        <div aria-hidden="true" className="absolute inset-0 bg-navy-logo/20" />
+        <div aria-hidden="true" className="absolute inset-0 bg-navy-logo/0" />
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent"
@@ -148,9 +162,9 @@ export function Hero() {
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 z-10"
           style={{
-            height: "clamp(16px, 3vh, 32px)",
+            height: "clamp(10px, 1.8vh, 20px)",
             background:
-              "linear-gradient(to right, rgba(1,22,137,0.95) 0%, rgba(1,22,137,0.75) 25%, rgba(1,22,137,0.75) 75%, rgba(1,22,137,0.95) 100%)",
+              "linear-gradient(to right, rgba(10,26,82,0.95) 0%, rgba(10,26,82,0.75) 25%, rgba(10,26,82,0.75) 75%, rgba(10,26,82,0.95) 100%)",
           }}
         />
 
@@ -172,26 +186,26 @@ export function Hero() {
         </motion.div>
 
         {/* ── Copy — assembled on a timer, header first then subheader ──── */}
-        <div className="relative z-20 mx-auto w-full max-w-[1500px] px-5 pb-24 pt-32 sm:px-8 md:px-11">
+        <div className="relative z-20 mx-auto w-full max-w-[1500px] px-5 pb-12 pt-24 sm:px-8 sm:pb-20 sm:pt-32 md:px-11 lg:pb-24">
           <div className="max-w-[64rem]">
 
             {/* H1 — three lines rise in one after another */}
             <h1 className="font-display font-light leading-[0.95] tracking-[-0.025em]">
               <motion.span
                 {...lineIn(0.5)}
-                className="block text-[clamp(2.1rem,7vw,5.5rem)] text-white"
+                className="block text-[clamp(1.5rem,7vw,5.5rem)] text-white"
               >
                 Central Florida&apos;s leader
               </motion.span>
               <motion.span
                 {...lineIn(1.25)}
-                className="block text-[clamp(2.1rem,7vw,5.5rem)] text-white/80"
+                className="block text-[clamp(1.5rem,7vw,5.5rem)] text-white/80"
               >
                 in smart home automation
               </motion.span>
               <motion.span
                 {...lineIn(2.0)}
-                className="block text-[clamp(2.1rem,7vw,5.5rem)] text-white/50"
+                className="block text-[clamp(1.5rem,7vw,5.5rem)] text-white/50"
               >
                 since 1968.
               </motion.span>

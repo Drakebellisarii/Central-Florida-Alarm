@@ -1,15 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Reveal } from "@/components/Reveal";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { TESTIMONIALS } from "@/lib/content";
+
+const INTERVAL = 3000;
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function TestimonialsSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  // The brand film is a desktop-only treatment. On phones we render a bespoke
-  // brand-navy field with glass quote plates instead, so we skip rendering
-  // (and downloading) the video below the md breakpoint entirely.
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
@@ -19,50 +23,98 @@ export function TestimonialsSection() {
     return () => mq.removeEventListener("change", apply);
   }, []);
 
-  // Browsers de-prioritize muted background video — they delay starting it,
-  // pause it offscreen, and stall it when the tab loses focus. Explicitly
-  // drive playback so it keeps running whenever the section is on screen.
+  // Desktop video — /Mansion-drone.mp4
   useEffect(() => {
     if (!isDesktop) return;
     const video = videoRef.current;
     if (!video) return;
 
-    const play = () => {
-      const p = video.play();
-      if (p) p.catch(() => {});
-    };
+    const play = () => { const p = video.play(); if (p) p.catch(() => {}); };
+    const onMeta = () => { video.playbackRate = 0.65; };
+    video.addEventListener("loadedmetadata", onMeta);
+    if (video.readyState >= 1) onMeta();
 
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) play();
-      },
+      ([entry]) => { if (entry.isIntersecting) play(); },
       { threshold: 0.01 }
     );
     io.observe(video);
-
-    const onVisible = () => {
-      if (!document.hidden) play();
-    };
+    const onVisible = () => { if (!document.hidden) play(); };
     document.addEventListener("visibilitychange", onVisible);
-
     play();
-
     return () => {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVisible);
+      video.removeEventListener("loadedmetadata", onMeta);
     };
   }, [isDesktop]);
 
-  return (
-    <section className="relative isolate overflow-hidden border-t border-navy-logo/20 md:border-white/10 md:bg-navy-deep">
-      {/* ───────────── Mobile: clean brand-navy gradient ───────────── */}
-      <div aria-hidden="true" className="absolute inset-0 md:hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(165deg,#16348F_0%,#122C82_45%,#0A1A52_100%)]" />
-      </div>
+  // Mobile video — /Phone-Hero.mp4
+  useEffect(() => {
+    if (isDesktop) return;
+    const video = mobileVideoRef.current;
+    if (!video) return;
 
-      {/* ── Desktop: brand film background (skipped entirely on mobile) ─────── */}
+    const play = () => { const p = video.play(); if (p) p.catch(() => {}); };
+    const onMeta = () => { video.playbackRate = 0.65; };
+    video.addEventListener("loadedmetadata", onMeta);
+    if (video.readyState >= 1) onMeta();
+
+    const io = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) play(); },
+      { threshold: 0.01 }
+    );
+    io.observe(video);
+    const onVisible = () => { if (!document.hidden) play(); };
+    document.addEventListener("visibilitychange", onVisible);
+    play();
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisible);
+      video.removeEventListener("loadedmetadata", onMeta);
+    };
+  }, [isDesktop]);
+
+  const next = useCallback(() => {
+    setActive((i) => (i + 1) % TESTIMONIALS.length);
+  }, []);
+
+  const prev = useCallback(() => {
+    setActive((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+  }, []);
+
+  useEffect(() => {
+    if (paused) return;
+    const id = setTimeout(next, INTERVAL);
+    return () => clearTimeout(id);
+  }, [active, paused, next]);
+
+  return (
+    <section
+      className="relative isolate overflow-hidden bg-navy-deep"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* Video background — mobile: Phone-Hero.mp4 */}
+      {!isDesktop && (
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <video
+            ref={mobileVideoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+          >
+            <source src="/Phone-Hero.mp4" type="video/mp4" />
+          </video>
+        </div>
+      )}
+
+      {/* Video background — desktop: Mansion-drone.mp4 */}
       {isDesktop && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <video
             ref={videoRef}
             autoPlay
@@ -70,91 +122,97 @@ export function TestimonialsSection() {
             loop
             playsInline
             preload="auto"
-            poster="/images/cfas-poster.jpg"
             className="absolute inset-0 h-full w-full object-cover"
           >
-            <source src="/CFAS.mp4" type="video/mp4" />
+            <source src="/Mansion-drone.mp4" type="video/mp4" />
           </video>
         </div>
       )}
 
-      {/* ── Color grade — desktop only, keeps the copy and cards legible ───── */}
-      <div aria-hidden="true" className="absolute inset-0 hidden bg-navy-deep/75 md:block" />
-      <div aria-hidden="true" className="absolute inset-0 hidden bg-black/35 md:block" />
-      <div aria-hidden="true" className="absolute inset-0 hidden bg-navy-logo/15 md:block" />
+      {/* Overlays — slightly heavier than before for legibility over both videos */}
+      <div aria-hidden="true" className="absolute inset-0 bg-navy-deep/60" />
+      <div aria-hidden="true" className="absolute inset-0 bg-black/30" />
+      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20" />
 
-      {/* ════════════════ Mobile content — clean glass quote plates ══════════ */}
-      <div className="relative z-10 px-5 py-20 sm:px-8 md:hidden">
-        <Reveal>
-          <h2 className="font-display text-[clamp(2rem,8vw,2.7rem)] font-light leading-[1.1] tracking-tight text-white">
-            The builders and architects who hand us their most demanding homes.
-          </h2>
-        </Reveal>
+      {/* Carousel */}
+      <div className="relative z-10 flex min-h-[65vh] flex-col items-center justify-center px-8 py-16 text-center sm:px-12 sm:py-24 md:py-40 lg:px-32">
 
-        <div className="mt-12 space-y-5">
-          {TESTIMONIALS.map((t, i) => (
-            <Reveal key={t.name} index={i}>
-              <figure className="rounded-2xl border border-white/[0.12] bg-white/[0.05] p-7 backdrop-blur-md">
-                <span
-                  aria-hidden="true"
-                  className="block font-display text-[2.75rem] leading-none text-white/25"
-                >
-                  &ldquo;
-                </span>
-                <blockquote className="mt-2 font-display text-[18px] font-light leading-[1.55] text-white/85">
-                  {t.quote}
-                </blockquote>
-                <figcaption className="mt-6 border-t border-white/10 pt-5">
-                  <p className="font-sans text-[14px] font-semibold tracking-wide text-white">
-                    {t.name}
-                  </p>
-                  <p className="mt-1 font-sans text-[11px] uppercase tracking-wide2 text-white/45">
-                    {t.role}
-                  </p>
-                </figcaption>
-              </figure>
-            </Reveal>
+        {/* Side arrows — absolute, only on sm+ where they have room */}
+        <button
+          onClick={() => { prev(); setPaused(false); }}
+          aria-label="Previous testimonial"
+          className="absolute left-4 top-1/2 -translate-y-1/2 hidden h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/50 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white sm:flex sm:left-8"
+        >
+          <ChevronLeft strokeWidth={1.5} className="h-5 w-5" />
+        </button>
+        <button
+          onClick={() => { next(); setPaused(false); }}
+          aria-label="Next testimonial"
+          className="absolute right-4 top-1/2 -translate-y-1/2 hidden h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/50 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white sm:flex sm:right-8"
+        >
+          <ChevronRight strokeWidth={1.5} className="h-5 w-5" />
+        </button>
+
+        <AnimatePresence mode="wait">
+          <motion.figure
+            key={active}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.45, ease: EASE }}
+            className="max-w-3xl"
+          >
+            <figcaption className="flex flex-col items-center gap-1">
+              <p className="font-sans text-[17px] font-semibold tracking-wide text-white sm:text-[20px]">
+                {TESTIMONIALS[active].name}
+              </p>
+              <p className="font-sans text-[11px] uppercase tracking-eyebrow text-white/40 sm:text-[14px]">
+                {TESTIMONIALS[active].role}
+              </p>
+            </figcaption>
+
+            <div className="mx-auto mt-5 h-px w-10 bg-white/20 sm:mt-6" />
+
+            <blockquote className="mt-5 font-display text-[clamp(1.05rem,2.2vw,1.75rem)] font-light leading-[1.65] tracking-tight text-white/85 sm:mt-6 sm:text-[clamp(1.1rem,2.2vw,1.75rem)]">
+              &ldquo;{TESTIMONIALS[active].quote}&rdquo;
+            </blockquote>
+          </motion.figure>
+        </AnimatePresence>
+
+        {/* Dots */}
+        <div className="mt-8 flex items-center gap-2 sm:mt-14">
+          {TESTIMONIALS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => { setActive(i); setPaused(false); }}
+              aria-label={`Testimonial ${i + 1}`}
+              className={`h-[4px] rounded-full transition-all duration-500 ease-out ${
+                i === active
+                  ? "w-7 bg-white"
+                  : "w-[4px] bg-white/25 hover:bg-white/50"
+              }`}
+            />
           ))}
         </div>
-      </div>
 
-      {/* ════════════════ Desktop content — unchanged film treatment ═════════ */}
-      <div className="relative z-10 mx-auto hidden max-w-[1500px] px-5 py-24 sm:px-8 md:block md:px-11 md:py-36">
-        <Reveal>
-          <h2 className="max-w-3xl font-display text-[clamp(2rem,3.6vw,3rem)] font-light leading-[1.08] tracking-tight text-white">
-            The builders and architects who hand us their most demanding homes.
-          </h2>
-        </Reveal>
-
-        <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-sm border border-white/10 bg-white/10 lg:grid-cols-3">
-          {TESTIMONIALS.map((t, i) => (
-            <Reveal
-              key={t.name}
-              index={i}
-              className="flex flex-col justify-between bg-navy-deep/40 p-8 backdrop-blur-md md:p-10"
-            >
-              <div>
-                <span
-                  aria-hidden="true"
-                  className="block font-display text-5xl leading-none text-white/25"
-                >
-                  &ldquo;
-                </span>
-                <blockquote className="mt-5 font-display text-[18px] font-light leading-[1.55] text-white/80 md:text-[19px]">
-                  {t.quote}
-                </blockquote>
-              </div>
-              <figcaption className="mt-9 border-t border-white/15 pt-6">
-                <p className="font-sans text-[14px] font-semibold tracking-wide text-white">
-                  {t.name}
-                </p>
-                <p className="mt-1 font-sans text-[12px] uppercase tracking-wide2 text-white/50">
-                  {t.role}
-                </p>
-              </figcaption>
-            </Reveal>
-          ))}
+        {/* Inline prev / next — mobile only, shown below the dots */}
+        <div className="mt-6 flex items-center gap-4 sm:hidden">
+          <button
+            onClick={() => { prev(); setPaused(false); }}
+            aria-label="Previous testimonial"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/50 backdrop-blur-sm transition-all duration-200 active:border-white/40 active:bg-white/10 active:text-white"
+          >
+            <ChevronLeft strokeWidth={1.5} className="h-5 w-5" />
+          </button>
+          <button
+            onClick={() => { next(); setPaused(false); }}
+            aria-label="Next testimonial"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/50 backdrop-blur-sm transition-all duration-200 active:border-white/40 active:bg-white/10 active:text-white"
+          >
+            <ChevronRight strokeWidth={1.5} className="h-5 w-5" />
+          </button>
         </div>
+
       </div>
     </section>
   );

@@ -28,6 +28,42 @@ export const TESTIMONIALS: Testimonial[] = [
     name: "R. Morales III",
     role: "Morales Construction",
   },
+  {
+    quote:
+      "Their team came to us early in the design phase, which is exactly how it should work. They flagged things in the drawings that would have cost twice as much to solve in the field, and delivered a system the owner still raves about two years in.",
+    name: "Sara Mitchell",
+    role: "Interior Designer",
+  },
+  {
+    quote:
+      "I have lived in this house for six years and the system has never once needed a service call I did not initiate myself. When I have called, they pick up. That kind of reliability is what you hope for and rarely get.",
+    name: "Private Client",
+    role: "Windermere, FL",
+  },
+  {
+    quote:
+      "We brought CFAS in on a lakefront estate at the framing stage. They were the best-coordinated sub on the job — drawings on time, no change orders that were their fault, and a commissioning that went exactly as described.",
+    name: "James Holton",
+    role: "Holton Custom Homes",
+  },
+  {
+    quote:
+      "Integration is one of those things that can make a home feel cheap or feel extraordinary. CFAS understands that. They know how to hide everything that should be hidden and surface only what serves the design. Our clients have never had a complaint.",
+    name: "Elena Cross",
+    role: "Cross Design Studio",
+  },
+  {
+    quote:
+      "Managing a property portfolio in Central Florida means you need contractors who communicate, show up, and do not create liability. CFAS checks every box. They have maintained three of our estates for over a decade without incident.",
+    name: "T. Garrison",
+    role: "Estate Property Manager",
+  },
+  {
+    quote:
+      "We referred CFAS to a client building in Lake Nona and they sent a thank-you note specifically because of the experience they had with the team. That says everything.",
+    name: "David Park",
+    role: "Park + Associates Architecture",
+  },
 ];
 
 export const STATS = [

@@ -5,49 +5,92 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/* The product lines we design around, shown as a calm in-page band. Logos
-   arrive in every brand color and weight, so they are flattened to a single
-   neutral tone (brightness-0 + opacity) to sit together cleanly, and lift to
-   near-full strength on hover. Intrinsic w/h match each source file so nothing
-   is stretched; the Alarm mark is taller because it stacks an icon over its
-   wordmark, so it carries a larger height to stay optically level. */
 const BRANDS = [
-  { src: "/logos/logo-lutron.png", alt: "Lutron", w: 545, h: 270, cls: "h-6 sm:h-7" },
-  { src: "/logos/Sonos-logo.png", alt: "Sonos", w: 712, h: 301, cls: "h-5 sm:h-6" },
-  { src: "/logos/josh-logo.png", alt: "Josh.ai", w: 2000, h: 680, cls: "h-7 sm:h-8" },
-  { src: "/logos/Alarm_logo.png", alt: "Alarm.com", w: 316, h: 192, cls: "h-11 sm:h-12" },
+  {
+    src: "/logos/logo-lutron.png",
+    alt: "Lutron",
+    category: "Lighting Control",
+    w: 545,
+    h: 270,
+    cls: "h-7 sm:h-8",
+  },
+  {
+    src: "/logos/Sonos-logo.png",
+    alt: "Sonos",
+    category: "Audio",
+    w: 712,
+    h: 301,
+    cls: "h-5 sm:h-6",
+  },
+  {
+    src: "/logos/josh-logo.png",
+    alt: "Josh.ai",
+    category: "Automation",
+    w: 2000,
+    h: 680,
+    cls: "h-6 sm:h-7",
+  },
+  {
+    src: "/logos/Alarm_logo.png",
+    alt: "Alarm.com",
+    category: "Security",
+    w: 316,
+    h: 192,
+    cls: "h-10 sm:h-11",
+  },
 ];
+
+const pad = (n: number) => String(n).padStart(2, "0");
 
 export function BrandStrip() {
   const reduce = useReducedMotion();
 
   return (
     <section className="border-y border-navy/10 bg-white">
-      <div className="mx-auto max-w-[1400px] px-5 py-20 sm:px-8 md:px-10 md:py-24">
-        <motion.div
-          initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.9, ease: EASE }}
-        >
-          <p className="text-center font-sans text-[11px] uppercase tracking-eyebrow text-navy-logo">
-            The systems we build around
-          </p>
+      <div className="mx-auto max-w-[1400px] px-5 py-16 sm:px-8 md:px-10 md:py-20">
 
-          <ul className="mt-12 flex flex-wrap items-center justify-center gap-x-14 gap-y-10 sm:gap-x-20 md:mt-14">
-            {BRANDS.map((b) => (
-              <li key={b.alt} className="flex items-center">
+        <motion.p
+          initial={reduce ? { opacity: 1 } : { opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: EASE }}
+          className="font-sans text-[11px] uppercase tracking-eyebrow text-navy/35"
+        >
+          The systems we build around
+        </motion.p>
+
+        <motion.div
+          initial={reduce ? { opacity: 1 } : { opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
+          className="mt-10 grid grid-cols-2 border-l border-t border-navy/10 md:grid-cols-4"
+        >
+          {BRANDS.map((b, i) => (
+            <div
+              key={b.alt}
+              className="group flex flex-col justify-between gap-10 border-b border-r border-navy/10 px-8 py-10 transition-colors duration-500 hover:bg-navy/[0.025] md:px-10 md:py-12"
+            >
+              <span className="font-display text-[1.6rem] font-light leading-none text-navy-logo/20 transition-colors duration-500 group-hover:text-navy-logo/35">
+                {pad(i + 1)}
+              </span>
+
+              <div className="flex flex-col gap-4">
                 <Image
                   src={b.src}
                   alt={b.alt}
                   width={b.w}
                   height={b.h}
-                  className={`${b.cls} w-auto brightness-0 opacity-40 transition-opacity duration-500 hover:opacity-80`}
+                  className={`${b.cls} w-auto brightness-0 opacity-40 transition-opacity duration-500 group-hover:opacity-75`}
                 />
-              </li>
-            ))}
-          </ul>
+                <p className="font-sans text-[10px] uppercase tracking-eyebrow text-navy/30">
+                  {b.category}
+                </p>
+              </div>
+            </div>
+          ))}
         </motion.div>
+
       </div>
     </section>
   );

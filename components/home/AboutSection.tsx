@@ -102,21 +102,21 @@ export function AboutSection() {
           transition={{ duration: 0.8, ease: EASE, delay: 0.25 }}
           className="mt-10 border-t border-slate-100 pt-8"
         >
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:flex-nowrap sm:gap-10">
             <Image
               src="/images/GOBA.png"
               alt="Greater Orlando Builders Association"
               width={120}
               height={60}
-              className="h-16 w-auto object-contain opacity-80 transition-all duration-300 hover:opacity-100 sm:h-20 lg:h-24"
+              className="h-16 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-20 lg:h-24"
             />
-            <span className="h-12 w-px bg-slate-200 sm:h-16" />
+            <span className="hidden h-12 w-px bg-slate-200 sm:block sm:h-16" />
             <Image
               src="/images/MCBC_Logo.jpg"
               alt="Master Custom Builder Council"
               width={200}
               height={60}
-              className="h-16 w-auto object-contain opacity-80 transition-all duration-300 hover:opacity-100 sm:h-20 lg:h-24"
+              className="h-16 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-20 lg:h-24"
             />
           </div>
         </motion.div>
@@ -140,6 +140,7 @@ export function AboutSection() {
             preload="auto"
             poster="/images/blinds-poster.jpg"
             className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: "75% center" }}
           >
             <source src="/Blinds.mp4" type="video/mp4" />
           </video>
