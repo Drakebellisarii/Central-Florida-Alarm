@@ -141,14 +141,14 @@ export function TestimonialsSection() {
         <button
           onClick={() => { prev(); setPaused(false); }}
           aria-label="Previous testimonial"
-          className="absolute left-4 top-1/2 -translate-y-1/2 hidden h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/50 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white sm:flex sm:left-8"
+          className="absolute left-4 top-1/2 -translate-y-1/2 hidden h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/50 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white lg:flex lg:left-8"
         >
           <ChevronLeft strokeWidth={1.5} className="h-5 w-5" />
         </button>
         <button
           onClick={() => { next(); setPaused(false); }}
           aria-label="Next testimonial"
-          className="absolute right-4 top-1/2 -translate-y-1/2 hidden h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/50 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white sm:flex sm:right-8"
+          className="absolute right-4 top-1/2 -translate-y-1/2 hidden h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/50 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white lg:flex lg:right-8"
         >
           <ChevronRight strokeWidth={1.5} className="h-5 w-5" />
         </button>
@@ -195,8 +195,8 @@ export function TestimonialsSection() {
           ))}
         </div>
 
-        {/* Inline prev / next — mobile only, shown below the dots */}
-        <div className="mt-6 flex items-center gap-4 sm:hidden">
+        {/* Inline prev / next — mobile + tablet, shown below the dots */}
+        <div className="mt-6 flex items-center gap-4 lg:hidden">
           <button
             onClick={() => { prev(); setPaused(false); }}
             aria-label="Previous testimonial"
