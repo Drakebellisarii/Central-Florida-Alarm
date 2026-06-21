@@ -23,16 +23,39 @@ export function AboutSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.5;
-    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Set playback rate once metadata is available (setting it before
+    // loadedmetadata fires is silently ignored on mobile browsers).
+    const applyRate = () => { video.playbackRate = 0.5; };
+    video.addEventListener("loadedmetadata", applyRate);
+    if (video.readyState >= 1) applyRate();
+
+    // On mobile the video is below the fold and won't autoplay until the
+    // user scrolls to it — watch for it entering the viewport and play then.
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          const p = video.play();
+          if (p) p.catch(() => {});
+        }
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(video);
+
+    return () => {
+      io.disconnect();
+      video.removeEventListener("loadedmetadata", applyRate);
+    };
   }, []);
 
   return (
-    <section className="relative flex min-h-[100dvh] flex-col bg-white shadow-[0_-20px_80px_rgba(0,0,0,0.25)] lg:flex-row">
+    <section className="relative flex min-h-[100dvh] flex-col bg-white shadow-[0_-20px_80px_rgba(0,0,0,0.25)] md:flex-row lg:flex-row">
 
       {/* ── Left — text ───────────────────────────────────────────────── */}
-      <div className="flex flex-col px-6 py-20 sm:px-8 md:px-12 lg:w-1/2 lg:justify-center lg:px-14 lg:py-16 xl:px-16">
+      <div className="flex min-w-0 flex-col px-6 py-20 sm:px-8 md:w-1/2 md:justify-center md:px-10 md:py-12 lg:w-1/2 lg:justify-center lg:px-14 lg:py-16 xl:px-16">
 
         <motion.div
           initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
@@ -40,7 +63,7 @@ export function AboutSection() {
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.9, ease: EASE }}
         >
-          <h2 className="font-display text-[clamp(1.9rem,3.2vw,3rem)] font-light leading-[1.05] tracking-tight text-navy-deep">
+          <h2 className="font-display text-[clamp(1.9rem,3.2vw,3rem)] font-light leading-[1.05] tracking-tight text-navy-deep md:text-[2.1rem] lg:text-[clamp(1.9rem,3.2vw,3rem)]">
             Central Florida&rsquo;s home integration partner since&nbsp;{BUSINESS.founded}.
           </h2>
         </motion.div>
@@ -68,7 +91,7 @@ export function AboutSection() {
 
         {/* Capabilities */}
         <div className="mt-8 border-t border-slate-100 pt-7">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-5">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-5 md:grid-cols-1 md:gap-y-4 lg:grid-cols-2 lg:gap-y-5">
             {PILLARS.map((p, i) => (
               <motion.div
                 key={p.label}
@@ -102,29 +125,29 @@ export function AboutSection() {
           transition={{ duration: 0.8, ease: EASE, delay: 0.25 }}
           className="mt-10 border-t border-slate-100 pt-8"
         >
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:flex-nowrap sm:gap-10">
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:flex-nowrap sm:gap-10 md:gap-5 lg:gap-6 xl:gap-10">
             <Image
               src="/images/GOBA.png"
               alt="Greater Orlando Builders Association"
               width={120}
               height={60}
-              className="h-16 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-20 lg:h-24"
+              className="h-14 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-16 md:h-11 lg:h-12 xl:h-16 2xl:h-20"
             />
-            <span className="hidden h-12 w-px bg-slate-200 sm:block sm:h-16" />
+            <span className="hidden h-12 w-px bg-slate-200 sm:block sm:h-16 md:h-10" />
             <Image
               src="/images/MCBC_Logo.jpg"
               alt="Master Custom Builder Council"
               width={200}
               height={60}
-              className="h-16 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-20 lg:h-24"
+              className="h-14 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-16 md:h-11 lg:h-12 xl:h-16 2xl:h-20"
             />
           </div>
         </motion.div>
 
       </div>
 
-      {/* ── Right — portrait video placeholder (9:16) ─────────────────── */}
-      <div className="relative hidden bg-navy-deep lg:flex lg:w-1/2 lg:items-center lg:justify-center lg:overflow-hidden">
+      {/* ── Right — portrait video (full-width on mobile, side panel on tablet/desktop) */}
+      <div className="relative flex h-[65vh] items-center justify-center overflow-hidden bg-navy-deep sm:h-[75vh] md:h-auto md:w-1/2 lg:h-auto lg:w-1/2">
         <div className="grain absolute inset-0 opacity-30" />
         {/* Portrait 9:16 container centered within the right panel */}
         <div

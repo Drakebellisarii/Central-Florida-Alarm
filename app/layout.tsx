@@ -1,22 +1,32 @@
 import type { Metadata } from "next";
-import { Fraunces, Archivo } from "next/font/google";
+import localFont from "next/font/local";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SiteFrame } from "@/components/SiteFrame";
 import { SITE_URL, BUSINESS } from "@/lib/seo";
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
+const notoSerifDisplay = localFont({
+  src: [
+    {
+      path: "./fonts/Noto_Serif_Display/NotoSerifDisplay-VariableFont_wdth,wght.ttf",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Noto_Serif_Display/NotoSerifDisplay-Italic-VariableFont_wdth,wght.ttf",
+      style: "italic",
+    },
+  ],
+  variable: "--font-noto-serif-display",
   display: "swap",
-  variable: "--font-fraunces",
-  style: ["normal", "italic"],
 });
 
-const archivo = Archivo({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-archivo",
+  variable: "--font-dm-sans",
+  weight: ["300", "400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -54,7 +64,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${archivo.variable}`}>
+    <html lang="en" className={`${notoSerifDisplay.variable} ${dmSans.variable}`}>
       <body className="bg-white font-sans text-navy-deep antialiased">
         <a
           href="#content"

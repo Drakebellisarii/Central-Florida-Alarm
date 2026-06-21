@@ -24,7 +24,7 @@ export default function HomePage() {
       <Hero />
       <div
         id="nav-solid-marker"
-        className="relative z-20 lg:-mt-[100dvh]"
+        className="relative z-20 -mt-[100dvh]"
       >
         <AboutSection />
       </div>

@@ -132,15 +132,9 @@ export function ServicesSection() {
               data-card
               className="group relative flex flex-col border-b border-r border-navy/10 p-8 transition-colors duration-500 hover:bg-navy/[0.025] md:p-10"
             >
-              <div className="flex items-start justify-between">
-                <span className="font-display text-[2rem] font-light leading-none text-navy-logo/35 transition-colors duration-500 group-hover:text-navy-logo md:text-[2.4rem]">
-                  {pad(i + 1)}
-                </span>
-                <ArrowUpRight
-                  strokeWidth={1.25}
-                  className="h-5 w-5 -translate-y-1 translate-x-1 text-navy-logo opacity-0 transition-all duration-500 ease-expo group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
-                />
-              </div>
+              <span className="font-display text-[2rem] font-light leading-none text-navy-logo/35 transition-colors duration-500 group-hover:text-navy-logo md:text-[2.4rem]">
+                {pad(i + 1)}
+              </span>
 
               <h3 className="mt-7 font-display text-[clamp(1.2rem,1.6vw,1.5rem)] font-light leading-tight text-navy-deep">
                 {o.label}

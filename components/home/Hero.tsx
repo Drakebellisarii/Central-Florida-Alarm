@@ -19,9 +19,8 @@ export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // On mobile / tablet (< 1024 px) the browser restricts video.currentTime
-  // manipulation, so we fall back to a simple autoplay loop and collapse the
-  // scroll runway to a single viewport height.
+  const isScrollScrub = !reduce;
+
   const [isDesktop, setIsDesktop] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -30,8 +29,6 @@ export function Hero() {
     mq.addEventListener("change", apply);
     return () => mq.removeEventListener("change", apply);
   }, []);
-
-  const isScrollScrub = !reduce && isDesktop;
 
   // Scroll progress across the whole pinned region (0 at the top, 1 once the
   // container's bottom edge reaches the bottom of the viewport).
@@ -69,6 +66,17 @@ export function Hero() {
     animate: { opacity: 1, y: 0 },
     transition: { duration: 1.7, ease: EASE, delay },
   });
+
+  // On mobile / reduced-motion the video autoplays. Call .play() explicitly so
+  // it restarts correctly whether this is first load or a resize back from
+  // desktop (where the scrub effect would have called .pause() and left it
+  // stopped — the autoPlay HTML attribute alone won't restart a paused video).
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || isScrollScrub) return;
+    const p = video.play();
+    if (p) p.catch(() => {});
+  }, [isScrollScrub, isDesktop]);
 
   // Drive the video's currentTime from the smoothed scroll value every frame.
   useEffect(() => {
@@ -116,7 +124,7 @@ export function Hero() {
       cancelAnimationFrame(raf);
       video.removeEventListener("loadedmetadata", onMeta);
     };
-  }, [isScrollScrub, smoothProgress]);
+  }, [isScrollScrub, smoothProgress, isDesktop]);
 
   return (
     // The tall container is the scroll runway. The sticky child stays locked
@@ -124,7 +132,7 @@ export function Hero() {
     // scroll distance into video playhead position.
     <div
       ref={containerRef}
-      className={`relative h-[100dvh] ${!reduce ? "lg:h-[400dvh]" : ""}`}
+      className={`relative ${reduce ? "h-[100dvh]" : "h-[300dvh] lg:h-[400dvh]"}`}
     >
       <section className="sticky top-0 z-10 flex h-[100dvh] flex-col justify-end overflow-hidden bg-navy-deep">
         <NavSentinel />
@@ -132,16 +140,20 @@ export function Hero() {
         {/* ── Scroll-scrubbed footage ─────────────────────────────────── */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <video
+            key={isDesktop ? "desktop" : "mobile"}
             ref={videoRef}
             muted
             playsInline
             preload="auto"
-            poster="/images/hero-scroll-poster.jpg"
-            autoPlay={!isScrollScrub ? true : undefined}
-            loop={!isScrollScrub ? true : undefined}
+            poster={isDesktop ? "/images/hero-scroll-poster.jpg" : undefined}
+            autoPlay={reduce ? true : undefined}
+            loop={reduce ? true : undefined}
             className="absolute inset-0 h-full w-full object-cover"
           >
-            <source src="/Hero-Scroll.mp4" type="video/mp4" />
+            <source
+              src={isDesktop ? "/Hero-Scroll.mp4" : "/mobile-mansion-construction.mp4"}
+              type="video/mp4"
+            />
           </video>
         </div>
 
@@ -186,26 +198,26 @@ export function Hero() {
         </motion.div>
 
         {/* ── Copy — assembled on a timer, header first then subheader ──── */}
-        <div className="relative z-20 mx-auto w-full max-w-[1500px] px-5 pb-12 pt-24 sm:px-8 sm:pb-20 sm:pt-32 md:px-11 lg:pb-24">
+        <div className="relative z-20 mx-auto w-full max-w-[1500px] px-5 pb-24 sm:px-8 sm:pb-32 md:px-11 md:pb-36 lg:pb-28 xl:pb-32">
           <div className="max-w-[64rem]">
 
             {/* H1 — three lines rise in one after another */}
             <h1 className="font-display font-light leading-[0.95] tracking-[-0.025em]">
               <motion.span
                 {...lineIn(0.5)}
-                className="block text-[clamp(1.5rem,7vw,5.5rem)] text-white"
+                className="block text-[clamp(1.7rem,7vw,5.5rem)] text-white"
               >
                 Central Florida&apos;s leader
               </motion.span>
               <motion.span
                 {...lineIn(1.25)}
-                className="block text-[clamp(1.5rem,7vw,5.5rem)] text-white/80"
+                className="block text-[clamp(1.7rem,7vw,5.5rem)] text-white/80"
               >
                 in smart home automation
               </motion.span>
               <motion.span
                 {...lineIn(2.0)}
-                className="block text-[clamp(1.5rem,7vw,5.5rem)] text-white/50"
+                className="block text-[clamp(1.7rem,7vw,5.5rem)] text-white/50"
               >
                 since 1968.
               </motion.span>
@@ -217,7 +229,7 @@ export function Hero() {
               animate={{ scaleX: 1 }}
               transition={{ duration: 1.3, ease: EASE, delay: 2.9 }}
               style={{ transformOrigin: "left" }}
-              className="mt-10 h-px w-24 bg-white/70"
+              className="mt-7 h-px w-24 bg-white/70 sm:mt-10"
             />
 
             {/* Subheader — follows the header in */}
@@ -225,7 +237,7 @@ export function Hero() {
               initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.7, ease: EASE, delay: 3.5 }}
-              className="mt-8 max-w-[42rem] font-display text-[clamp(1.1rem,2vw,1.65rem)] font-light leading-[1.55] tracking-[-0.005em] text-white/75"
+              className="mt-5 max-w-[42rem] font-display text-[clamp(1rem,2vw,1.65rem)] font-light leading-[1.55] tracking-[-0.005em] text-white/75 sm:mt-8"
             >
               {SUBTITLE}
             </motion.p>

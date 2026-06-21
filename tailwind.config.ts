@@ -41,8 +41,8 @@ const config: Config = {
         stone: "#7C7666",
       },
       fontFamily: {
-        display: ["var(--font-fraunces)", "Georgia", "serif"],
-        sans: ["var(--font-archivo)", "system-ui", "sans-serif"],
+        display: ["var(--font-noto-serif-display)", "Georgia", "serif"],
+        sans: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
       },
       letterSpacing: {
         eyebrow: "0.22em",
