@@ -22,10 +22,14 @@ export default function HomePage() {
         and turns solid white the moment that edge reaches the bar.
       */}
       <Hero />
-      <div
-        id="nav-solid-marker"
-        className="relative z-20 -mt-[100dvh]"
-      >
+
+      {/* Zero-height marker — the navbar watches this to go solid.
+          Stays 100dvh before the hero's end so the nav times correctly. */}
+      <div id="nav-solid-marker" aria-hidden className="-mt-[100dvh]" />
+
+      {/* About starts at the natural end of the hero's scroll runway.
+          It only enters the viewport once the hero is completely done. */}
+      <div className="relative z-20">
         <AboutSection />
       </div>
 
