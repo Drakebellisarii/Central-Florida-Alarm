@@ -4,7 +4,7 @@ import { IntegrateCreed } from "@/components/home/IntegrateCreed";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { ServiceAreasSection } from "@/components/home/ServiceAreasSection";
-import { FloatingLogos } from "@/components/home/FloatingLogos";
+// import { FloatingLogos } from "@/components/home/FloatingLogos";
 import { JsonLd } from "@/components/JsonLd";
 import { localBusinessLd } from "@/lib/seo";
 
