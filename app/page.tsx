@@ -23,13 +23,11 @@ export default function HomePage() {
       */}
       <Hero />
 
-      {/* Zero-height marker — the navbar watches this to go solid.
-          Stays 100dvh before the hero's end so the nav times correctly. */}
-      <div id="nav-solid-marker" aria-hidden className="-mt-[100dvh]" />
-
-      {/* About starts at the natural end of the hero's scroll runway.
-          It only enters the viewport once the hero is completely done. */}
+      {/* Outer wrapper sits at the true end of the hero runway (300/400dvh).
+          The marker is pulled 100dvh above it via absolute positioning so it
+          fires the navbar at the right time without displacing About in flow. */}
       <div className="relative z-20">
+        <div id="nav-solid-marker" aria-hidden className="absolute -top-[100dvh]" />
         <AboutSection />
       </div>
 
@@ -39,10 +37,8 @@ export default function HomePage() {
       <TestimonialsSection />
       <ServiceAreasSection />
 
-      {/* All partner logos, floating in a glass dock at the foot of the
-          viewport. It reveals only once the hero has been scrolled through
-          and tucks away again before the footer. */}
-      <FloatingLogos />
+      {/* Brand strip commented out — replacing with a different design later */}
+      {/* <FloatingLogos /> */}
     </>
   );
 }

@@ -17,7 +17,7 @@ const SUBTITLE =
 type DeviceType = "mobile" | "tablet" | "desktop";
 
 const VIDEO_SRC: Record<DeviceType, string> = {
-  mobile: "/mobile-mansion-construction.mp4",
+  mobile: "/iphone-hero-hig.mp4",
   tablet: "/ipad-hero.mp4",
   desktop: "/Hero-Scroll.mp4",
 };
@@ -132,7 +132,7 @@ export function Hero() {
   return (
     <div
       ref={containerRef}
-      className={`relative ${reduce ? "h-[100dvh]" : "h-[300dvh] lg:h-[400dvh]"}`}
+      className={`relative ${reduce ? "h-[100dvh]" : "h-[400dvh]"}`}
     >
       <section className="sticky top-0 z-10 flex h-[100dvh] flex-col justify-end overflow-hidden bg-navy-deep">
         <NavSentinel />
