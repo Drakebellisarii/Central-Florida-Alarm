@@ -42,13 +42,13 @@ export function PageHero({
             priority
             sizes="100vw"
             className={`object-cover object-center ${
-              light ? "opacity-25" : "opacity-40"
+              light ? "opacity-35" : "opacity-40"
             }`}
           />
           <div
             aria-hidden="true"
             className={`absolute inset-0 ${
-              light ? "bg-navy-deep/80" : "bg-ink/70"
+              light ? "bg-navy-deep/70" : "bg-ink/70"
             }`}
           />
           <div

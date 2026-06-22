@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { buildMetadata, localBusinessLd, breadcrumbLd, BUSINESS } from "@/lib/seo";
 import { NavSentinel } from "@/components/NavSentinel";
@@ -27,9 +28,23 @@ export default function ContactPage() {
       <section className="relative bg-white">
         <NavSentinel />
 
-        {/* Blue masthead band — title sits on brand navy, body on white */}
-        <div className="bg-navy-deep">
-          <div className="mx-auto max-w-[1500px] px-5 pb-20 pt-36 sm:px-8 md:px-11 md:pb-24 md:pt-44">
+        {/* Blue masthead band — blue-tinted photo behind brand navy, matching
+            the service-area page headers (PageHero light). */}
+        <div className="relative isolate overflow-hidden bg-navy-deep">
+          <Image
+            src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80"
+            alt="Aerial view of a Central Florida lakefront community at dusk"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center opacity-35"
+          />
+          <div aria-hidden="true" className="absolute inset-0 bg-navy-deep/70" />
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-navy-deep to-transparent"
+          />
+          <div className="relative mx-auto max-w-[1500px] px-5 pb-20 pt-36 sm:px-8 md:px-11 md:pb-24 md:pt-44">
             <Breadcrumbs items={crumbs} tone="onDark" />
             <div className="mt-10 max-w-2xl">
               <h1 className="font-display text-[clamp(2.1rem,6.5vw,4.4rem)] font-light leading-[1.05] tracking-tight text-white">

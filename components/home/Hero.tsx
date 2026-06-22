@@ -104,15 +104,32 @@ export function Hero() {
     const video = videoRef.current;
     if (!video || !isScrollScrub) return;
 
-    const prime = video.play();
-    if (prime) {
-      prime
-        .then(() => { video.pause(); })
-        .catch(() => {
-          // Autoplay blocked (rare for muted video) — explicit load() as fallback
-          video.load();
-        });
+    // Defer the heavy video fetch until *after* first paint. With preload="none"
+    // the browser won't touch the MP4 on its own, and priming play() before the
+    // page has loaded makes the video's first frame the LCP element — on a
+    // throttled mobile link that lands ~10s in. Holding off keeps the 113KB
+    // poster as the painted hero (and the LCP) until the clip streams in.
+    let primed = false;
+    const prime = () => {
+      if (primed) return;
+      primed = true;
+      const p = video.play();
+      if (p) {
+        p.then(() => { video.pause(); })
+          .catch(() => { video.load(); });
+      }
+    };
+
+    const onScrollPrime = () => prime();
+    let idle = 0;
+    if (document.readyState === "complete") {
+      idle = window.setTimeout(prime, 200);
+    } else {
+      window.addEventListener("load", prime, { once: true });
     }
+    // If the visitor scrolls before load fires, prime immediately so the
+    // scrub has frames to seek to.
+    window.addEventListener("scroll", onScrollPrime, { once: true, passive: true });
 
     let raf = 0;
     let duration = video.duration || 0;
@@ -142,6 +159,9 @@ export function Hero() {
 
     return () => {
       cancelAnimationFrame(raf);
+      if (idle) window.clearTimeout(idle);
+      window.removeEventListener("load", prime);
+      window.removeEventListener("scroll", onScrollPrime);
       video.removeEventListener("loadedmetadata", onMeta);
     };
   }, [isScrollScrub, smoothProgress, deviceType]);
@@ -161,7 +181,7 @@ export function Hero() {
             ref={videoRef}
             muted
             playsInline
-            preload="auto"
+            preload="none"
             poster={POSTER_SRC[deviceType]}
             autoPlay={reduce ? true : undefined}
             loop={reduce ? true : undefined}
