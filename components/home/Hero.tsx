@@ -18,8 +18,9 @@ type DeviceType = "mobile" | "tablet" | "desktop";
 
 const VIDEO_SRC: Record<DeviceType, string> = {
   mobile: "/iphone-hero-hig.mp4",
-  tablet: "/ipad-hero.mp4",
-  desktop: "/Hero-Scroll.mp4",
+  // Tablets share the portrait phone clip — no separate iPad encode.
+  tablet: "/iphone-hero-hig.mp4",
+  desktop: "/Desktop.mp4",
 };
 
 // Last frame of each clip — the finished estate. Shown on load (as poster and
@@ -28,8 +29,9 @@ const VIDEO_SRC: Record<DeviceType, string> = {
 // handing off to the scrubbed build animation.
 const POSTER_SRC: Record<DeviceType, string> = {
   mobile: "/images/hero-last-mobile.jpg",
-  tablet: "/images/hero-last-tablet.jpg",
-  desktop: "/images/hero-last-desktop.jpg",
+  tablet: "/images/hero-last-mobile.jpg",
+  // -v2 busts the year-long immutable cache after the desktop clip changed.
+  desktop: "/images/hero-last-desktop-v2.jpg",
 };
 
 export function Hero() {
@@ -44,18 +46,28 @@ export function Hero() {
   useEffect(() => {
     const getType = (): DeviceType => {
       if (window.matchMedia("(min-width: 1024px)").matches) return "desktop";
-      if (window.matchMedia("(min-width: 768px)").matches) return "tablet";
+      if (window.matchMedia("(min-width: 768px)").matches) {
+        // A tablet held in landscape gets the landscape desktop clip — the
+        // portrait phone clip would crop its sides badly. Portrait tablets
+        // keep the portrait clip.
+        return window.matchMedia("(orientation: landscape)").matches
+          ? "desktop"
+          : "tablet";
+      }
       return "mobile";
     };
     const apply = () => setDeviceType(getType());
     apply();
     const mqLg = window.matchMedia("(min-width: 1024px)");
     const mqMd = window.matchMedia("(min-width: 768px)");
+    const mqOrient = window.matchMedia("(orientation: landscape)");
     mqLg.addEventListener("change", apply);
     mqMd.addEventListener("change", apply);
+    mqOrient.addEventListener("change", apply);
     return () => {
       mqLg.removeEventListener("change", apply);
       mqMd.removeEventListener("change", apply);
+      mqOrient.removeEventListener("change", apply);
     };
   }, []);
 
@@ -64,9 +76,11 @@ export function Hero() {
     offset: ["start start", "end end"],
   });
 
-  // The build completes at 50% of the runway, leaving the back half to hold on
-  // the finished estate (the "pause") before the About panel slides up over it.
-  const clipProgress = useTransform(scrollYProgress, [0, 0.5], [0, 1], {
+  // The build runs across most of the runway so it finishes right as the About
+  // panel begins to rise (About's entrance is fixed by the sticky release near
+  // ~82% of the runway). Ending at ~0.93 leaves roughly the video's last second
+  // playing as About starts coming up — no stretch of motionless scroll between.
+  const clipProgress = useTransform(scrollYProgress, [0, 0.93], [0, 1], {
     clamp: true,
   });
 
@@ -82,6 +96,27 @@ export function Hero() {
     damping: 28,
     mass: 0.35,
   });
+
+  // Re-sync the scroll-driven hero after every (re)mount — most visibly when
+  // returning to the homepage from another page. useSpring seeds its value at
+  // 0, and on mount scrollYProgress reports 0 for a frame before it measures,
+  // so without this the smoothed value *animates* up from 0 — auto-scrubbing
+  // the build on its own and looking frozen/janky until it catches up. Two
+  // rAFs let framer-motion measure, then we snap (jump, no animation) the
+  // spring straight to the real scroll position.
+  useEffect(() => {
+    if (!isScrollScrub) return;
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        smoothProgress.jump(clipProgress.get());
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [isScrollScrub, smoothProgress, clipProgress]);
 
   // Reduced-motion fallback: autoplay the video as a loop instead of scrubbing.
   useEffect(() => {
@@ -169,7 +204,7 @@ export function Hero() {
   return (
     <div
       ref={containerRef}
-      className={`relative ${reduce ? "h-[100dvh]" : "h-[400dvh]"}`}
+      className={`relative ${reduce ? "h-[100dvh]" : "h-[400dvh] lg:h-[650dvh]"}`}
     >
       <section className="sticky top-0 z-10 flex h-[100dvh] flex-col justify-end overflow-hidden bg-navy-deep">
         <NavSentinel />
@@ -181,7 +216,14 @@ export function Hero() {
             ref={videoRef}
             muted
             playsInline
-            preload="none"
+            // Desktop only: eagerly buffer the whole (large, all-intra) clip so
+            // reverse scrubbing always has data to seek to. With "none" the
+            // browser buffers only near the playhead and evicts earlier ranges,
+            // so seeking back to the start stalls (video.seeking never clears)
+            // and the scrub freezes before reaching the top. Mobile/tablet clips
+            // are small enough to buffer fully on their own, so they stay "none"
+            // to protect their (throttled) LCP.
+            preload={deviceType === "desktop" ? "auto" : "none"}
             poster={POSTER_SRC[deviceType]}
             autoPlay={reduce ? true : undefined}
             loop={reduce ? true : undefined}

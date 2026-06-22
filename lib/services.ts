@@ -70,7 +70,7 @@ export const SERVICES: Service[] = [
     title: "Smart Home Automation",
     icon: "home",
     summary:
-      "One system that runs the lights, climate, music, shades, and security of the entire house.",
+      "One system that runs the lights, climate, music, shades, and security of the entire property.",
     metaTitle:
       "Smart Home Automation in Orlando, FL | Central Florida Automation Services",
     metaDescription:
@@ -79,18 +79,18 @@ export const SERVICES: Service[] = [
     heroAlt:
       "Evening view of a modern Orlando living room with integrated lighting and automation",
     overview: [
-      "Automation is the discipline of getting a house full of separate systems to behave like one. The lighting, the thermostats, the music, the shades, the cameras, the front gate, the pool equipment: each comes from a different manufacturer and speaks a different language. Our work is to make them answer to a single, quiet logic, so that the people who live there stop thinking about any of it.",
-      "A well-designed system does not look like technology. It looks like the house simply knows what to do. Lights come up to twenty percent when someone walks downstairs at six in the morning. The theater dims, the shades drop, and the right source turns on from one button. When the last person leaves, the house sets itself back. None of it requires a manual, and none of it is on the wall where a guest would notice it.",
+      "Automation is the discipline of getting a property full of separate systems to behave like one. The lighting, the thermostats, the music, the shades, the cameras, the front gate, the pool equipment: each comes from a different manufacturer and speaks a different language. Our work is to make them answer to a single, quiet logic, so that the people who live there stop thinking about any of it.",
+      "A well-designed system does not look like technology. It looks like the property simply knows what to do. Lights come up to twenty percent when someone walks downstairs at six in the morning. The theater dims, the shades drop, and the right source turns on from one button. When the last person leaves, the property sets itself back. None of it requires a manual, and none of it is on the wall where a guest would notice it.",
     ],
     approach:
-      "We start with how you actually live in the house, not with a parts list. Before we specify a single keypad we walk the plans with you and your builder and decide what should happen in each room, at each time of day, for each person. Then we engineer the system to be reliable for fifteen years, label every wire, and document the whole thing so that the next person who touches it understands what we did. The measure of the work is that you forget it is there.",
+      "We start with how you actually live in the property, not with a parts list. Before we specify a single keypad we walk the plans with you and your builder and decide what should happen in each room, at each time of day, for each person. Then we engineer the system to be reliable for fifteen years, label every wire, and document the whole thing so that the next person who touches it understands what we did. The measure of the work is that you forget it is there.",
     brands: ["Control4", "Lutron", "Savant", "Sonos", "Alarm.com"],
     scope: [
       { label: "Central control", detail: "Control4 or Savant processors sized to the home" },
       { label: "Keypads and touchscreens", detail: "Engraved Lutron and Control4 keypads, in-wall and tabletop" },
       { label: "Scenes and schedules", detail: "Morning, away, evening, and goodnight programmed to the household" },
       { label: "Remote access", detail: "Secure control and monitoring from anywhere" },
-      { label: "Voice and app", detail: "Optional voice control and a single app for the whole house" },
+      { label: "Voice and app", detail: "Optional voice control and a single app for the whole property" },
     ],
     gallery: [
       { src: IMG.smartHome, alt: "Integrated living space with concealed automation in an Orlando home" },
@@ -100,19 +100,19 @@ export const SERVICES: Service[] = [
     faqs: [
       {
         q: "We are building in Windermere. When should the automation company get involved?",
-        a: "As early as you can, ideally before the drywall goes up. The wiring is the part that is expensive to change later. We work directly with your architect and builder during the rough-in stage to place the right cable in the right walls. You do not have to decide on every keypad that early, but the infrastructure should be in before the house is closed up.",
+        a: "As early as you can, ideally before the drywall goes up. The wiring is the part that is expensive to change later. We work directly with your architect and builder during the rough-in stage to place the right cable in the right walls. You do not have to decide on every keypad that early, but the infrastructure should be in before the property is closed up.",
       },
       {
-        q: "Do I have to replace everything if my house is already finished?",
-        a: "No. A great deal can be done in an existing home using wireless lighting, retrofit shades, and equipment that rides on the wiring already in the walls. It is not quite as invisible as a system planned from the studs, but the result is usually indistinguishable to anyone living in the house. We will tell you honestly what is and is not worth opening a wall for.",
+        q: "Do I have to replace everything if my property is already finished?",
+        a: "No. A great deal can be done in an existing home using wireless lighting, retrofit shades, and equipment that rides on the wiring already in the walls. It is not quite as invisible as a system planned from the studs, but the result is usually indistinguishable to anyone living in the property. We will tell you honestly what is and is not worth opening a wall for.",
       },
       {
         q: "What happens when something stops working and I am out of town?",
-        a: "Most issues we see remotely before you call. Our systems report their own health back to us, and many problems are corrected without anyone visiting the house. When a truck is needed, you are dealing with the same company that has been serving Central Florida since 1968, not a call center.",
+        a: "Most issues we see remotely before you call. Our systems report their own health back to us, and many problems are corrected without anyone visiting the property. When a truck is needed, you are dealing with the same company that has been serving Central Florida since 1968, not a call center.",
       },
       {
         q: "Will the system still work if the internet goes down?",
-        a: "Yes. Lighting, climate, shades, and locally stored audio run on the processor inside the house and do not depend on the internet. You lose remote access and streaming services until the connection returns, but the house itself keeps behaving normally.",
+        a: "Yes. Lighting, climate, shades, and locally stored audio run on the processor inside the property and do not depend on the internet. You lose remote access and streaming services until the connection returns, but the property itself keeps behaving normally.",
       },
       {
         q: "Is this going to be obsolete in five years?",
@@ -120,7 +120,7 @@ export const SERVICES: Service[] = [
       },
       {
         q: "How much does whole-house automation cost in the Orlando area?",
-        a: "For the homes we serve it generally runs from $30,000 for focused lighting and audio work to $200,000 and beyond for a fully integrated estate. The honest answer depends on the size of the house and how much of it you want the system to touch. We give a fixed proposal after we have seen the plans.",
+        a: "For the homes we serve it generally runs from $30,000 for focused lighting and audio work to $200,000 and beyond for a fully integrated estate. The honest answer depends on the size of the property and how much of it you want the system to touch. We give a fixed proposal after we have seen the plans.",
       },
     ],
     related: ["lighting-control", "audio-video", "motorized-shades"],
@@ -132,7 +132,7 @@ export const SERVICES: Service[] = [
     title: "Home Security and Surveillance",
     icon: "shield",
     summary:
-      "Alarm, cameras, access, and monitoring engineered into the house and watched around the clock.",
+      "Alarm, cameras, access, and monitoring engineered into the property and watched around the clock.",
     metaTitle:
       "Home Security Systems in Orlando, FL | Central Florida Automation Services",
     metaDescription:
@@ -141,11 +141,11 @@ export const SERVICES: Service[] = [
     heroAlt:
       "Discreet surveillance camera mounted on the exterior of an Orlando estate at dusk",
     overview: [
-      "Security on a property like yours is not a box from a big-box store with a yard sign. It is alarm, video, access, and monitoring designed together so they cover the house without turning it into a fortress. Done right, you barely see it. The cameras sit where they belong, the keypads are where you actually enter, and the system arms itself when the house goes to bed.",
+      "Security on a property like yours is not a box from a big-box store with a yard sign. It is alarm, video, access, and monitoring designed together so they cover the property without turning it into a fortress. Done right, you barely see it. The cameras sit where they belong, the keypads are where you actually enter, and the system arms itself when the property goes to bed.",
       "We hold the Florida licenses required to do this work properly, and we have been doing it across Central Florida for more than fifty years. That matters most on the day something goes wrong, when you want a monitored response and a company that knows your property rather than an account number in another state. Every system we install is documented, tested, and handed over with a walkthrough so the household actually knows how to use it.",
     ],
     approach:
-      "We design from the outside in. We look at how someone would approach the property, where the natural sight lines are, and where a camera earns its place rather than just filling a corner. Then we build the alarm and access around how your family comes and goes, so arming the house is something you do without thinking. We would rather install fewer, better placed devices than blanket the house with hardware that nobody trusts.",
+      "We design from the outside in. We look at how someone would approach the property, where the natural sight lines are, and where a camera earns its place rather than just filling a corner. Then we build the alarm and access around how your family comes and goes, so arming the property is something you do without thinking. We would rather install fewer, better placed devices than blanket the property with hardware that nobody trusts.",
     brands: ["Alarm.com", "Control4", "Ubiquiti", "LiftMaster", "Luma"],
     scope: [
       { label: "Intrusion alarm", detail: "Door, window, and motion protection with cellular backup" },
@@ -166,11 +166,11 @@ export const SERVICES: Service[] = [
       },
       {
         q: "I live in a guard-gated community in Dr. Phillips. Do I even need an alarm?",
-        a: "A gate slows people down, it does not watch your house. The properties we protect in Dr. Phillips and Isleworth still benefit from alarm and camera coverage, particularly during construction, staff hours, and travel. We design the system to fit a guarded community rather than duplicate it.",
+        a: "A gate slows people down, it does not watch your property. The properties we protect in Dr. Phillips and Isleworth still benefit from alarm and camera coverage, particularly during construction, staff hours, and travel. We design the system to fit a guarded community rather than duplicate it.",
       },
       {
         q: "Can I see the cameras on my phone, and is that secure?",
-        a: "Yes. You get live and recorded video on your phone through an encrypted connection, with recording stored locally at the house so your footage is not sitting on someone else's server. We set up access carefully and walk you through exactly who can see what.",
+        a: "Yes. You get live and recorded video on your phone through an encrypted connection, with recording stored locally at the property so your footage is not sitting on someone else's server. We set up access carefully and walk you through exactly who can see what.",
       },
       {
         q: "Will the cameras actually be useful at night?",
@@ -181,8 +181,8 @@ export const SERVICES: Service[] = [
         a: "The alarm has battery backup and a cellular path that does not rely on your internet or phone line, so a cut cable does not blind the system. Local video recording continues on backup power. This is standard on every security system we install.",
       },
       {
-        q: "Can the security tie into the rest of the house automation?",
-        a: "Yes, and it should. When the alarm is set to away, the lights, shades, and climate can settle the house automatically. When a perimeter camera detects someone after midnight, the right exterior lights can come on. We integrate the security with Control4 or Savant so the whole property works as one.",
+        q: "Can the security tie into the rest of the property automation?",
+        a: "Yes, and it should. When the alarm is set to away, the lights, shades, and climate can settle the property automatically. When a perimeter camera detects someone after midnight, the right exterior lights can come on. We integrate the security with Control4 or Savant so the whole property works as one.",
       },
     ],
     related: ["commercial-security", "smart-home-automation", "networking"],
@@ -261,11 +261,11 @@ export const SERVICES: Service[] = [
     heroAlt:
       "Dedicated home theater with tiered seating in an Orlando estate",
     overview: [
-      "Sound and picture are where a great house earns its keep on a Friday night. We build two things: music that follows you through the house from the kitchen to the pool to the primary suite, and dedicated rooms where a film looks and sounds the way it was meant to. Both should be effortless to use, which is harder to deliver than it sounds.",
+      "Sound and picture are where a great property earns its keep on a Friday night. We build two things: music that follows you through the property from the kitchen to the pool to the primary suite, and dedicated rooms where a film looks and sounds the way it was meant to. Both should be effortless to use, which is harder to deliver than it sounds.",
       "The hard part of audio and video is not the equipment, it is the engineering and the restraint. Speakers disappear into the ceiling and the architecture. Televisions hide behind art or drop out of sight when the room is being used for something else. The rack lives in a closet, properly cooled and labeled, and the only thing you ever touch is a single remote or a button that does exactly what you expect.",
     ],
     approach:
-      "We treat the room as part of the system. A theater is acoustically designed, not just filled with speakers, and a calibrated picture is set to a reference standard so it looks correct rather than merely bright. Throughout the house we lay out audio so coverage is even and the volume is right in every zone. We would rather specify fewer, better components and set them up properly than sell you a long list of gear that never gets dialed in.",
+      "We treat the room as part of the system. A theater is acoustically designed, not just filled with speakers, and a calibrated picture is set to a reference standard so it looks correct rather than merely bright. Throughout the property we lay out audio so coverage is even and the volume is right in every zone. We would rather specify fewer, better components and set them up properly than sell you a long list of gear that never gets dialed in.",
     brands: ["Sonos", "Sony", "Sonance", "Control4", "Lutron"],
     scope: [
       { label: "Whole-house audio", detail: "Even, zoned music in every room and outdoor space" },
@@ -286,7 +286,7 @@ export const SERVICES: Service[] = [
       },
       {
         q: "What is the difference between a media room and a real theater?",
-        a: "A media room is a living space that also does movies well. A dedicated theater is a room designed around the screen, with controlled light, acoustic treatment, and tiered seating, so the experience is closer to a private cinema. We build both, and we will tell you which one your house and your budget actually call for.",
+        a: "A media room is a living space that also does movies well. A dedicated theater is a room designed around the screen, with controlled light, acoustic treatment, and tiered seating, so the experience is closer to a private cinema. We build both, and we will tell you which one your property and your budget actually call for.",
       },
       {
         q: "Can I run the whole thing from one remote?",
@@ -314,23 +314,23 @@ export const SERVICES: Service[] = [
     metaTitle:
       "Lighting Control in Orlando, FL | Central Florida Automation Services",
     metaDescription:
-      "Lutron lighting control and tunable architectural lighting for Orlando custom homes and estates. Keypads that replace banks of switches, scenes that set the house through the day. Since 1968.",
+      "Lutron lighting control and tunable architectural lighting for Orlando custom homes and estates. Keypads that replace banks of switches, scenes that set the property through the day. Since 1968.",
     heroImage: IMG.lighting,
     heroAlt:
       "Warm layered architectural lighting in an Orlando home at dusk",
     overview: [
-      "Lighting is the single change that does the most for how a house feels, and it is the one most often left to chance. A wall of five switches by the door tells you nobody designed the light in that room. Proper lighting control replaces those switches with a single engraved keypad and lets the architecture, not the fixtures, be what you notice.",
-      "We design light in layers: the general light, the accent on the art and the millwork, the task light where you actually work, and the low path of light that gets you through the house at night. Each layer is set to the right level for the time of day and recalled with one button. The result is a house that looks considered at seven in the morning and again at nine at night, without anyone hunting for the right dimmer.",
+      "Lighting is the single change that does the most for how a property feels, and it is the one most often left to chance. A wall of five switches by the door tells you nobody designed the light in that room. Proper lighting control replaces those switches with a single engraved keypad and lets the architecture, not the fixtures, be what you notice.",
+      "We design light in layers: the general light, the accent on the art and the millwork, the task light where you actually work, and the low path of light that gets you through the property at night. Each layer is set to the right level for the time of day and recalled with one button. The result is a property that looks considered at seven in the morning and again at nine at night, without anyone hunting for the right dimmer.",
     ],
     approach:
-      "We are a Lutron house because over fifty years of installs it has proven to be the system that still works flawlessly a decade later. We engrave the keypads to the room so the buttons say what they do, we set the scenes with you on site rather than guessing, and we tune the color temperature of the light to warm as the evening comes on. Good lighting control is invisible engineering in service of something you feel rather than see.",
+      "We standardize on Lutron because over fifty years of installs it has proven to be the system that still works flawlessly a decade later. We engrave the keypads to the room so the buttons say what they do, we set the scenes with you on site rather than guessing, and we tune the color temperature of the light to warm as the evening comes on. Good lighting control is invisible engineering in service of something you feel rather than see.",
     brands: ["Lutron", "Ketra", "Control4", "Savant", "Sonos"],
     scope: [
       { label: "Keypad control", detail: "Engraved Lutron keypads replacing banks of switches" },
       { label: "Layered scenes", detail: "Entertain, dine, relax, and goodnight set per room" },
       { label: "Tunable white", detail: "Light that warms through the evening to match the hour" },
       { label: "Architectural integration", detail: "Coves, accents, and millwork lighting designed with your architect" },
-      { label: "Daylight and away", detail: "Schedules and astronomic timing so the house lights itself" },
+      { label: "Daylight and away", detail: "Schedules and astronomic timing so the property lights itself" },
     ],
     gallery: [
       { src: IMG.lighting, alt: "Layered lighting accenting millwork in an Orlando estate" },
@@ -340,22 +340,22 @@ export const SERVICES: Service[] = [
     faqs: [
       {
         q: "What is wrong with just using smart bulbs?",
-        a: "Smart bulbs work until someone flips the wall switch off, and then they are dead until the switch goes back on. A proper lighting control system keeps power to the fixtures and controls them at the load, so the light is always there when you ask for it. For a whole house, controlled at the panel and the keypad is the only approach that holds up.",
+        a: "Smart bulbs work until someone flips the wall switch off, and then they are dead until the switch goes back on. A proper lighting control system keeps power to the fixtures and controls them at the load, so the light is always there when you ask for it. For a whole property, controlled at the panel and the keypad is the only approach that holds up.",
       },
       {
-        q: "Can we add lighting control without rewiring the whole house?",
+        q: "Can we add lighting control without rewiring the whole property?",
         a: "Often, yes. Lutron makes wireless systems that retrofit into existing homes without opening walls, and they are reliable enough that we install them in finished estates regularly. A new build lets us do more, but an existing home is far from a lost cause.",
       },
       {
         q: "What does tunable lighting actually do?",
-        a: "It changes the color of the white light through the day, cooler and brighter in the morning, warmer and softer at night, the way good daylight does. It is subtle, and it is one of those things you do not consciously notice until you are in a house that does not have it.",
+        a: "It changes the color of the white light through the day, cooler and brighter in the morning, warmer and softer at night, the way good daylight does. It is subtle, and it is one of those things you do not consciously notice until you are in a property that does not have it.",
       },
       {
         q: "Will the keypads look like a spaceship on my wall?",
         a: "No. We use a small number of engraved buttons per keypad, labeled in plain words, in finishes chosen to match your trim and hardware. The aim is fewer controls than the pile of switches they replace, not more.",
       },
       {
-        q: "Can the lighting work with the shades and the rest of the house?",
+        q: "Can the lighting work with the shades and the rest of the property?",
         a: "Yes. Lighting and shading are designed together so that one scene sets both, and both tie into the larger automation system. Pressing relax in the evening can bring the lights down and the shades to the right level at the same time.",
       },
     ],
@@ -378,10 +378,10 @@ export const SERVICES: Service[] = [
       "Floor-to-ceiling windows with motorized shades in an Orlando home",
     overview: [
       "In Central Florida the sun is not a minor consideration, it is a design problem. It fades the floors, heats the rooms the afternoon sun reaches, and washes out a television at the worst possible moment. Motorized shades solve all of that quietly, and on the big walls of glass that estate homes are built around, they are the only practical way to manage it.",
-      "We hang shades that move almost silently and align perfectly across a run of windows, because a row of shades that stop at slightly different heights ruins the look of the wall. They can run on schedules, follow the path of the sun, or drop automatically when a room gets too hot or too bright. On the lanai and around the pool, exterior screens hold back the heat and the insects without closing the house off from the view.",
+      "We hang shades that move almost silently and align perfectly across a run of windows, because a row of shades that stop at slightly different heights ruins the look of the wall. They can run on schedules, follow the path of the sun, or drop automatically when a room gets too hot or too bright. On the lanai and around the pool, exterior screens hold back the heat and the insects without closing the property off from the view.",
     ],
     approach:
-      "We specify shades as part of the lighting and architecture, not as an afterthought hung once the house is done. The fabric is chosen for how much sun it lets through and how it reads from inside and from the street. We align every shade in a run, hide the rollers in pockets where the millwork allows, and set them to manage the sun automatically so you are not the one chasing glare around the house all afternoon.",
+      "We specify shades as part of the lighting and architecture, not as an afterthought hung once the property is done. The fabric is chosen for how much sun it lets through and how it reads from inside and from the street. We align every shade in a run, hide the rollers in pockets where the millwork allows, and set them to manage the sun automatically so you are not the one chasing glare around the property all afternoon.",
     brands: ["Lutron", "Control4", "Savant", "Somfy", "Sonos"],
     scope: [
       { label: "Interior shades", detail: "Roller, roman, and drapery tracks, aligned across every run" },
@@ -405,7 +405,7 @@ export const SERVICES: Service[] = [
         a: "Both work. In a new build we prefer to run power to the shade pockets for shades that never need charging. In a finished home, battery shades have improved to the point that they last a year or more between charges and let us avoid opening walls. We will recommend the right one for your situation.",
       },
       {
-        q: "Will the shades actually keep the house cooler?",
+        q: "Will the shades actually keep the property cooler?",
         a: "Yes, measurably, on the walls of glass that take the Florida afternoon sun. Dropping the shades on the west side before the heat builds keeps those rooms from becoming uncomfortable and takes load off the air conditioning. Letting them manage the sun automatically is the whole point.",
       },
       {
@@ -414,7 +414,7 @@ export const SERVICES: Service[] = [
       },
       {
         q: "Do the shades work with the lighting and automation?",
-        a: "Yes. Shades, lighting, and the rest of the house share one system, so an evening scene can bring the shades down with the lights, and a hot, bright afternoon can lower the west-facing shades on its own. That coordination is most of the value.",
+        a: "Yes. Shades, lighting, and the rest of the property share one system, so an evening scene can bring the shades down with the lights, and a hot, bright afternoon can lower the west-facing shades on its own. That coordination is most of the value.",
       },
     ],
     related: ["lighting-control", "smart-home-automation", "audio-video"],
@@ -426,7 +426,7 @@ export const SERVICES: Service[] = [
     title: "WiFi and Networking",
     icon: "wifi",
     summary:
-      "The wired and wireless backbone that everything else in the house depends on.",
+      "The wired and wireless backbone that everything else in the property depends on.",
     metaTitle:
       "WiFi and Home Networking in Orlando, FL | Central Florida Automation Services",
     metaDescription:
@@ -435,11 +435,11 @@ export const SERVICES: Service[] = [
     heroAlt:
       "Organized network rack serving a large Orlando estate",
     overview: [
-      "Every other system in a modern house, the cameras, the music, the shades, the thermostats, the streaming, all ride on the network. When the network is weak, everything feels unreliable, and the homeowner blames the automation when the real problem is the wireless router from the cable company sitting in a closet trying to cover ten thousand square feet. It cannot, and it never could.",
+      "Every other system in a modern property, the cameras, the music, the shades, the thermostats, the streaming, all ride on the network. When the network is weak, everything feels unreliable, and the homeowner blames the automation when the real problem is the wireless router from the cable company sitting in a closet trying to cover ten thousand square feet. It cannot, and it never could.",
       "We build the network the way a small business builds one, with a wired backbone and professional access points placed so coverage is strong in every room, on the lanai, at the dock, and out to the gate. The equipment lives in a proper rack, cooled and labeled. Guests get their own network that never touches yours, the cameras and automation get a lane of their own, and the whole thing is monitored so we often fix a problem before you notice it.",
     ],
     approach:
-      "We design the network first and treat it as the foundation, because no amount of good automation survives a bad network. We run wire to everything that can take wire and reserve wireless for the things that move. We segment the network so a guest's laptop cannot reach your cameras, secure it properly, and document every port. When we are done you have a system that holds up to a full house of people streaming at once, which is the real test.",
+      "We design the network first and treat it as the foundation, because no amount of good automation survives a bad network. We run wire to everything that can take wire and reserve wireless for the things that move. We segment the network so a guest's laptop cannot reach your cameras, secure it properly, and document every port. When we are done you have a system that holds up when the whole property is streaming at once, which is the real test.",
     brands: ["Ubiquiti", "Araknis", "Control4", "Pakedge", "Alarm.com"],
     scope: [
       { label: "Wired backbone", detail: "Cat6 or fiber to every fixed device, the foundation of the system" },
@@ -455,8 +455,8 @@ export const SERVICES: Service[] = [
     ],
     faqs: [
       {
-        q: "My internet is fast, so why is the WiFi still bad in half the house?",
-        a: "Because the speed coming into the house and the coverage inside it are two different things. A single router cannot cover a large home, no matter how fast the connection is. The fix is several professional access points wired back to a central switch, placed so every part of the house and yard has a strong signal.",
+        q: "My internet is fast, so why is the WiFi still bad in half the property?",
+        a: "Because the speed coming into the property and the coverage inside it are two different things. A single router cannot cover a large home, no matter how fast the connection is. The fix is several professional access points wired back to a central switch, placed so every part of the property and yard has a strong signal.",
       },
       {
         q: "Do I really need wired connections, or is WiFi enough now?",

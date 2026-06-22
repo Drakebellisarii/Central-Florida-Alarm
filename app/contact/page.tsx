@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 import { buildMetadata, localBusinessLd, breadcrumbLd, BUSINESS } from "@/lib/seo";
 import { NavSentinel } from "@/components/NavSentinel";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -48,7 +48,7 @@ export default function ContactPage() {
             <Breadcrumbs items={crumbs} tone="onDark" />
             <div className="mt-10 max-w-2xl">
               <h1 className="font-display text-[clamp(2.1rem,6.5vw,4.4rem)] font-light leading-[1.05] tracking-tight text-white">
-                Tell us about the house.
+                Tell us about the property.
               </h1>
               <p className="mt-7 max-w-md font-sans text-[17px] leading-relaxed text-white/70">
                 Whether you are reviewing plans with an architect or living in a home
@@ -89,24 +89,7 @@ export default function ContactPage() {
                     {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
                   </address>
                 </ContactRow>
-
-                <ContactRow icon={<Clock strokeWidth={1.25} className="h-5 w-5" />} label="Hours">
-                  <p className="font-sans text-[16px] leading-relaxed text-navy-deep">
-                    Monday to Friday, 8:00 to 5:00
-                    <br />
-                    <span className="text-slate-500">Monitoring and emergency support, 24/7</span>
-                  </p>
-                </ContactRow>
               </dl>
-
-              <div className="mt-12 border-t border-slate-200 pt-7">
-                <p className="font-sans text-[12px] uppercase tracking-eyebrow text-navy-logo">
-                  Licensed in Florida
-                </p>
-                <p className="mt-3 font-sans text-[14px] leading-relaxed text-slate-500">
-                  {BUSINESS.licenses.map((l) => `FL ${l}`).join("   ·   ")}
-                </p>
-              </div>
             </div>
 
             {/* Right: form */}

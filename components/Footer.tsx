@@ -27,7 +27,7 @@ export function Footer() {
               Since 1968 &nbsp;&middot;&nbsp; One Mission &nbsp;&middot;&nbsp; Quality
             </p>
             <p className="mt-5 max-w-xs font-display text-lg leading-snug text-white/60">
-              The systems disappear into the house. The trust is what you keep.
+              The systems disappear into the property. The trust is what you keep.
             </p>
 
             <address className="mt-8 not-italic">

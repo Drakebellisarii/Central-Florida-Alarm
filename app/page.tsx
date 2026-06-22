@@ -15,7 +15,7 @@ export default function HomePage() {
 
       {/*
         Hero owns its own tall scroll runway and pins itself — scrolling
-        through it scrubs the Hero-Scroll footage frame by frame. Once the
+        through it scrubs the hero footage frame by frame. Once the
         clip has played out, the About panel slides up over the pinned hero.
         The -mt pulls About into the bottom third of the hero's runway so it
         overlaps the held final frame; the navbar watches #nav-solid-marker

@@ -178,7 +178,7 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={reduce ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-50 flex flex-col bg-navy-deep/98 backdrop-blur-xl lg:hidden"
+            className="fixed inset-0 z-50 flex flex-col bg-navy-deep lg:hidden"
           >
             <div className="flex h-[76px] items-center justify-between border-b border-white/[0.07] px-5 sm:px-8">
               <Image

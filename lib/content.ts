@@ -18,19 +18,19 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      "On the projects where we cannot afford to see the technology, they are who we call. They read the drawings, they ask the right questions early, and they keep the equipment out of the architecture. The owners think the house is simply smart. We know how much work that takes.",
+      "On the projects where we cannot afford to see the technology, they are who we call. They read the drawings, they ask the right questions early, and they keep the equipment out of the architecture. The owners think the property is simply smart. We know how much work that takes.",
     name: "AJ Berry Jr.",
     role: "Lamar T. Webb Architects",
   },
   {
     quote:
-      "I have worked with CFAS across a lot of houses over a lot of years. What I count on is that the job is done right and that they stand behind it long after the truck leaves. When something needs attention five years later, the same company answers the phone.",
+      "I have worked with CFAS across a lot of properties over a lot of years. What I count on is that the job is done right and that they stand behind it long after the truck leaves. When something needs attention five years later, the same company answers the phone.",
     name: "R. Morales III",
     role: "Morales Construction",
   },
   {
     quote:
-      "Every shade, light, and speaker in the house now answers to a single tap. CFAS tied the motorized blinds to the sun, set the lighting scenes to match the time of day, and made the whole-home audio follow us room to room. It feels less like a house full of gadgets and more like the house simply knows what we want.",
+      "Every shade, light, and speaker in the property now answers to a single tap. CFAS tied the motorized blinds to the sun, set the lighting scenes to match the time of day, and made the whole-home audio follow us room to room. It feels less like a property full of gadgets and more like the property simply knows what we want.",
     name: "Marcus Whitfield",
     role: "Windermere, FL",
   },

@@ -30,7 +30,7 @@ const OFFERINGS: Offering[] = [
   },
   {
     label: "Fiber Networks & WiFi",
-    body: "The wired and wireless backbone every other system in the house quietly depends on, built to enterprise standard.",
+    body: "The wired and wireless backbone every other system in the property quietly depends on, built to enterprise standard.",
   },
   {
     label: "Life Safety & Surveillance",

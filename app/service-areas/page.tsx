@@ -31,7 +31,7 @@ export default function ServiceAreasPage() {
 
       <PageHero
         title="Smart home and security across Greater Orlando."
-        lead="We are based in Orlando and work throughout the region's finest neighborhoods. Every community has its own character, and we design for the house and the place it sits in."
+        lead="We are based in Orlando and work throughout the region's finest neighborhoods. Every community has its own character, and we design for the property and the place it sits in."
         image="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80"
         imageAlt="Aerial view of a Central Florida lakefront community at dusk"
         crumbs={crumbs}

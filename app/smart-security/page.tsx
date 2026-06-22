@@ -15,7 +15,7 @@ const PATHS = [
     n: "01",
     eyebrow: "For your home",
     title: "Smart Home",
-    line: "Security, cameras, locks, and life-safety woven into the house you live in.",
+    line: "Security, cameras, locks, and life-safety woven into the property you live in.",
     image: "/images/smarthome.webp",
     alt: "A modern waterfront Central Florida estate at dusk",
   },

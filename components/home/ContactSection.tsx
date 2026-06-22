@@ -13,7 +13,7 @@ export function ContactSection() {
 
             <div>
               <h2 className="font-display text-[clamp(1.7rem,2.8vw,2.5rem)] font-light leading-[1.1] tracking-tight text-navy-deep">
-                Tell us about the house.
+                Tell us about the property.
               </h2>
               <p className="mt-4 max-w-md font-sans text-[14px] leading-relaxed text-slate-500">
                 A conversation costs nothing, and the earlier it happens, the
