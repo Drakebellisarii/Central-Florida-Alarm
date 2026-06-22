@@ -111,7 +111,10 @@ export default function ServicePage({
                     src={img.src}
                     alt={img.alt}
                     fill
-                    sizes="(max-width: 640px) 100vw, 33vw"
+                    quality={70}
+                    sizes={i === 0 ? "(max-width: 640px) 100vw, 66vw" : "(max-width: 640px) 100vw, 33vw"}
+                    placeholder="blur"
+                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0IDMiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjMiIGZpbGw9IiMxMTE4MjciLz48L3N2Zz4="
                     className="object-cover object-center transition-transform duration-700 ease-expo hover:scale-[1.03]"
                   />
                 </div>

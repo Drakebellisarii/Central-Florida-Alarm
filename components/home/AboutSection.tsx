@@ -1,13 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { BUSINESS } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 const PILLARS = [
   { label: "Automation", body: "Lighting, climate, shades, and AV coordinated by one quiet logic." },
@@ -19,7 +16,6 @@ const PILLARS = [
 ];
 
 export function AboutSection() {
-  const reduce = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -57,24 +53,13 @@ export function AboutSection() {
       {/* ── Left — text ───────────────────────────────────────────────── */}
       <div className="flex min-w-0 flex-col px-6 py-20 sm:px-8 md:w-1/2 md:justify-center md:px-10 md:py-12 lg:w-1/2 lg:justify-center lg:px-14 lg:py-16 xl:px-16">
 
-        <motion.div
-          initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.9, ease: EASE }}
-        >
+        <div className="reveal-scroll">
           <h2 className="font-display text-[clamp(1.9rem,3.2vw,3rem)] font-light leading-[1.05] tracking-tight text-navy-deep md:text-[2.1rem] lg:text-[clamp(1.9rem,3.2vw,3rem)]">
             Central Florida&rsquo;s home integration partner since&nbsp;{BUSINESS.founded}.
           </h2>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
-          className="mt-5"
-        >
+        <div className="reveal-scroll mt-5">
           <p className="max-w-md font-sans text-[14px] leading-relaxed text-slate-500">
             A division of {BUSINESS.parent}, we have spent more than fifty years
             working alongside builders and architects to bring the world&rsquo;s best
@@ -87,19 +72,16 @@ export function AboutSection() {
             Start a conversation
             <ArrowRight strokeWidth={1.25} className="h-3 w-3" />
           </Link>
-        </motion.div>
+        </div>
 
         {/* Capabilities */}
         <div className="mt-8 border-t border-slate-100 pt-7">
           <div className="grid grid-cols-2 gap-x-8 gap-y-5 md:grid-cols-1 md:gap-y-4 lg:grid-cols-2 lg:gap-y-5">
             {PILLARS.map((p, i) => (
-              <motion.div
+              <div
                 key={p.label}
-                initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.6, ease: EASE, delay: i * 0.06 }}
-                className="group"
+                className="reveal-scroll group"
+                style={{ animationDelay: `${i * 0.06}s` }}
               >
                 <div className="flex items-baseline gap-2.5">
                   <span className="font-sans text-[9px] uppercase tracking-eyebrow text-navy/25">
@@ -112,19 +94,13 @@ export function AboutSection() {
                 <p className="mt-1 pl-[1.6rem] font-sans text-[11px] leading-relaxed text-slate-400">
                   {p.body}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
 
         {/* Association logos */}
-        <motion.div
-          initial={reduce ? { opacity: 1 } : { opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.25 }}
-          className="mt-10 border-t border-slate-100 pt-8"
-        >
+        <div className="reveal-scroll mt-10 border-t border-slate-100 pt-8">
           <div className="flex flex-wrap items-center justify-center gap-6 sm:flex-nowrap sm:gap-10 md:gap-5 lg:gap-6 xl:gap-10">
             <Image
               src="/images/GOBA.png"
@@ -142,7 +118,7 @@ export function AboutSection() {
               className="h-14 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-16 md:h-11 lg:h-12 xl:h-16 2xl:h-20"
             />
           </div>
-        </motion.div>
+        </div>
 
       </div>
 

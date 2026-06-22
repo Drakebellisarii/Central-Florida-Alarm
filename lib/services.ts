@@ -42,21 +42,25 @@ export type Service = {
   related: string[];
 };
 
-/* Guaranteed Unsplash images (all on images.unsplash.com) */
+/* Guaranteed Unsplash images (all on images.unsplash.com).
+   `auto=format` makes Unsplash hand back a pre-encoded WebP, and a smaller
+   source width (900px is plenty for a 4/3 grid cell) means Next's optimizer
+   pulls far less over the wire before it resizes — the slow part today. */
+const U = "auto=format&fit=crop&w=900&q=70";
 const IMG = {
   smartHome:
-    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80",
+    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?" + U,
   security:
-    "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=1200&q=80",
-  av: "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=1200&q=80",
+    "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?" + U,
+  av: "https://images.unsplash.com/photo-1593784991095-a205069470b6?" + U,
   lighting:
-    "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=1200&q=80",
+    "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?" + U,
   shades:
-    "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1200&q=80",
+    "https://images.unsplash.com/photo-1513694203232-719a280e022f?" + U,
   networking:
-    "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1200&q=80",
+    "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?" + U,
   commercial:
-    "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80",
+    "https://images.unsplash.com/photo-1486325212027-8081e485255e?" + U,
 } as const;
 
 export const SERVICES: Service[] = [

@@ -22,6 +22,16 @@ const VIDEO_SRC: Record<DeviceType, string> = {
   desktop: "/Hero-Scroll.mp4",
 };
 
+// Last frame of each clip — the finished estate. Shown on load (as poster and
+// as the intro overlay) so the hero opens on the completed house instead of the
+// bare concrete of frame 0; the overlay fades the moment the user scrolls,
+// handing off to the scrubbed build animation.
+const POSTER_SRC: Record<DeviceType, string> = {
+  mobile: "/images/hero-last-mobile.jpg",
+  tablet: "/images/hero-last-tablet.jpg",
+  desktop: "/images/hero-last-desktop.jpg",
+};
+
 export function Hero() {
   const reduce = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,7 +64,16 @@ export function Hero() {
     offset: ["start start", "end end"],
   });
 
-  const clipProgress = useTransform(scrollYProgress, [0, 0.75], [0, 1], {
+  // The build completes at 50% of the runway, leaving the back half to hold on
+  // the finished estate (the "pause") before the About panel slides up over it.
+  const clipProgress = useTransform(scrollYProgress, [0, 0.5], [0, 1], {
+    clamp: true,
+  });
+
+  // Intro still: the finished house covers the video at rest and fades out over
+  // the first sliver of scroll, masking the jump from the last frame (poster)
+  // back to the construction start that the scrubber rewinds to.
+  const introOpacity = useTransform(scrollYProgress, [0, 0.04], [1, 0], {
     clamp: true,
   });
 
@@ -62,13 +81,6 @@ export function Hero() {
     stiffness: 110,
     damping: 28,
     mass: 0.35,
-  });
-
-  const EASE = [0.16, 1, 0.3, 1] as const;
-  const lineIn = (delay: number) => ({
-    initial: reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 1.7, ease: EASE, delay },
   });
 
   // Reduced-motion fallback: autoplay the video as a loop instead of scrubbing.
@@ -111,6 +123,11 @@ export function Hero() {
     if (video.readyState >= 1) onMeta();
 
     const tick = () => {
+      // Safari does not reliably honor the prime-then-pause above: the play()
+      // keeps running and the footage plays through on its own. Enforce the
+      // paused state every frame so scroll is the *only* thing that advances
+      // the video — otherwise it auto-plays once, then scrubs again on scroll.
+      if (!video.paused) video.pause();
       if (duration && Number.isFinite(duration)) {
         const progress = Math.min(1, Math.max(0, smoothProgress.get()));
         const target = Math.min(progress * duration, duration - 0.05);
@@ -145,13 +162,25 @@ export function Hero() {
             muted
             playsInline
             preload="auto"
-            poster={deviceType === "desktop" ? "/images/hero-scroll-poster.jpg" : undefined}
+            poster={POSTER_SRC[deviceType]}
             autoPlay={reduce ? true : undefined}
             loop={reduce ? true : undefined}
             className="absolute inset-0 h-full w-full object-cover"
           >
             <source src={VIDEO_SRC[deviceType]} type="video/mp4" />
           </video>
+
+          {/* Intro still — the finished estate, held over the video at rest and
+              faded out as the scrub (which rewinds to the build start) begins. */}
+          {isScrollScrub && (
+            <motion.img
+              src={POSTER_SRC[deviceType]}
+              alt=""
+              aria-hidden="true"
+              style={{ opacity: introOpacity }}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          )}
         </div>
 
         {/* ── Color grade ─────────────────────────────────────────────── */}
@@ -178,12 +207,7 @@ export function Hero() {
         />
 
         {/* ── Logo — top right ────────────────────────────────────────── */}
-        <motion.div
-          initial={reduce ? { opacity: 1 } : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 3, delay: 0.5, ease: "easeOut" }}
-          className="pointer-events-none absolute right-8 top-24 z-20 sm:right-12 sm:top-24 md:right-14 md:top-28"
-        >
+        <div className="reveal-fade-in pointer-events-none absolute right-8 top-24 z-20 sm:right-12 sm:top-24 md:right-14 md:top-28">
           <Image
             src="/images/cfas-logo-light.png"
             alt="Central Florida Automation Services"
@@ -192,49 +216,29 @@ export function Hero() {
             className="h-20 w-auto sm:h-24 md:h-28"
             priority
           />
-        </motion.div>
+        </div>
 
         {/* ── Copy ────────────────────────────────────────────────────── */}
         <div className="relative z-20 mx-auto w-full max-w-[1500px] px-5 pb-24 sm:px-8 sm:pb-32 md:px-11 md:pb-36 lg:pb-28 xl:pb-32">
           <div className="max-w-[64rem]">
 
             <h1 className="font-display font-light leading-[0.95] tracking-[-0.025em]">
-              <motion.span
-                {...lineIn(0.5)}
-                className="block text-[clamp(1.7rem,7vw,5.5rem)] text-white"
-              >
+              <span className="reveal-load rd-1 block text-[clamp(1.7rem,7vw,5.5rem)] text-white">
                 Central Florida&apos;s leader
-              </motion.span>
-              <motion.span
-                {...lineIn(1.25)}
-                className="block text-[clamp(1.7rem,7vw,5.5rem)] text-white/80"
-              >
+              </span>
+              <span className="reveal-load rd-2 block text-[clamp(1.7rem,7vw,5.5rem)] text-white/80">
                 in smart home automation
-              </motion.span>
-              <motion.span
-                {...lineIn(2.0)}
-                className="block text-[clamp(1.7rem,7vw,5.5rem)] text-white/50"
-              >
+              </span>
+              <span className="reveal-load rd-3 block text-[clamp(1.7rem,7vw,5.5rem)] text-white/50">
                 since 1968.
-              </motion.span>
+              </span>
             </h1>
 
-            <motion.div
-              initial={reduce ? { scaleX: 1 } : { scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1.3, ease: EASE, delay: 2.9 }}
-              style={{ transformOrigin: "left" }}
-              className="mt-7 h-px w-24 bg-white/70 sm:mt-10"
-            />
+            <div className="reveal-load rd-4 mt-7 h-px w-24 bg-white/70 sm:mt-10" />
 
-            <motion.p
-              initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.7, ease: EASE, delay: 3.5 }}
-              className="mt-5 max-w-[42rem] font-display text-[clamp(1rem,2vw,1.65rem)] font-light leading-[1.55] tracking-[-0.005em] text-white/75 sm:mt-8"
-            >
+            <p className="reveal-load rd-5 mt-5 max-w-[42rem] font-display text-[clamp(1rem,2vw,1.65rem)] font-light leading-[1.55] tracking-[-0.005em] text-white/75 sm:mt-8">
               {SUBTITLE}
-            </motion.p>
+            </p>
 
           </div>
         </div>

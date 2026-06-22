@@ -124,7 +124,7 @@ export function ServiceAreasSection() {
           {/* ── Right — map ── */}
           <div data-map-frame className="w-full">
             <Image
-              src="/images/Service-Area-CFAS.png"
+              src="/images/Service-Area-CFAS.webp"
               alt="Central Florida service coverage map"
               width={1221}
               height={864}

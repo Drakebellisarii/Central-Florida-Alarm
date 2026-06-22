@@ -13,9 +13,9 @@ export function Footer() {
   return (
     <footer className="relative border-t border-white/10 bg-navy-deep">
       <div className="mx-auto max-w-[1500px] px-5 pb-12 pt-12 sm:px-8 md:px-11 md:pb-16 md:pt-16">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-10">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-x-8 md:gap-y-12 lg:gap-10">
           {/* Brand + NAP */}
-          <div className="lg:col-span-4">
+          <div className="md:col-span-12 md:mb-2 lg:col-span-4 lg:mb-0">
             <Image
               src="/images/cfas-logo-light.png"
               alt="Central Florida Automation Services"
@@ -92,7 +92,7 @@ export function Footer() {
           </div>
 
           {/* Services — links disabled for now */}
-          <div className="lg:col-span-3">
+          <div className="md:col-span-4 lg:col-span-3 lg:mt-16">
             <h2 className="font-sans text-[11px] uppercase tracking-eyebrow text-white/40">
               Services
             </h2>
@@ -106,7 +106,7 @@ export function Footer() {
           </div>
 
           {/* Areas — links disabled for now */}
-          <div className="lg:col-span-2">
+          <div className="md:col-span-4 lg:col-span-2 lg:mt-16">
             <h2 className="font-sans text-[11px] uppercase tracking-eyebrow text-white/40">
               Service Areas
             </h2>
@@ -121,7 +121,7 @@ export function Footer() {
           </div>
 
           {/* Credentials */}
-          <div className="lg:col-span-3">
+          <div className="md:col-span-4 lg:col-span-3 lg:mt-16">
             <h2 className="font-sans text-[11px] uppercase tracking-eyebrow text-white/40">
               Licensed and Insured
             </h2>

@@ -28,9 +28,9 @@ export const BUSINESS = {
   licenses: ["EF0001226", "EF20002121", "EF20002120"],
   installations: "50,000+",
   social: {
-    facebook: "https://www.facebook.com/",
-    instagram: "https://www.instagram.com/",
-    youtube: "https://www.youtube.com/",
+    facebook: "https://www.facebook.com/cfalarm/",
+    instagram: "https://www.instagram.com/atlantic.security/",
+    youtube: "https://www.youtube.com/channel/UCuSfSxKR4Gr9tqd_KJXZmWA",
   },
 } as const;
 

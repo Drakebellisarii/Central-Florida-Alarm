@@ -13,6 +13,8 @@ const BRANDS = [
   { src: "/logos/norm-crestron.png", alt: "Crestron",  w: 447,  h: 52,  cls: "h-3" },
   { src: "/logos/norm-ovrc.png",     alt: "OvrC",      w: 501,  h: 161, cls: "h-5" },
   { src: "/logos/norm-alarm.png",    alt: "Alarm.com", w: 306,  h: 182, cls: "h-7" },
+  { src: "/logos/norm-hartmann-forbes.png", alt: "Hartmann & Forbes", w: 1896, h: 549, cls: "h-7 sm:h-8" },
+  { src: "/logos/norm-magnatrack.png",      alt: "MagnaTrack by Progressive Screens", w: 1498, h: 289, cls: "h-6 sm:h-7" },
 ];
 
 // Drop-shadow makes white logos readable over both light and dark backgrounds.

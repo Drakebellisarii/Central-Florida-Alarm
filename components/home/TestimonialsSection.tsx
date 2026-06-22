@@ -14,6 +14,11 @@ export function TestimonialsSection() {
   const [isDesktop, setIsDesktop] = useState(false);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  // The first quote must be readable without waiting for the JS bundle, so we
+  // render it at its final (visible) state on the server and only run the
+  // fade transition once mounted, on subsequent slide changes.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
@@ -156,7 +161,7 @@ export function TestimonialsSection() {
         <AnimatePresence mode="wait">
           <motion.figure
             key={active}
-            initial={{ opacity: 0, y: 10 }}
+            initial={mounted ? { opacity: 0, y: 10 } : false}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: EASE }}

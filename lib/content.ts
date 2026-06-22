@@ -30,39 +30,39 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      "Their team came to us early in the design phase, which is exactly how it should work. They flagged things in the drawings that would have cost twice as much to solve in the field, and delivered a system the owner still raves about two years in.",
-    name: "Sara Mitchell",
-    role: "Interior Designer",
-  },
-  {
-    quote:
-      "I have lived in this house for six years and the system has never once needed a service call I did not initiate myself. When I have called, they pick up. That kind of reliability is what you hope for and rarely get.",
-    name: "Private Client",
+      "Every shade, light, and speaker in the house now answers to a single tap. CFAS tied the motorized blinds to the sun, set the lighting scenes to match the time of day, and made the whole-home audio follow us room to room. It feels less like a house full of gadgets and more like the house simply knows what we want.",
+    name: "Marcus Whitfield",
     role: "Windermere, FL",
   },
   {
     quote:
-      "We brought CFAS in on a lakefront estate at the framing stage. They were the best-coordinated sub on the job — drawings on time, no change orders that were their fault, and a commissioning that went exactly as described.",
-    name: "James Holton",
-    role: "Holton Custom Homes",
+      "Our home theater is the reason the whole family fights over the remote — except there is no remote, just one button that dims the lights, drops the screen, and starts the movie. CFAS dialed in the projector and surround sound until it genuinely rivals any cinema in Orlando. The kids think it is magic.",
+    name: "Priya Nair",
+    role: "Lake Nona, FL",
   },
   {
     quote:
-      "Integration is one of those things that can make a home feel cheap or feel extraordinary. CFAS understands that. They know how to hide everything that should be hidden and surface only what serves the design. Our clients have never had a complaint.",
-    name: "Elena Cross",
-    role: "Cross Design Studio",
+      "I wanted lighting and music that adjusted on their own, and CFAS delivered exactly that. Morning scenes ease the lights up, the blinds open to the lake, and our favorite playlist follows me from the kitchen to the patio without ever touching a panel. The automation is seamless and it has never once glitched on us.",
+    name: "Gabriela Soto",
+    role: "Winter Park, FL",
   },
   {
     quote:
-      "Managing a property portfolio in Central Florida means you need contractors who communicate, show up, and do not create liability. CFAS checks every box. They have maintained three of our estates for over a decade without incident.",
-    name: "T. Garrison",
-    role: "Estate Property Manager",
+      "After a break-in two doors down, we asked CFAS to secure the property properly. Cameras, motion sensors, smart locks, and 24/7 monitoring — all of it running through one app I can check from anywhere. The night we left town, the system caught a prowler at the gate and alerted us before he reached the door. Worth every penny.",
+    name: "Daniel Hargrove",
+    role: "Lake Mary, FL",
   },
   {
     quote:
-      "We referred CFAS to a client building in Lake Nona and they sent a thank-you note specifically because of the experience they had with the team. That says everything.",
-    name: "David Park",
-    role: "Park + Associates Architecture",
+      "CFAS installed our entire security system from the ground up, and the difference in how safe we feel is night and day. Every entry point is covered, the camera footage is crystal clear, and their monitoring team called us within seconds the one time an alarm tripped. Professional, fast, and genuinely reassuring.",
+    name: "Rebecca Tran",
+    role: "Maitland, FL",
+  },
+  {
+    quote:
+      "The fire detection system CFAS put in gave us real peace of mind. When a wiring fault sparked in the attic last spring, the system caught the smoke early and the monitoring center had the fire department on the way before we even smelled it. They very likely saved our home, and possibly more than that.",
+    name: "Anthony Russo",
+    role: "Clermont, FL",
   },
 ];
 

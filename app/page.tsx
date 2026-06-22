@@ -23,11 +23,13 @@ export default function HomePage() {
       */}
       <Hero />
 
-      {/* Outer wrapper sits at the true end of the hero runway (300/400dvh).
-          The marker is pulled 100dvh above it via absolute positioning so it
-          fires the navbar at the right time without displacing About in flow. */}
-      <div className="relative z-20">
-        <div id="nav-solid-marker" aria-hidden className="absolute -top-[100dvh]" />
+      {/* -mt-[100dvh] pulls About up into the final 100dvh of the hero runway —
+          the stretch where the build is finished and the frame holds — so the
+          panel slides up over the held final frame instead of starting after a
+          blank gap. The nav marker sits at this wrapper's own top edge so the
+          navbar turns solid as About reaches the top of the viewport. */}
+      <div className="relative z-20 motion-safe:-mt-[100dvh]">
+        <div id="nav-solid-marker" aria-hidden className="absolute inset-x-0 top-0" />
         <AboutSection />
       </div>
 
@@ -37,7 +39,7 @@ export default function HomePage() {
       <TestimonialsSection />
       <ServiceAreasSection />
 
-      {/* Brand strip commented out — replacing with a different design later */}
+      {/* Sticky partner-logo marquee — taken down for now */}
       {/* <FloatingLogos /> */}
     </>
   );

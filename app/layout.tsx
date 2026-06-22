@@ -10,11 +10,11 @@ import { SITE_URL, BUSINESS } from "@/lib/seo";
 const notoSerifDisplay = localFont({
   src: [
     {
-      path: "./fonts/Noto_Serif_Display/NotoSerifDisplay-VariableFont_wdth,wght.ttf",
+      path: "./fonts/Noto_Serif_Display/NotoSerifDisplay-VariableFont_wdth,wght.woff2",
       style: "normal",
     },
     {
-      path: "./fonts/Noto_Serif_Display/NotoSerifDisplay-Italic-VariableFont_wdth,wght.ttf",
+      path: "./fonts/Noto_Serif_Display/NotoSerifDisplay-Italic-VariableFont_wdth,wght.woff2",
       style: "italic",
     },
   ],

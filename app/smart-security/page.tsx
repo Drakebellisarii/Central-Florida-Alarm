@@ -16,9 +16,8 @@ const PATHS = [
     eyebrow: "For your home",
     title: "Smart Home",
     line: "Security, cameras, locks, and life-safety woven into the house you live in.",
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80",
-    alt: "A modern Central Florida home at dusk",
+    image: "/images/smarthome.webp",
+    alt: "A modern waterfront Central Florida estate at dusk",
   },
   {
     href: "/smart-business",
@@ -26,9 +25,8 @@ const PATHS = [
     eyebrow: "For your business",
     title: "Smart Business",
     line: "Access control, surveillance, and monitoring built for how your business runs.",
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&q=80",
-    alt: "Modern corporate towers in a downtown business district",
+    image: "/images/commercial-smart.webp",
+    alt: "A modern Central Florida commercial building",
   },
   {
     href: "/smart-marine",
@@ -36,9 +34,8 @@ const PATHS = [
     eyebrow: "For the water",
     title: "Smart Marine",
     line: "Automation, security, and connectivity engineered for life aboard.",
-    image:
-      "https://images.unsplash.com/photo-1500627964684-141351970a7f?w=1400&q=80",
-    alt: "A sailboat under sail on calm open water",
+    image: "/images/boat.avif",
+    alt: "A yacht moored at a Central Florida waterfront",
   },
 ];
 
@@ -70,18 +67,25 @@ export default function SmartSecurityPage() {
                 src={p.image}
                 alt={p.alt}
                 fill
-                sizes="(max-width: 768px) 100vw, 50vw"
+                // 1 column below lg, 3 across at lg+ — tell the optimizer so it
+                // ships an appropriately small file instead of a full-width one.
+                sizes="(max-width: 1024px) 100vw, 33vw"
+                // The cards are the top-of-page focal point; eager-load the
+                // first so it isn't gated behind lazy-loading as the LCP image.
+                priority={p.n === "01"}
                 className="object-cover transition-transform duration-[1.2s] ease-expo group-hover:scale-[1.06]"
               />
 
-              {/* Color grade — brand navy, deepening toward the bottom */}
+              {/* Color grade — kept minimal so the photo reads clearly. Only a
+                  faint wash sits over the full image; the real legibility comes
+                  from the bottom gradient that anchors the text. */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-navy-deep/45 transition-colors duration-700 group-hover:bg-navy-deep/30"
+                className="absolute inset-0 bg-navy-deep/10 transition-colors duration-700 group-hover:bg-navy-deep/0"
               />
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/40 to-transparent"
+                className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/10 to-transparent"
               />
 
               {/* Big index watermark */}

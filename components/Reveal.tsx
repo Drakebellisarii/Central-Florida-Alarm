@@ -1,6 +1,3 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
 type RevealProps = {
@@ -11,29 +8,19 @@ type RevealProps = {
 };
 
 /**
- * Restrained scroll reveal: a short fade with a 16px rise and a touch of blur,
- * eased out, fired once. Honors prefers-reduced-motion by rendering statically.
+ * Restrained scroll reveal: a short fade with a rise as the element enters
+ * the viewport. Driven purely by CSS (see `.reveal-scroll` in globals.css),
+ * so the content is readable the instant HTML + CSS load and never waits on
+ * the JavaScript bundle. Honors prefers-reduced-motion, and degrades to
+ * fully-visible (no animation) in browsers without scroll-driven animations.
  */
 export function Reveal({ children, index = 0, className }: RevealProps) {
-  const reduce = useReducedMotion();
-
-  if (reduce) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{
-        duration: 0.7,
-        ease: [0.16, 1, 0.3, 1],
-        delay: index * 0.08,
-      }}
+    <div
+      className={`reveal-scroll${className ? ` ${className}` : ""}`}
+      style={index ? { animationDelay: `${index * 0.06}s` } : undefined}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
