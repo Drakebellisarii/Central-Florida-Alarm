@@ -9,7 +9,7 @@ export function ImplementNext({ title }: { title: string }) {
       <p className="font-sans text-[11px] uppercase tracking-eyebrow text-bone/50 sm:text-[12px]">
         {title}
       </p>
-      <h1 className="mt-6 font-display text-[clamp(2.4rem,9vw,5rem)] font-light leading-[0.95] tracking-tight text-white">
+      <h1 className="mt-6 font-hero text-[clamp(2.4rem,9vw,5rem)] font-light leading-[0.95] tracking-tight text-white">
         Implement Next
       </h1>
       <div className="mt-8 h-px w-16 bg-white/25" />

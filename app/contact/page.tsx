@@ -47,7 +47,7 @@ export default function ContactPage() {
           <div className="relative mx-auto max-w-[1500px] px-5 pb-20 pt-36 sm:px-8 md:px-11 md:pb-24 md:pt-44">
             <Breadcrumbs items={crumbs} tone="onDark" />
             <div className="mt-10 max-w-2xl">
-              <h1 className="font-display text-[clamp(2.1rem,6.5vw,4.4rem)] font-light leading-[1.05] tracking-tight text-white">
+              <h1 className="font-hero text-[clamp(2.1rem,6.5vw,4.4rem)] font-light leading-[1.05] tracking-tight text-white">
                 Tell us about the property.
               </h1>
               <p className="mt-7 max-w-md font-sans text-[17px] leading-relaxed text-white/70">

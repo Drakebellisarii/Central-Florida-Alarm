@@ -76,11 +76,9 @@ export function Hero() {
     offset: ["start start", "end end"],
   });
 
-  // The build runs across most of the runway so it finishes right as the About
-  // panel begins to rise (About's entrance is fixed by the sticky release near
-  // ~82% of the runway). Ending at ~0.93 leaves roughly the video's last second
-  // playing as About starts coming up — no stretch of motionless scroll between.
-  const clipProgress = useTransform(scrollYProgress, [0, 0.93], [0, 1], {
+  // The build completes at 50% of the runway, leaving the back half to hold on
+  // the finished estate (the "pause") before the About panel slides up over it.
+  const clipProgress = useTransform(scrollYProgress, [0, 0.5], [0, 1], {
     clamp: true,
   });
 
@@ -90,6 +88,18 @@ export function Hero() {
   const introOpacity = useTransform(scrollYProgress, [0, 0.04], [1, 0], {
     clamp: true,
   });
+
+  // Latch the intro reveal: once the visitor scrolls past it, never bring the
+  // overlay back. Otherwise its [0, 0.04] fade is symmetric and re-covers the
+  // hero on the way *up*, hiding the final frames of the disassembly so the
+  // house never appears to come apart all the way to the start.
+  const [introDone, setIntroDone] = useState(false);
+  useEffect(() => {
+    const unsub = scrollYProgress.on("change", (v) => {
+      if (v >= 0.06) setIntroDone(true);
+    });
+    return unsub;
+  }, [scrollYProgress]);
 
   const smoothProgress = useSpring(clipProgress, {
     stiffness: 110,
@@ -233,8 +243,9 @@ export function Hero() {
           </video>
 
           {/* Intro still — the finished estate, held over the video at rest and
-              faded out as the scrub (which rewinds to the build start) begins. */}
-          {isScrollScrub && (
+              faded out as the scrub begins. Dropped for good once scrolled past
+              (introDone) so it can't re-cover the disassembly on the way back. */}
+          {isScrollScrub && !introDone && (
             <motion.img
               src={POSTER_SRC[deviceType]}
               alt=""
@@ -284,7 +295,7 @@ export function Hero() {
         <div className="relative z-20 mx-auto w-full max-w-[1500px] px-5 pb-24 sm:px-8 sm:pb-32 md:px-11 md:pb-36 lg:pb-28 xl:pb-32">
           <div className="max-w-[64rem]">
 
-            <h1 className="font-display font-light leading-[0.95] tracking-[-0.025em]">
+            <h1 className="font-hero font-light leading-[0.95] tracking-[-0.025em]">
               <span className="reveal-load rd-1 block text-[clamp(1.7rem,7vw,5.5rem)] text-white">
                 Central Florida&apos;s leader
               </span>

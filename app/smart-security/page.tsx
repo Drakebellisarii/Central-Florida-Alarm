@@ -44,7 +44,7 @@ export default function SmartSecurityPage() {
     <div className="bg-white pt-[76px]">
       {/* Compact heading — the two paths below are the focal point */}
       <section className="mx-auto max-w-[1500px] px-5 pb-12 pt-16 text-center sm:px-8 md:px-11 md:pb-16 md:pt-24">
-        <h1 className="mx-auto max-w-3xl font-display text-[clamp(2.6rem,5.5vw,4.6rem)] font-light leading-[1.0] tracking-tight text-navy-deep">
+        <h1 className="mx-auto max-w-3xl font-hero text-[clamp(2.6rem,5.5vw,4.6rem)] font-light leading-[1.0] tracking-tight text-navy-deep">
           Built for your space.
         </h1>
         <p className="mx-auto mt-6 max-w-xl font-sans text-[17px] leading-relaxed text-slate-600">

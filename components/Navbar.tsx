@@ -142,7 +142,7 @@ export function Navbar() {
               className={`group inline-flex items-center gap-2.5 px-5 py-2.5 font-sans text-[11px] uppercase tracking-wide2 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 ${
                 solid
                   ? "bg-navy-logo text-white hover:bg-navy focus-visible:ring-navy-logo/50"
-                  : "bg-white text-navy-deep hover:bg-bone focus-visible:ring-white/60"
+                  : "bg-white text-navy-deep hover:bg-paper focus-visible:ring-white/60"
               }`}
             >
               Fix my stuff

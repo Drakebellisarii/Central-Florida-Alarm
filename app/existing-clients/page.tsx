@@ -79,7 +79,7 @@ export default function ExistingClientsPage() {
         {/* Blue hero / heading band */}
         <div className="bg-navy-deep">
           <div className="mx-auto max-w-[1500px] px-5 pb-16 pt-36 sm:px-8 md:px-11 md:pb-20 md:pt-44">
-            <h1 className="max-w-3xl font-display text-[clamp(2.4rem,5vw,4rem)] font-light leading-[1.0] tracking-tight text-white">
+            <h1 className="max-w-3xl font-hero text-[clamp(2.4rem,5vw,4rem)] font-light leading-[1.0] tracking-tight text-white">
               Welcome back.
             </h1>
             <p className="mt-6 max-w-xl font-sans text-[17px] leading-relaxed text-white/70">

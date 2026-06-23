@@ -4,7 +4,7 @@
 
 :root {
   --navy-deep: #0A1A52;
-  --bronze: #b08c53;
+  --bronze: #1E3FA0;
   --ink-deep: #080b11;
   --frame-inset: 16px;
 }
@@ -116,6 +116,60 @@ body {
       animation: reveal-rise both linear;
       animation-timeline: view();
       animation-range: entry 5% entry 55%;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Smart Home page — scoped, more dramatic scroll choreography.        */
+/* Pure CSS scroll-driven; content stays visible where unsupported.    */
+/* ------------------------------------------------------------------ */
+@keyframes sh-rise {
+  from { opacity: 0; transform: translateY(56px); filter: blur(10px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes sh-curtain {
+  from { clip-path: inset(0 0 100% 0); transform: scale(1.12); }
+  to   { clip-path: inset(0 0 0 0);    transform: scale(1); }
+}
+@keyframes sh-parallax {
+  from { transform: translateY(-8%) scale(1.18); }
+  to   { transform: translateY(8%)  scale(1.18); }
+}
+@keyframes sh-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Scroll progress bar — always present, fills as the page scrolls. */
+.sh-progress { transform: scaleX(0); transform-origin: left center; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .sh-progress {
+      animation: sh-progress both linear;
+      animation-timeline: scroll(root block);
+    }
+  }
+  @supports (animation-timeline: view()) {
+    /* Deep rise + blur-clear for section headers. */
+    .sh-rise {
+      opacity: 0;
+      animation: sh-rise both cubic-bezier(0.16, 1, 0.3, 1);
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    /* Curtain reveal for feature imagery. */
+    .sh-curtain {
+      animation: sh-curtain both cubic-bezier(0.16, 1, 0.3, 1);
+      animation-timeline: view();
+      animation-range: entry 0% cover 38%;
+    }
+    /* Slow vertical drift for hero / banner media. */
+    .sh-parallax {
+      animation: sh-parallax both linear;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
     }
   }
 }

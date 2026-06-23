@@ -23,26 +23,30 @@ const config: Config = {
           logo: "#011689",
           light: "#1E3FA0",
         },
-        // Warm neutrals
+        // Light neutrals — white & cool blue-tinted whites (no warm cream)
         bone: {
-          DEFAULT: "#ECE7DB",
-          dim: "#C9C3B4",
+          DEFAULT: "#FFFFFF",
+          dim: "#AEBAD2",
         },
         paper: {
-          DEFAULT: "#F1EDE3",
-          dim: "#E4DDCC",
+          DEFAULT: "#F4F7FC",
+          dim: "#E7ECF6",
         },
-        // Accent
+        // Accent — brand blue (formerly warm bronze)
         bronze: {
-          DEFAULT: "#B08C53",
-          soft: "#A78A5E",
-          deep: "#8A6B3C",
+          DEFAULT: "#1E3FA0",
+          soft: "#2A4CB0",
+          deep: "#122C82",
         },
-        stone: "#7C7666",
+        stone: "#5C6884",
       },
       fontFamily: {
-        display: ["var(--font-noto-serif-display)", "Georgia", "serif"],
-        sans: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
+        // Gloock — hero + page h1s only.
+        hero: ["var(--font-gloock)", "Georgia", "serif"],
+        // DM Serif Text — all other serif headings.
+        display: ["var(--font-dm-serif)", "Georgia", "serif"],
+        // Plus Jakarta Sans — body and smaller UI text.
+        sans: ["var(--font-jakarta)", "system-ui", "sans-serif"],
       },
       letterSpacing: {
         eyebrow: "0.22em",

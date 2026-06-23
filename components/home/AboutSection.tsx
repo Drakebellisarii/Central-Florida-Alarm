@@ -24,7 +24,7 @@ export function AboutSection() {
 
     // Set playback rate once metadata is available (setting it before
     // loadedmetadata fires is silently ignored on mobile browsers).
-    const applyRate = () => { video.playbackRate = 0.5; };
+    const applyRate = () => { video.playbackRate = 0.25; };
     video.addEventListener("loadedmetadata", applyRate);
     if (video.readyState >= 1) applyRate();
 
@@ -117,6 +117,14 @@ export function AboutSection() {
               height={60}
               className="h-14 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-16 md:h-11 lg:h-12 xl:h-16 2xl:h-20"
             />
+            <span className="hidden h-12 w-px bg-slate-200 sm:block sm:h-16 md:h-10" />
+            <Image
+              src="/images/Lutron-platinum.png"
+              alt="Lutron Platinum Dealer 2026"
+              width={200}
+              height={184}
+              className="h-16 w-auto object-contain opacity-70 transition-all duration-300 hover:opacity-100 sm:h-20 md:h-12 lg:h-14 xl:h-20 2xl:h-24"
+            />
           </div>
         </div>
 
@@ -141,7 +149,7 @@ export function AboutSection() {
             className="absolute inset-0 h-full w-full object-cover"
             style={{ objectPosition: "75% center" }}
           >
-            <source src="/Blinds.mp4" type="video/mp4" />
+            <source src="/Blinds-loop.mp4" type="video/mp4" />
           </video>
         </div>
       </div>

@@ -22,10 +22,10 @@ const base =
 const variants: Record<Variant, string> = {
   // bone fill, ink text — for use on dark surfaces
   primary:
-    "bg-bone text-ink hover:bg-bronze hover:text-ink",
+    "bg-bone text-ink hover:bg-bronze hover:text-white",
   // hairline ghost — for use on dark surfaces
   ghost:
-    "border border-bone/25 text-bone hover:border-bronze hover:text-bronze",
+    "border border-bone/25 text-bone hover:border-bronze hover:text-white",
   // ink fill, bone text — for use on light surfaces
   ink: "bg-ink text-bone hover:bg-navy-deep focus-visible:ring-offset-paper",
 };

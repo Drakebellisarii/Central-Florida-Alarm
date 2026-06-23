@@ -6,7 +6,7 @@ export default function NotFound() {
     <section className="relative flex min-h-[80vh] items-center bg-ink">
       <NavSentinel />
       <div className="mx-auto w-full max-w-[1500px] px-5 py-32 sm:px-8 md:px-11">
-        <h1 className="max-w-3xl font-display text-[clamp(2.6rem,6vw,5rem)] font-light leading-[1.0] tracking-tight text-bone">
+        <h1 className="max-w-3xl font-hero text-[clamp(2.6rem,6vw,5rem)] font-light leading-[1.0] tracking-tight text-bone">
           This page is not part of the property.
         </h1>
         <p className="mt-7 max-w-xl font-sans text-[17px] leading-relaxed text-bone-dim">

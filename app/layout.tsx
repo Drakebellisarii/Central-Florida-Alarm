@@ -1,32 +1,46 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { DM_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SiteFrame } from "@/components/SiteFrame";
 import { SITE_URL, BUSINESS } from "@/lib/seo";
 
-const notoSerifDisplay = localFont({
+// Gloock — heavy display serif, reserved for the hero and page h1s.
+const gloock = localFont({
   src: [
     {
-      path: "./fonts/Noto_Serif_Display/NotoSerifDisplay-VariableFont_wdth,wght.woff2",
+      path: "./fonts/Noto_Serif_Display/DM_Serif_Text,Gloock/Gloock/Gloock-Regular.ttf",
       style: "normal",
     },
-    {
-      path: "./fonts/Noto_Serif_Display/NotoSerifDisplay-Italic-VariableFont_wdth,wght.woff2",
-      style: "italic",
-    },
   ],
-  variable: "--font-noto-serif-display",
+  variable: "--font-gloock",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+// DM Serif Text — the secondary serif used for the rest of the headings.
+const dmSerifText = localFont({
+  src: [
+    {
+      path: "./fonts/Noto_Serif_Display/DM_Serif_Text,Gloock/DM_Serif_Text/DMSerifText-Regular.ttf",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Noto_Serif_Display/DM_Serif_Text,Gloock/DM_Serif_Text/DMSerifText-Italic.ttf",
+      style: "italic",
+    },
+  ],
+  variable: "--font-dm-serif",
+  display: "swap",
+});
+
+// Plus Jakarta Sans — body and all smaller UI text.
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-dm-sans",
-  weight: ["300", "400", "500", "600"],
+  variable: "--font-jakarta",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -64,7 +78,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${notoSerifDisplay.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${gloock.variable} ${dmSerifText.variable} ${jakarta.variable}`}>
       <body className="bg-white font-sans text-navy-deep antialiased">
         <a
           href="#content"

@@ -47,7 +47,7 @@ export default function FixMyStuffPage() {
           <div className="mx-auto max-w-[1500px] px-5 pb-14 pt-36 sm:px-8 md:px-11 md:pb-16 md:pt-44">
             <Breadcrumbs items={crumbs} tone="onDark" />
             <div className="mt-10">
-              <h1 className="font-display text-[clamp(2.6rem,5.5vw,4.4rem)] font-light leading-[1.0] tracking-tight text-white">
+              <h1 className="font-hero text-[clamp(2.6rem,5.5vw,4.4rem)] font-light leading-[1.0] tracking-tight text-white">
                 Let&rsquo;s fix your stuff.
               </h1>
             </div>
