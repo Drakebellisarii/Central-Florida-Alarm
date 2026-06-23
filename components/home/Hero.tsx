@@ -171,12 +171,23 @@ export function Hero() {
 
     const onScrollPrime = () => prime();
     let idle = 0;
-    if (document.readyState === "complete") {
+    if (deviceType === "desktop") {
+      // Desktop preloads the whole 6MB all-intra clip via preload="auto", and
+      // the poster overlay hides the video at rest — so prime the decode
+      // pipeline right now, on mount. Priming is what makes the browser
+      // actually *paint* a seeked frame (assigning currentTime alone doesn't);
+      // deferring it to window 'load' or the first scroll left the scrub frozen
+      // on the poster for the first moment of scrolling. There's no LCP cost
+      // here because the poster stays the painted hero until the user scrolls.
+      idle = window.setTimeout(prime, 0);
+    } else if (document.readyState === "complete") {
+      // Mobile/tablet keep the deferred prime: preload="none" plus a throttled
+      // link means an early fetch would make the video the LCP and tank it.
       idle = window.setTimeout(prime, 200);
     } else {
       window.addEventListener("load", prime, { once: true });
     }
-    // If the visitor scrolls before load fires, prime immediately so the
+    // If the visitor scrolls before prime fires, prime immediately so the
     // scrub has frames to seek to.
     window.addEventListener("scroll", onScrollPrime, { once: true, passive: true });
 
