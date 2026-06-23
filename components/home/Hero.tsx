@@ -20,7 +20,11 @@ const VIDEO_SRC: Record<DeviceType, string> = {
   mobile: "/iphone-hero-hig.mp4",
   // Tablets share the portrait phone clip — no separate iPad encode.
   tablet: "/iphone-hero-hig.mp4",
-  desktop: "/Desktop.mp4",
+  // -v2 busts the year-long immutable cache after the clip was re-encoded
+  // from a 17MB all-intra master down to a 6MB 720p all-intra (still every
+  // frame a keyframe, so reverse-scrubbing stays instant) — the original
+  // size never finished buffering on real networks, leaving the scrub dead.
+  desktop: "/Desktop-v2.mp4",
 };
 
 // Last frame of each clip — the finished estate. Shown on load (as poster and

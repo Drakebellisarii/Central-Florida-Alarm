@@ -46,7 +46,9 @@ export function TestimonialsSection() {
     io.observe(video);
     const onVisible = () => { if (!document.hidden) play(); };
     document.addEventListener("visibilitychange", onVisible);
-    play();
+    // No eager play() here: with preload="none" the clip stays off the wire
+    // until the IntersectionObserver fires as the section scrolls into view,
+    // so it never competes with the hero for bandwidth on first load.
     return () => {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVisible);
@@ -72,7 +74,9 @@ export function TestimonialsSection() {
     io.observe(video);
     const onVisible = () => { if (!document.hidden) play(); };
     document.addEventListener("visibilitychange", onVisible);
-    play();
+    // No eager play() here: with preload="none" the clip stays off the wire
+    // until the IntersectionObserver fires as the section scrolls into view,
+    // so it never competes with the hero for bandwidth on first load.
     return () => {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVisible);
@@ -109,7 +113,7 @@ export function TestimonialsSection() {
             muted
             loop
             playsInline
-            preload="auto"
+            preload="none"
             className="absolute inset-0 h-full w-full object-cover object-center"
           >
             <source src="/Phone-Hero.mp4" type="video/mp4" />
@@ -126,7 +130,7 @@ export function TestimonialsSection() {
             muted
             loop
             playsInline
-            preload="auto"
+            preload="none"
             className="absolute inset-0 h-full w-full object-cover"
           >
             <source src="/Mansion-drone.mp4" type="video/mp4" />
