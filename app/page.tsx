@@ -2,6 +2,7 @@ import { Hero } from "@/components/home/Hero";
 import { AboutSection } from "@/components/home/AboutSection";
 import { IntegrateCreed } from "@/components/home/IntegrateCreed";
 import { ServicesSection } from "@/components/home/ServicesSection";
+import { SmartSecurityShowcase } from "@/components/home/SmartSecurityShowcase";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { ServiceAreasSection } from "@/components/home/ServiceAreasSection";
 // import { FloatingLogos } from "@/components/home/FloatingLogos";
@@ -36,6 +37,12 @@ export default function HomePage() {
       {/* Rest of the site — normal scroll from here */}
       <IntegrateCreed />
       <ServicesSection />
+
+      {/* Smart Security paths — cinematic call-to-action cards into the three
+          /smart-* pages. Dark navy so it flows straight out of the white
+          ServicesSection and into the dark testimonials below it. */}
+      <SmartSecurityShowcase />
+
       <TestimonialsSection />
       <ServiceAreasSection />
 
