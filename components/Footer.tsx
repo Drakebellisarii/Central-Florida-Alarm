@@ -116,6 +116,7 @@ export function Footer() {
                   {a.name}
                 </li>
               ))}
+              <li className="font-sans text-[14px] text-white/55">Blog</li>
               <li className="font-sans text-[14px] text-white/55">Contact</li>
             </ul>
           </div>

@@ -120,6 +120,9 @@ export function Navbar() {
             <NavLink href="/service-areas" solid={solid}>
               Service Areas
             </NavLink>
+            <NavLink href="/blog" solid={solid}>
+              Blog
+            </NavLink>
             <NavLink href="/contact" solid={solid}>
               Contact
             </NavLink>
@@ -145,7 +148,7 @@ export function Navbar() {
                   : "bg-white text-navy-deep hover:bg-paper focus-visible:ring-white/60"
               }`}
             >
-              Fix my stuff
+              Service Request
               <ArrowRight
                 strokeWidth={1.25}
                 className="h-3.5 w-3.5 transition-transform duration-500 ease-expo group-hover:translate-x-0.5"
@@ -203,6 +206,7 @@ export function Navbar() {
                 {[
                   { href: "/smart-security", label: "Smart Security" },
                   { href: "/service-areas", label: "Service Areas" },
+                  { href: "/blog", label: "Blog" },
                   { href: "/contact", label: "Contact" },
                 ].map((item) => (
                   <Link

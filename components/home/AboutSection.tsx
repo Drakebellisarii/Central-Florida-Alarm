@@ -1,22 +1,24 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { BUSINESS } from "@/lib/seo";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { Cpu, ShieldCheck, Tv, Lightbulb, Blinds, Wifi, Plus } from "lucide-react";
+
+const CREED = ["Since 1968", "One Mission", "Quality"];
 
 const PILLARS = [
-  { label: "Automation", body: "Lighting, climate, shades, and AV coordinated by one quiet logic." },
-  { label: "Security", body: "Surveillance, access, and alarm systems designed for the property." },
-  { label: "Fire & Life Safety", body: "Smoke, CO, and fire detection tied into alarm and monitoring." },
-  { label: "Audio & Video", body: "Whole-house music, private cinema, and displays that disappear." },
-  { label: "Lighting Control", body: "Tunable light that flatters the architecture and sets itself." },
-  { label: "Networking", body: "Enterprise WiFi and wired backbone every smart home depends on." },
+  { icon: Cpu, label: "Automation", body: "Lighting, climate, and AV coordinated by one quiet logic." },
+  { icon: ShieldCheck, label: "Security & Fire Safety", body: "Surveillance, access, and alarm joined with smoke, CO, and fire detection — monitored as one." },
+  { icon: Tv, label: "Audio & Video", body: "Whole-house music, private cinema, and displays that disappear." },
+  { icon: Lightbulb, label: "Lighting Control", body: "Tunable light that flatters the architecture and sets itself." },
+  { icon: Blinds, label: "Motorized Shades", body: "Quiet shading that tracks the sun and tucks away for the view." },
+  { icon: Wifi, label: "Networking", body: "Enterprise WiFi and the wired backbone every smart home depends on." },
 ];
 
 export function AboutSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  // Which capability row is expanded — only one description shows at a time.
+  const [openPillar, setOpenPillar] = useState<number | null>(null);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -50,64 +52,128 @@ export function AboutSection() {
   return (
     <section className="relative flex min-h-[100dvh] flex-col bg-white shadow-[0_-20px_80px_rgba(0,0,0,0.25)] md:flex-row lg:flex-row">
 
-      {/* ── Left — text ───────────────────────────────────────────────── */}
-      <div className="flex min-w-0 flex-col px-6 py-20 sm:px-8 md:w-1/2 md:justify-center md:px-10 md:py-12 lg:w-1/2 lg:justify-center lg:px-14 lg:py-16 xl:px-16">
+      {/* ── Left — editorial mission ──────────────────────────────────── */}
+      <div className="flex min-w-0 flex-col justify-center px-6 py-20 sm:px-8 md:w-[55%] md:px-10 md:py-16 lg:px-16 lg:py-20 xl:px-20">
 
-        <div className="reveal-scroll">
-          <h2 className="font-display text-[clamp(1.9rem,3.2vw,3rem)] font-light leading-[1.05] tracking-tight text-navy-deep md:text-[2.1rem] lg:text-[clamp(1.9rem,3.2vw,3rem)]">
-            Central Florida&rsquo;s home integration partner since&nbsp;{BUSINESS.founded}.
-          </h2>
+        {/* Creed — the brand line, sitting just above the promise */}
+        <div className="reveal-scroll flex flex-wrap items-center gap-x-5 gap-y-2 font-sans text-[12px] uppercase tracking-eyebrow text-navy/55">
+          {CREED.map((word, i) => (
+            <span key={word} className="flex items-center gap-x-5">
+              {i > 0 && (
+                <span aria-hidden className="h-1 w-1 rounded-full bg-navy/30" />
+              )}
+              {word}
+            </span>
+          ))}
         </div>
 
-        <div className="reveal-scroll mt-5">
-          <p className="max-w-md font-sans text-[14px] leading-relaxed text-slate-500">
-            A division of {BUSINESS.parent}, we have spent more than fifty years
-            working alongside builders and architects to bring the world&rsquo;s best
-            automation and security systems into Central Florida&rsquo;s finest homes.
+        {/* The promise — the centerpiece. Sized down and given room to breathe,
+            with a quiet two-tone fall so the payoff lands without any bold. */}
+        <blockquote className="reveal-scroll mt-6 max-w-xl">
+          <p className="font-display text-[clamp(1.35rem,2.3vw,2.05rem)] leading-[1.45] tracking-[-0.005em] text-navy-deep">
+            <span className="text-navy-deep/45">
+              To be sure every client is so satisfied with our performance{" "}
+            </span>
+            that they would definitely do business with us again.
           </p>
-          <Link
-            href="/contact"
-            className="mt-5 inline-flex items-center gap-2 font-sans text-[11px] uppercase tracking-wide2 text-navy transition-colors hover:text-navy-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30"
-          >
-            Start a conversation
-            <ArrowRight strokeWidth={1.25} className="h-3 w-3" />
-          </Link>
-        </div>
+        </blockquote>
 
-        {/* Capabilities */}
-        <div className="mt-8 border-t border-slate-100 pt-7">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-5 md:grid-cols-1 md:gap-y-4 lg:grid-cols-2 lg:gap-y-5">
-            {PILLARS.map((p, i) => (
-              <div
+        {/* Capabilities — a numbered serif ledger. Each row shows only its name;
+            tapping it reveals the description and inks the row in. Open one at a
+            time, accordion-style. */}
+        <ul className="mt-10 border-t border-slate-100">
+          {PILLARS.map((p, i) => {
+            const Icon = p.icon;
+            const isOpen = openPillar === i;
+            return (
+              <li
                 key={p.label}
-                className="reveal-scroll group"
-                style={{ animationDelay: `${i * 0.06}s` }}
+                className="reveal-scroll border-b border-slate-100"
+                style={{ animationDelay: `${i * 0.05}s` }}
               >
-                <div className="flex items-baseline gap-2.5">
-                  <span className="font-sans text-[9px] uppercase tracking-eyebrow text-navy/25">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="font-display text-[15px] leading-snug text-navy-deep transition-colors duration-300 group-hover:text-navy">
-                    {p.label}
-                  </h3>
-                </div>
-                <p className="mt-1 pl-[1.6rem] font-sans text-[11px] leading-relaxed text-slate-400">
-                  {p.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+                <button
+                  type="button"
+                  onClick={() => setOpenPillar(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  className="group relative block w-full overflow-hidden text-left"
+                >
+                  {/* wash sweep — on hover, and held while open */}
+                  <span
+                    aria-hidden
+                    className={`pointer-events-none absolute inset-0 bg-navy/[0.035] transition-transform duration-500 ease-out group-hover:translate-x-0 ${
+                      isOpen ? "translate-x-0" : "-translate-x-full"
+                    }`}
+                  />
+                  {/* left accent rule */}
+                  <span
+                    aria-hidden
+                    className={`pointer-events-none absolute left-0 top-0 h-full w-[2px] origin-top bg-navy-deep transition-transform duration-500 ease-out group-hover:scale-y-100 ${
+                      isOpen ? "scale-y-100" : "scale-y-0"
+                    }`}
+                  />
+
+                  <div
+                    className={`relative flex items-center gap-5 py-5 pr-3 transition-[padding] duration-500 ease-out group-hover:pl-6 ${
+                      isOpen ? "pl-6" : "pl-4"
+                    }`}
+                  >
+                    <span
+                      className={`w-8 shrink-0 font-display text-[1.55rem] leading-none transition-colors duration-300 group-hover:text-navy-deep ${
+                        isOpen ? "text-navy-deep" : "text-navy/20"
+                      }`}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2.5">
+                        <Icon
+                          strokeWidth={1.5}
+                          className={`h-[18px] w-[18px] shrink-0 transition-colors duration-300 group-hover:text-navy-deep ${
+                            isOpen ? "text-navy-deep" : "text-navy/40"
+                          }`}
+                        />
+                        <h3 className="font-display text-[16px] leading-snug text-navy-deep">
+                          {p.label}
+                        </h3>
+                      </div>
+
+                      {/* Description — collapsed to zero height until tapped. */}
+                      <div
+                        className={`grid overflow-hidden transition-all duration-500 ease-out ${
+                          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                        }`}
+                      >
+                        <p className="min-h-0 pt-1.5 font-sans text-[12px] leading-relaxed text-slate-400">
+                          {p.body}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Toggle indicator — plus rotates into an × when open. */}
+                    <Plus
+                      aria-hidden
+                      strokeWidth={1.5}
+                      className={`h-4 w-4 shrink-0 self-start text-navy/35 transition-all duration-300 ease-out group-hover:text-navy-deep ${
+                        isOpen ? "rotate-45 text-navy-deep" : ""
+                      }`}
+                    />
+                  </div>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
 
         {/* Association logos */}
-        <div className="reveal-scroll mt-10 border-t border-slate-100 pt-8">
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:flex-nowrap sm:gap-10 md:gap-5 lg:gap-6 xl:gap-10">
+        <div className="reveal-scroll mt-12 border-t border-slate-100 pt-8">
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:flex-nowrap sm:gap-8 md:gap-5 lg:gap-6 xl:gap-8">
             <Image
               src="/images/GOBA.png"
               alt="Greater Orlando Builders Association"
               width={120}
               height={60}
-              className="h-14 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-16 md:h-11 lg:h-12 xl:h-16 2xl:h-20"
+              className="h-14 w-auto object-contain opacity-85 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-16 md:h-12 lg:h-14 xl:h-16 2xl:h-20"
             />
             <span className="hidden h-12 w-px bg-slate-200 sm:block sm:h-16 md:h-10" />
             <Image
@@ -115,7 +181,7 @@ export function AboutSection() {
               alt="Master Custom Builder Council"
               width={200}
               height={60}
-              className="h-14 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-16 md:h-11 lg:h-12 xl:h-16 2xl:h-20"
+              className="h-14 w-auto object-contain opacity-85 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-16 md:h-12 lg:h-14 xl:h-16 2xl:h-20"
             />
             <span className="hidden h-12 w-px bg-slate-200 sm:block sm:h-16 md:h-10" />
             <Image
@@ -123,7 +189,7 @@ export function AboutSection() {
               alt="Lutron Platinum Dealer 2026"
               width={200}
               height={184}
-              className="h-16 w-auto object-contain opacity-70 transition-all duration-300 hover:opacity-100 sm:h-20 md:h-12 lg:h-14 xl:h-20 2xl:h-24"
+              className="h-16 w-auto object-contain opacity-90 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-20 md:h-14 lg:h-16 xl:h-20 2xl:h-24"
             />
           </div>
         </div>
@@ -131,7 +197,7 @@ export function AboutSection() {
       </div>
 
       {/* ── Right — portrait video (full-width on mobile, side panel on tablet/desktop) */}
-      <div className="relative flex h-[65vh] items-center justify-center overflow-hidden bg-navy-deep sm:h-[75vh] md:h-auto md:w-1/2 lg:h-auto lg:w-1/2">
+      <div className="relative flex h-[65vh] items-center justify-center overflow-hidden bg-navy-deep sm:h-[75vh] md:h-auto md:w-[45%] lg:h-auto lg:w-[45%]">
         <div className="grain absolute inset-0 opacity-30" />
         {/* Portrait 9:16 container centered within the right panel */}
         <div
@@ -142,7 +208,6 @@ export function AboutSection() {
             ref={videoRef}
             autoPlay
             muted
-            loop
             playsInline
             preload="auto"
             poster="/images/blinds-poster.jpg"

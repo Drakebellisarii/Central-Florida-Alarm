@@ -13,13 +13,6 @@ export function IntegrateCreed() {
     <section className="relative overflow-hidden border-y border-white/10 bg-navy-deep">
       <div className="mx-auto max-w-[1500px] px-5 py-16 sm:px-8 md:px-11 md:py-20">
 
-        {/* Motto */}
-        <Reveal>
-          <p className="font-sans text-[11px] uppercase tracking-eyebrow text-bone/55 sm:text-[12px]">
-            Since 1968 &nbsp;&middot;&nbsp; One Mission &nbsp;&middot;&nbsp; Quality
-          </p>
-        </Reveal>
-
         {/* Dictionary entry */}
         <Reveal index={1}>
           <div className="mt-8 max-w-3xl">

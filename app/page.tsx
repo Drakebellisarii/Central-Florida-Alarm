@@ -15,23 +15,23 @@ export default function HomePage() {
       <JsonLd data={localBusinessLd()} />
 
       {/*
-        Hero owns its own tall scroll runway and pins itself — scrolling
-        through it scrubs the hero footage frame by frame. Once the
-        clip has played out, the About panel slides up over the pinned hero.
-        The -mt pulls About into the bottom third of the hero's runway so it
-        overlaps the held final frame; the navbar watches #nav-solid-marker
-        and turns solid white the moment that edge reaches the bar.
+        Hero + About share a positioning context. The hero footage autoplays
+        once and rests on the finished estate while the hero pins itself
+        (sticky top-0); as you scroll, the opaque About panel rises up and
+        slides over the held final frame. The sticky scope ends with this
+        wrapper, so the hero releases once About has scrolled past.
       */}
-      <Hero />
+      <div className="relative">
+        <Hero />
 
-      {/* -mt-[100dvh] pulls About up into the final 100dvh of the hero runway —
-          the stretch where the build is finished and the frame holds — so the
-          panel slides up over the held final frame instead of starting after a
-          blank gap. The nav marker sits at this wrapper's own top edge so the
-          navbar turns solid as About reaches the top of the viewport. */}
-      <div className="relative z-20 motion-safe:-mt-[100dvh]">
-        <div id="nav-solid-marker" aria-hidden className="absolute inset-x-0 top-0" />
-        <AboutSection />
+        {/* z-20 + opaque bg lets About cover the pinned hero; its top shadow
+            reads as a panel sliding up over the scene. The nav marker sits at
+            the top of this wrapper so the navbar turns solid the moment About
+            reaches the top of the viewport. */}
+        <div className="relative z-20">
+          <div id="nav-solid-marker" aria-hidden className="absolute inset-x-0 top-0" />
+          <AboutSection />
+        </div>
       </div>
 
       {/* Rest of the site — normal scroll from here */}

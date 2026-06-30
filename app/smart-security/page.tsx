@@ -28,15 +28,6 @@ const PATHS = [
     image: "/images/commercial-smart.webp",
     alt: "A modern Central Florida commercial building",
   },
-  {
-    href: "/smart-marine",
-    n: "03",
-    eyebrow: "For the water",
-    title: "Smart Marine",
-    line: "Automation, security, and connectivity engineered for life aboard.",
-    image: "/images/boat.avif",
-    alt: "A yacht moored at a Central Florida waterfront",
-  },
 ];
 
 export default function SmartSecurityPage() {
@@ -55,7 +46,7 @@ export default function SmartSecurityPage() {
 
       {/* The two paths */}
       <section className="mx-auto max-w-[1600px] px-5 pb-20 sm:px-8 md:px-11 md:pb-28">
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
           {PATHS.map((p) => (
             <Link
               key={p.href}
@@ -67,9 +58,9 @@ export default function SmartSecurityPage() {
                 src={p.image}
                 alt={p.alt}
                 fill
-                // 1 column below lg, 3 across at lg+ — tell the optimizer so it
+                // 1 column below md, 2 across at md+ — tell the optimizer so it
                 // ships an appropriately small file instead of a full-width one.
-                sizes="(max-width: 1024px) 100vw, 33vw"
+                sizes="(max-width: 768px) 100vw, 50vw"
                 // The cards are the top-of-page focal point; eager-load the
                 // first so it isn't gated behind lazy-loading as the LCP image.
                 priority={p.n === "01"}

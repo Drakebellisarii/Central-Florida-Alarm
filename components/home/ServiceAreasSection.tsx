@@ -12,7 +12,6 @@ const AREAS = [
   "Winter Park",
   "Lake Nona",
   "Dr. Phillips & Bay Hill",
-  "Celebration",
   "Winter Garden",
   "Clermont",
   "Mount Dora",
@@ -24,6 +23,8 @@ const AREAS = [
   "DeLand",
   "Ocala",
   "Daytona Beach",
+  "New Smyrna",
+  "Bella Collina"
 ];
 
 export function ServiceAreasSection() {
@@ -80,18 +81,13 @@ export function ServiceAreasSection() {
           {/* ── Left — text ── */}
           <div data-areas-intro className="flex flex-col">
             <h2 className="font-display text-[clamp(2rem,3.5vw,3.2rem)] font-light leading-[1.05] tracking-tight text-navy-deep">
-              From Daytona to Tampa,{" "}
+              From the Lakes to the Ocean,{" "}
               <em className="font-light italic text-navy/40">
-                every fine home
+                and every fine home in
               </em>{" "}
               between.
             </h2>
-            <p className="mt-4 max-w-md font-sans text-[14px] leading-relaxed text-slate-500">
-              Based in Orlando, we serve the lakefront estates of Windermere,
-              the historic streets of Winter Park, the new builds of Lake Nona,
-              and the gated enclaves of Dr.&nbsp;Phillips and Celebration.
-            </p>
-
+  
             <div className="mt-8 h-px w-full bg-slate-100" />
 
             <div
@@ -122,13 +118,13 @@ export function ServiceAreasSection() {
           </div>
 
           {/* ── Right — map ── */}
-          <div data-map-frame className="w-full">
+          <div data-map-frame className="mx-auto w-full max-w-[440px] lg:max-w-[500px]">
             <Image
               src="/images/Service-Area-CFAS.webp"
               alt="Central Florida service coverage map"
               width={1221}
               height={864}
-              sizes="(min-width: 1024px) 50vw, 100vw"
+              sizes="(min-width: 1024px) 500px, (min-width: 640px) 440px, 100vw"
               className="h-auto w-full"
             />
           </div>
