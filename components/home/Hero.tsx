@@ -16,7 +16,7 @@ const VIDEO_SRC: Record<DeviceType, string> = {
   tablet: "/iphone-hero-hig.mp4",
   // -v2 busts the year-long immutable cache after the clip was re-encoded
   // from a 17MB all-intra master down to a 6MB 720p.
-  desktop: "/Desktop-v2.mp4",
+  desktop: "/Hero-1080.mp4",
 };
 
 // Last frame of each clip — the finished estate. Used as the static poster for
@@ -103,14 +103,14 @@ export function Hero() {
       </div>
 
       {/* ── Color grade ─────────────────────────────────────────────── */}
-      <div aria-hidden="true" className="absolute inset-0 bg-black/15" />
+      <div aria-hidden="true" className="absolute inset-0 bg-black/25" />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/15 to-transparent"
+        className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
+        className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/75 via-black/25 to-transparent"
       />
 
       {/* ── Bottom bar — logo blue, fades out into the scene ────────── */}

@@ -1,155 +1,221 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, MapPin } from "lucide-react";
+import {
+  APIProvider,
+  Map,
+  AdvancedMarker,
+  Pin,
+  useMap,
+} from "@vis.gl/react-google-maps";
+import { useReducedMotion } from "framer-motion";
 import { gsap, prefersReducedMotion } from "@/lib/motion";
+import { AREAS } from "@/lib/areas";
 
-const AREAS = [
-  "Orlando",
-  "Windermere & Isleworth",
-  "Winter Park",
-  "Lake Nona",
-  "Dr. Phillips & Bay Hill",
-  "Winter Garden",
-  "Clermont",
-  "Mount Dora",
-  "Lake Mary & Heathrow",
-  "Sanford",
-  "Oviedo",
-  "Maitland & Altamonte",
-  "Kissimmee & St. Cloud",
-  "DeLand",
-  "Ocala",
-  "Daytona Beach",
-  "New Smyrna",
-  "Bella Collina"
-];
+const COORDS: Record<string, { lat: number; lng: number }> = {
+  orlando:         { lat: 28.5383, lng: -81.3792 },
+  "winter-park":   { lat: 28.6,    lng: -81.3392 },
+  "dr-phillips":   { lat: 28.4581, lng: -81.4739 },
+  windermere:      { lat: 28.4933, lng: -81.5326 },
+  "lake-nona":     { lat: 28.3772, lng: -81.2378 },
+  "winter-garden": { lat: 28.5654, lng: -81.5862 },
+  clermont:        { lat: 28.5494, lng: -81.7729 },
+  "lake-mary":     { lat: 28.7589, lng: -81.3178 },
+  oviedo:          { lat: 28.67,   lng: -81.2081 },
+  kissimmee:       { lat: 28.292,  lng: -81.4076 },
+  ocala:           { lat: 29.1872, lng: -82.1401 },
+  "new-smyrna":    { lat: 29.0258, lng: -80.927  },
+  "mount-dora":    { lat: 28.8028, lng: -81.6445 },
+  sanford:         { lat: 28.8028, lng: -81.2731 },
+  maitland:        { lat: 28.6611, lng: -81.3656 },
+  deland:          { lat: 29.0283, lng: -81.3031 },
+  "daytona-beach": { lat: 29.2108, lng: -81.0228 },
+  "bella-collina": { lat: 28.5747, lng: -81.6801 },
+};
+
+const half = Math.ceil(AREAS.length / 2);
+const COL1 = AREAS.slice(0, half);   // scrolls upward
+const COL2 = AREAS.slice(half);      // scrolls downward
+
+function MapController({ target }: { target: { lat: number; lng: number } | null }) {
+  const map = useMap();
+  useEffect(() => {
+    if (!map || !target) return;
+    map.panTo(target);
+    map.setZoom(11);
+  }, [map, target]);
+  return null;
+}
+
+function AreaRow({
+  area,
+  selected,
+  onClick,
+}: {
+  area: (typeof AREAS)[number];
+  selected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex w-full items-center gap-2.5 border-b border-slate-100 px-5 py-[13px] text-left transition-colors duration-200 ${
+        selected ? "text-navy-deep" : "text-slate-400 hover:text-navy"
+      }`}
+    >
+      {selected ? (
+        <MapPin strokeWidth={1.5} className="h-3 w-3 shrink-0 text-bronze" />
+      ) : (
+        <span className="h-3 w-3 shrink-0" />
+      )}
+      <span className={`font-sans text-[13px] leading-snug ${selected ? "font-medium text-navy-deep" : ""}`}>
+        {area.name}
+      </span>
+    </button>
+  );
+}
 
 export function ServiceAreasSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+
+  const areasWithCoords = AREAS.map((a) => ({
+    ...a,
+    coords: COORDS[a.slug] ?? null,
+  })).filter((a): a is typeof a & { coords: { lat: number; lng: number } } => a.coords !== null);
+
+  const [selectedSlug, setSelectedSlug] = useState(areasWithCoords[0]?.slug ?? "");
+  const selected = areasWithCoords.find((a) => a.slug === selectedSlug) ?? areasWithCoords[0];
+
+  // Duplicate items for seamless loop (skipped when reduced motion)
+  const col1Items = reduce ? COL1 : [...COL1, ...COL1];
+  const col2Items = reduce ? COL2 : [...COL2, ...COL2];
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        "[data-areas-intro] > *",
+        "[data-areas-header] > *",
         { opacity: 0, y: 20 },
         {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out",
-          stagger: 0.1,
-          scrollTrigger: { trigger: "[data-areas-intro]", start: "top 80%" },
+          opacity: 1, y: 0, duration: 1, ease: "power3.out", stagger: 0.1,
+          scrollTrigger: { trigger: "[data-areas-header]", start: "top 80%" },
         }
       );
-
       gsap.fromTo(
-        "[data-area-chip]",
-        { opacity: 0 },
+        "[data-map-panel]",
+        { opacity: 0, x: 24 },
         {
-          opacity: 1,
-          duration: 0.5,
-          ease: "power2.out",
-          stagger: 0.04,
-          scrollTrigger: { trigger: "[data-area-list]", start: "top 84%" },
-        }
-      );
-
-      gsap.fromTo(
-        "[data-map-frame]",
-        { clipPath: "inset(0% 0% 100% 0%)" },
-        {
-          clipPath: "inset(0% 0% 0% 0%)",
-          duration: 1.4,
-          ease: "power4.inOut",
-          scrollTrigger: { trigger: "[data-map-frame]", start: "top 75%" },
+          opacity: 1, x: 0, duration: 1.1, ease: "power3.out",
+          scrollTrigger: { trigger: "[data-map-panel]", start: "top 80%" },
         }
       );
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
   return (
     <section ref={sectionRef} className="border-t border-slate-100 bg-white">
       <div className="mx-auto max-w-[1400px] px-5 py-24 sm:px-8 md:px-11 md:py-32">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
 
-          {/* ── Left — text ── */}
-          <div data-areas-intro className="flex flex-col">
-            <h2 className="font-display text-[clamp(2rem,3.5vw,3.2rem)] font-light leading-[1.05] tracking-tight text-navy-deep">
-              From the Lakes to the Ocean,{" "}
-              <em className="font-light italic text-navy/40">
-                and every fine home in
-              </em>{" "}
-              between.
-            </h2>
-  
-            <div className="mt-8 h-px w-full bg-slate-100" />
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
 
-            <div
-              data-area-list
-              className="mt-6 grid grid-cols-2 gap-x-6 gap-y-2"
-            >
-              {AREAS.map((area) => (
-                <span
-                  key={area}
-                  data-area-chip
-                  className="font-sans text-[13px] text-slate-500"
-                >
-                  {area}
-                </span>
-              ))}
+          {/* ── Left: heading + dual vertical marquees ── */}
+          <div className="flex flex-col">
+
+            <div data-areas-header className="mb-8">
+              <span className="font-sans text-[11px] uppercase tracking-eyebrow text-navy/30">
+                Service Areas
+              </span>
+              <h2 className="mt-3 font-display text-[clamp(1.9rem,3vw,2.8rem)] font-light leading-[1.05] tracking-tight text-navy-deep">
+                From the Lakes to the Ocean,{" "}
+                <em className="italic text-navy/40">and every fine home in between.</em>
+              </h2>
+            </div>
+
+            {/* Dual vertical marquees */}
+            <div className="flex overflow-hidden border-t border-slate-100" style={{ height: 300 }}>
+
+              {/* Column 1 — scrolls up */}
+              <div className="area-col-wrap w-1/2 overflow-hidden border-r border-slate-100">
+                <div className={reduce ? undefined : "area-col-up"}>
+                  {col1Items.map((area, i) => (
+                    <AreaRow
+                      key={`c1-${i}-${area.slug}`}
+                      area={area}
+                      selected={area.slug === selectedSlug}
+                      onClick={() => setSelectedSlug(area.slug)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 2 — scrolls down */}
+              <div className="area-col-wrap w-1/2 overflow-hidden">
+                <div className={reduce ? undefined : "area-col-down"}>
+                  {col2Items.map((area, i) => (
+                    <AreaRow
+                      key={`c2-${i}-${area.slug}`}
+                      area={area}
+                      selected={area.slug === selectedSlug}
+                      onClick={() => setSelectedSlug(area.slug)}
+                    />
+                  ))}
+                </div>
+              </div>
+
             </div>
 
             <Link
               href="/service-areas"
-              className="group mt-8 inline-flex items-center gap-2 font-sans text-[11px] uppercase tracking-wide2 text-navy transition-colors hover:text-navy-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30"
+              className="group mt-8 inline-flex w-fit items-center gap-2 font-sans text-[11px] uppercase tracking-wide2 text-navy transition-colors hover:text-navy-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30"
             >
               View all service areas
               <ArrowUpRight
                 strokeWidth={1.25}
-                className="h-3.5 w-3.5 transition-transform duration-500 ease-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                className="h-3.5 w-3.5 transition-transform duration-300 ease-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
             </Link>
           </div>
 
-          {/* ── Right — map ── */}
-          <div data-map-frame className="mx-auto w-full max-w-[440px] lg:max-w-[500px]">
-            <Image
-              src="/images/Service-Area-CFAS.webp"
-              alt="Central Florida service coverage map"
-              width={1221}
-              height={864}
-              sizes="(min-width: 1024px) 500px, (min-width: 640px) 440px, 100vw"
-              className="h-auto w-full"
-            />
+          {/* ── Right: map rectangle ── */}
+          <div
+            data-map-panel
+            className="h-[380px] w-full overflow-hidden border border-slate-200 lg:h-[460px]"
+          >
+            <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
+              <Map
+                mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID}
+                defaultCenter={{ lat: 28.62, lng: -81.45 }}
+                defaultZoom={9}
+                gestureHandling="cooperative"
+                disableDefaultUI
+                zoomControl
+                className="h-full w-full"
+              >
+                <MapController target={selected?.coords ?? null} />
+                {areasWithCoords.map((area) => (
+                  <AdvancedMarker
+                    key={area.slug}
+                    position={area.coords}
+                    onClick={() => setSelectedSlug(area.slug)}
+                  >
+                    <Pin
+                      background={area.slug === selectedSlug ? "#B08C53" : "#0A1A52"}
+                      borderColor="#ffffff"
+                      glyphColor="#ffffff"
+                      scale={area.slug === selectedSlug ? 1.15 : 0.8}
+                    />
+                  </AdvancedMarker>
+                ))}
+              </Map>
+            </APIProvider>
           </div>
 
         </div>
       </div>
     </section>
-  );
-}
-
-/* Preserved — not currently rendered */
-export function ArchitecturalBackdrop({ className = "" }: { className?: string }) {
-  return (
-    <div aria-hidden="true" className={`absolute inset-0 ${className}`}>
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(10,26,82,0.06) 1px, transparent 1px)," +
-            "linear-gradient(90deg, rgba(10,26,82,0.06) 1px, transparent 1px)," +
-            "linear-gradient(rgba(10,26,82,0.12) 1px, transparent 1px)," +
-            "linear-gradient(90deg, rgba(10,26,82,0.12) 1px, transparent 1px)",
-          backgroundSize: "34px 34px, 34px 34px, 272px 272px, 272px 272px",
-        }}
-      />
-    </div>
   );
 }

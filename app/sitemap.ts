@@ -1,8 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
 import { SERVICES } from "@/lib/services";
-import { AREAS } from "@/lib/areas";
-
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
@@ -35,12 +33,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  const areaRoutes: MetadataRoute.Sitemap = AREAS.map((a) => ({
-    url: `${SITE_URL}/service-areas/${a.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: 0.8,
-  }));
-
-  return [...staticRoutes, ...serviceRoutes, ...areaRoutes];
+  return [...staticRoutes, ...serviceRoutes];
 }

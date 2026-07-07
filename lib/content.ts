@@ -82,5 +82,5 @@ export const SERVICE_NAV = SERVICES.map((s) => ({
 
 export const AREA_NAV = AREAS.map((a) => ({
   name: a.name,
-  href: `/service-areas/${a.slug}`,
+  href: "/service-areas",
 }));

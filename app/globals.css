@@ -202,6 +202,32 @@ body {
 }
 
 /* ------------------------------------------------------------------ */
+/* Service-areas vertical marquees                                     */
+/* ------------------------------------------------------------------ */
+
+@keyframes area-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+
+@keyframes area-down {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}
+
+.area-col-up   { animation: area-up   28s linear infinite; }
+.area-col-down { animation: area-down 28s linear infinite; }
+
+.area-col-wrap:hover .area-col-up,
+.area-col-wrap:hover .area-col-down {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .area-col-up, .area-col-down { animation: none; }
+}
+
+/* ------------------------------------------------------------------ */
 /* Network vocabulary — trace anchors and current                      */
 /* ------------------------------------------------------------------ */
 
