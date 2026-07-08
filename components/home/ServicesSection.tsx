@@ -57,6 +57,10 @@ const OFFERINGS: Offering[] = [
     label: "Service After the Sale",
     body: "The team that designed and installed your system is the one that answers the phone, years after the truck leaves.",
   },
+  {
+    label: "24/7 Alarm Monitoring",
+    body: "Help prevent the event with fast local monitoring.",
+  },
 ];
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -105,7 +109,7 @@ export function ServicesSection() {
       id="services"
       className="relative scroll-mt-24 overflow-hidden border-y border-navy/10 bg-white"
     >
-      <div className="relative mx-auto max-w-[1400px] px-5 py-24 sm:px-8 md:px-10 md:py-32">
+      <div className="relative mx-auto max-w-[87.5rem] px-5 py-24 sm:px-8 md:px-10 md:py-32">
 
         {/* Masthead */}
         <div
@@ -120,8 +124,8 @@ export function ServicesSection() {
           </div>
         </div>
 
-        {/* Catalog grid. Eleven capabilities plus the invitation make twelve
-            cells — a clean 3 × 4 (or 2 × 6) ruled grid with no ragged row. */}
+        {/* Catalog grid. Twelve capabilities in a clean 3 × 4 (or 2 × 6) ruled
+            grid, anchored by the full-width invitation row beneath. */}
         <div
           data-grid
           className="mt-14 grid grid-cols-1 border-l border-t border-navy/10 sm:grid-cols-2 md:mt-20 lg:grid-cols-3"
@@ -140,30 +144,30 @@ export function ServicesSection() {
                 {o.label}
               </h3>
               {o.sub && (
-                <p className="mt-2 font-sans text-[10px] uppercase tracking-wide2 text-navy/50">
+                <p className="mt-2 font-sans text-[0.625rem] uppercase tracking-wide2 text-navy/50">
                   {o.sub}
                 </p>
               )}
-              <p className="mt-3 font-sans text-[13.5px] leading-relaxed text-slate-500">
+              <p className="mt-3 font-sans text-[0.8438rem] leading-relaxed text-slate-500">
                 {o.body}
               </p>
             </div>
           ))}
 
-          {/* The twelfth cell — a filled invitation that anchors the grid. */}
+          {/* The filled invitation — spans the last row so the grid stays clean. */}
           <Link
             href="/contact"
             data-card
-            className="group relative flex flex-col justify-between gap-8 border-b border-r border-navy/10 bg-navy-deep p-8 transition-colors duration-500 hover:bg-navy md:p-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/60"
+            className="group relative flex flex-col justify-between gap-8 border-b border-r border-navy/10 bg-navy-deep p-8 transition-colors duration-500 hover:bg-navy sm:col-span-2 md:p-10 lg:col-span-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/60"
           >
-            <span className="font-sans text-[10px] uppercase tracking-eyebrow text-white/55">
+            <span className="font-sans text-[0.625rem] uppercase tracking-eyebrow text-white/55">
               Not sure where to begin
             </span>
             <div>
               <h3 className="font-display text-[clamp(1.4rem,2vw,1.9rem)] font-light leading-tight text-bone">
                 Walk the plans with us.
               </h3>
-              <span className="mt-5 inline-flex items-center gap-2 font-sans text-[11px] uppercase tracking-wide2 text-bone/70 transition-colors duration-500 group-hover:text-bone">
+              <span className="mt-5 inline-flex items-center gap-2 font-sans text-[0.6875rem] uppercase tracking-wide2 text-bone/70 transition-colors duration-500 group-hover:text-bone">
                 Contact us
                 <ArrowUpRight
                   strokeWidth={1.25}

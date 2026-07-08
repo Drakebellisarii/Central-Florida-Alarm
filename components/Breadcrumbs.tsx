@@ -40,7 +40,7 @@ export function Breadcrumbs({
   return (
     <nav aria-label="Breadcrumb">
       <ol
-        className={`flex flex-wrap items-center gap-x-2 gap-y-1 font-sans text-[12px] tracking-wide ${t.list}`}
+        className={`flex flex-wrap items-center gap-x-2 gap-y-1 font-sans text-[0.75rem] tracking-wide ${t.list}`}
       >
         {items.map((c, i) => {
           const last = i === items.length - 1;

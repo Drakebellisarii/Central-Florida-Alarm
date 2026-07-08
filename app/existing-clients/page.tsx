@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { buildMetadata, localBusinessLd, breadcrumbLd } from "@/lib/seo";
 import { NavSentinel } from "@/components/NavSentinel";
 import { JsonLd } from "@/components/JsonLd";
+import { MonitoringNumbersModal } from "@/components/MonitoringNumbersModal";
 
 const crumbs = [
   { name: "Home", path: "/" },
@@ -72,17 +73,18 @@ export default function ExistingClientsPage() {
     <>
       <JsonLd data={localBusinessLd()} />
       <JsonLd data={breadcrumbLd(crumbs)} />
+      <MonitoringNumbersModal />
 
-      <section className="relative min-h-screen bg-white">
+      <section className="relative min-h-[100svh] bg-white">
         <NavSentinel />
 
         {/* Blue hero / heading band */}
         <div className="bg-navy-deep">
-          <div className="mx-auto max-w-[1500px] px-5 pb-16 pt-36 sm:px-8 md:px-11 md:pb-20 md:pt-44">
+          <div className="mx-auto max-w-[93.75rem] px-5 pb-16 pt-36 sm:px-8 md:px-11 md:pb-20 md:pt-44 short:pb-10 short:pt-24">
             <h1 className="max-w-3xl font-hero text-[clamp(2.4rem,5vw,4rem)] font-light leading-[1.0] tracking-tight text-white">
               Welcome back.
             </h1>
-            <p className="mt-6 max-w-xl font-sans text-[17px] leading-relaxed text-white/70">
+            <p className="mt-6 max-w-xl font-sans text-[1.0625rem] leading-relaxed text-white/70">
               Everything for the systems in your home — portals, service, and
               support — gathered in one place.
             </p>
@@ -90,7 +92,7 @@ export default function ExistingClientsPage() {
         </div>
 
         {/* Card grid — centered, so the final row sits in the middle */}
-        <div className="mx-auto max-w-[1500px] px-5 py-16 sm:px-8 md:px-11 md:py-24">
+        <div className="mx-auto max-w-[93.75rem] px-5 py-16 sm:px-8 md:px-11 md:py-24">
           <ul className="flex flex-wrap justify-center gap-4">
             {CARDS.map((card) => (
               <li
@@ -110,7 +112,7 @@ export default function ExistingClientsPage() {
                       <a
                         key={b.label}
                         href={b.href}
-                        className="inline-flex items-center justify-center bg-navy-logo px-7 py-3 font-sans text-[12px] uppercase tracking-wide2 text-white transition-colors duration-300 hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
+                        className="inline-flex items-center justify-center bg-navy-logo px-7 py-3 font-sans text-[0.75rem] uppercase tracking-wide2 text-white transition-colors duration-300 hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
                       >
                         {b.label}
                       </a>

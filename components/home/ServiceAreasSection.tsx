@@ -6,9 +6,9 @@ import { ArrowUpRight, MapPin } from "lucide-react";
 import {
   APIProvider,
   Map,
-  AdvancedMarker,
-  Pin,
+  Marker,
   useMap,
+  useApiIsLoaded,
 } from "@vis.gl/react-google-maps";
 import { useReducedMotion } from "framer-motion";
 import { gsap, prefersReducedMotion } from "@/lib/motion";
@@ -34,6 +34,96 @@ const COORDS: Record<string, { lat: number; lng: number }> = {
   "daytona-beach": { lat: 29.2108, lng: -81.0228 },
   "bella-collina": { lat: 28.5747, lng: -81.6801 },
 };
+
+// Branded blue-and-white map: white land, soft navy-blue water, city labels in
+// navy, and roads pared back to the major arteries/highways (local streets and
+// business POIs are hidden so it reads clean).
+const NAVY = "#0A1A52";
+const MAP_STYLES: google.maps.MapTypeStyle[] = [
+  // Base — white land, navy label text with a white halo for legibility
+  { elementType: "geometry", stylers: [{ color: "#ffffff" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: NAVY }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#ffffff" }, { weight: 3 }] },
+
+  // Clutter off — business POIs, transit, parcels, neighborhoods
+  { featureType: "poi", stylers: [{ visibility: "off" }] },
+  { featureType: "transit", stylers: [{ visibility: "off" }] },
+  { featureType: "administrative.land_parcel", stylers: [{ visibility: "off" }] },
+  { featureType: "administrative.neighborhood", stylers: [{ visibility: "off" }] },
+
+  // Administrative borders — faint blue
+  { featureType: "administrative", elementType: "geometry", stylers: [{ color: "#c3d0e8" }] },
+
+  // City labels — kept, in navy
+  { featureType: "administrative.locality", elementType: "labels", stylers: [{ visibility: "on" }] },
+  { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: NAVY }] },
+
+  // Roads — hide local streets, keep arterials faint and highways prominent
+  { featureType: "road", elementType: "labels", stylers: [{ visibility: "off" }] },
+  { featureType: "road.local", stylers: [{ visibility: "off" }] },
+  { featureType: "road.arterial", elementType: "geometry", stylers: [{ color: "#e2e8f5" }] },
+  { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#a9bce0" }] },
+  { featureType: "road.highway", elementType: "geometry.stroke", stylers: [{ color: "#8ba3d4" }] },
+  { featureType: "road.highway", elementType: "labels", stylers: [{ visibility: "on" }] },
+  { featureType: "road.highway", elementType: "labels.text.fill", stylers: [{ color: "#3d4d80" }] },
+
+  // Water — soft brand blue
+  { featureType: "water", elementType: "geometry", stylers: [{ color: "#c6d5ef" }] },
+  { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#6b80ac" }] },
+
+  // Land tint — a whisper of blue-grey so white pins/labels sit on it cleanly
+  { featureType: "landscape.natural", elementType: "geometry", stylers: [{ color: "#f6f8fc" }] },
+];
+
+// Branded teardrop pin as an inline SVG — navy by default, larger and bronze
+// when selected, each with a white outline and white center dot. Called only
+// after the API has loaded (google.maps.Size/Point exist).
+function pinIcon(selected: boolean): google.maps.Icon {
+  const fill = selected ? "#B08C53" : NAVY;
+  const w = selected ? 40 : 30;
+  const h = selected ? 54 : 41;
+  const svg =
+    `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 28 38'>` +
+    `<path d='M14 1C6.82 1 1 6.82 1 14c0 9.2 13 23 13 23s13-13.8 13-23C27 6.82 21.18 1 14 1z' ` +
+    `fill='${fill}' stroke='#ffffff' stroke-width='2.2'/>` +
+    `<circle cx='14' cy='14' r='4.8' fill='#ffffff'/></svg>`;
+  return {
+    url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg),
+    scaledSize: new google.maps.Size(w, h),
+    anchor: new google.maps.Point(w / 2, h),
+  };
+}
+
+// Legacy markers need google.maps.Symbol/Icon, which only exists once the JS
+// API has loaded — gate on that before touching the global.
+function AreaMarkers({
+  areas,
+  selectedSlug,
+  onSelect,
+}: {
+  areas: { slug: string; coords: { lat: number; lng: number } }[];
+  selectedSlug: string;
+  onSelect: (slug: string) => void;
+}) {
+  const loaded = useApiIsLoaded();
+  if (!loaded) return null;
+  return (
+    <>
+      {areas.map((area) => {
+        const selected = area.slug === selectedSlug;
+        return (
+          <Marker
+            key={area.slug}
+            position={area.coords}
+            onClick={() => onSelect(area.slug)}
+            zIndex={selected ? 10 : 1}
+            icon={pinIcon(selected)}
+          />
+        );
+      })}
+    </>
+  );
+}
 
 const half = Math.ceil(AREAS.length / 2);
 const COL1 = AREAS.slice(0, half);   // scrolls upward
@@ -61,7 +151,7 @@ function AreaRow({
   return (
     <button
       onClick={onClick}
-      className={`flex w-full items-center gap-2.5 border-b border-slate-100 px-5 py-[13px] text-left transition-colors duration-200 ${
+      className={`flex w-full items-center gap-2.5 border-b border-slate-100 px-5 py-[0.8125rem] text-left transition-colors duration-200 ${
         selected ? "text-navy-deep" : "text-slate-400 hover:text-navy"
       }`}
     >
@@ -70,7 +160,7 @@ function AreaRow({
       ) : (
         <span className="h-3 w-3 shrink-0" />
       )}
-      <span className={`font-sans text-[13px] leading-snug ${selected ? "font-medium text-navy-deep" : ""}`}>
+      <span className={`font-sans text-[0.8125rem] leading-snug ${selected ? "font-medium text-navy-deep" : ""}`}>
         {area.name}
       </span>
     </button>
@@ -117,8 +207,10 @@ export function ServiceAreasSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="border-t border-slate-100 bg-white">
-      <div className="mx-auto max-w-[1400px] px-5 py-24 sm:px-8 md:px-11 md:py-32">
+    // overflow-x-clip: the map panel's intro starts at translateX(24px),
+    // which would otherwise widen the page and cause horizontal scroll.
+    <section ref={sectionRef} className="overflow-x-clip border-t border-slate-100 bg-white">
+      <div className="mx-auto max-w-[87.5rem] px-5 py-24 sm:px-8 md:px-11 md:py-32">
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
 
@@ -126,7 +218,7 @@ export function ServiceAreasSection() {
           <div className="flex flex-col">
 
             <div data-areas-header className="mb-8">
-              <span className="font-sans text-[11px] uppercase tracking-eyebrow text-navy/30">
+              <span className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-navy/30">
                 Service Areas
               </span>
               <h2 className="mt-3 font-display text-[clamp(1.9rem,3vw,2.8rem)] font-light leading-[1.05] tracking-tight text-navy-deep">
@@ -136,7 +228,7 @@ export function ServiceAreasSection() {
             </div>
 
             {/* Dual vertical marquees */}
-            <div className="flex overflow-hidden border-t border-slate-100" style={{ height: 300 }}>
+            <div className="flex h-[18.75rem] overflow-hidden border-t border-slate-100">
 
               {/* Column 1 — scrolls up */}
               <div className="area-col-wrap w-1/2 overflow-hidden border-r border-slate-100">
@@ -170,7 +262,7 @@ export function ServiceAreasSection() {
 
             <Link
               href="/service-areas"
-              className="group mt-8 inline-flex w-fit items-center gap-2 font-sans text-[11px] uppercase tracking-wide2 text-navy transition-colors hover:text-navy-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30"
+              className="group mt-8 inline-flex w-fit items-center gap-2 font-sans text-[0.6875rem] uppercase tracking-wide2 text-navy transition-colors hover:text-navy-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30"
             >
               View all service areas
               <ArrowUpRight
@@ -183,33 +275,24 @@ export function ServiceAreasSection() {
           {/* ── Right: map rectangle ── */}
           <div
             data-map-panel
-            className="h-[380px] w-full overflow-hidden border border-slate-200 lg:h-[460px]"
+            className="h-[23.75rem] w-full overflow-hidden border border-navy/15 shadow-[0_24px_60px_-30px_rgba(10,26,82,0.45)] lg:h-[28.75rem]"
           >
             <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
               <Map
-                mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID}
                 defaultCenter={{ lat: 28.62, lng: -81.45 }}
                 defaultZoom={9}
                 gestureHandling="cooperative"
                 disableDefaultUI
                 zoomControl
+                styles={MAP_STYLES}
                 className="h-full w-full"
               >
                 <MapController target={selected?.coords ?? null} />
-                {areasWithCoords.map((area) => (
-                  <AdvancedMarker
-                    key={area.slug}
-                    position={area.coords}
-                    onClick={() => setSelectedSlug(area.slug)}
-                  >
-                    <Pin
-                      background={area.slug === selectedSlug ? "#B08C53" : "#0A1A52"}
-                      borderColor="#ffffff"
-                      glyphColor="#ffffff"
-                      scale={area.slug === selectedSlug ? 1.15 : 0.8}
-                    />
-                  </AdvancedMarker>
-                ))}
+                <AreaMarkers
+                  areas={areasWithCoords}
+                  selectedSlug={selectedSlug}
+                  onSelect={setSelectedSlug}
+                />
               </Map>
             </APIProvider>
           </div>

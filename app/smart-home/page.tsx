@@ -164,7 +164,7 @@ export default function SmartHomePage() {
           className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-navy-deep via-navy-deep/40 to-transparent"
         />
 
-        <div className="relative mx-auto w-full max-w-[1500px] px-5 pb-16 pt-40 sm:px-8 md:px-11 md:pb-20">
+        <div className="relative mx-auto w-full max-w-[93.75rem] px-5 pb-16 pt-40 sm:px-8 md:px-11 md:pb-20 short:pb-10 short:pt-24">
           <div className="reveal-load">
             <Breadcrumbs
               tone="onDark"
@@ -176,7 +176,7 @@ export default function SmartHomePage() {
             />
           </div>
 
-          <span className="reveal-load rd-1 mt-10 inline-flex items-center gap-3 font-sans text-[11px] uppercase tracking-eyebrow text-white/60">
+          <span className="reveal-load rd-1 mt-10 inline-flex items-center gap-3 font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/60">
             <span aria-hidden className="h-px w-7 bg-white/30" />
             Powered by Alarm.com
           </span>
@@ -184,7 +184,7 @@ export default function SmartHomePage() {
           <h1 className="reveal-load rd-2 mt-6 max-w-4xl font-hero text-[clamp(2.4rem,6.4vw,5.3rem)] font-light leading-[1.03] tracking-tight text-white">
             Security, comfort, and control — in one quiet app.
           </h1>
-          <p className="reveal-load rd-3 mt-7 max-w-2xl font-sans text-[17px] leading-relaxed text-white/75">
+          <p className="reveal-load rd-3 mt-7 max-w-2xl font-sans text-[1.0625rem] leading-relaxed text-white/75">
             One platform for your home&apos;s security, cameras, locks,
             lighting, and climate. Designed and installed by CFAS, it brings
             every system under a single, considered interface — so protecting
@@ -199,7 +199,7 @@ export default function SmartHomePage() {
               <a
                 key={t.href}
                 href={t.href}
-                className="inline-flex items-center rounded-full border border-white/25 px-5 py-2.5 font-sans text-[12px] uppercase tracking-wide2 text-white/85 transition-colors duration-300 hover:border-white/70 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+                className="inline-flex items-center rounded-full border border-white/25 px-5 py-2.5 font-sans text-[0.75rem] uppercase tracking-wide2 text-white/85 transition-colors duration-300 hover:border-white/70 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
               >
                 {t.label}
               </a>
@@ -210,7 +210,7 @@ export default function SmartHomePage() {
 
       {/* ========================= SECURITY ECOSYSTEM ===================== */}
       <section id="security" className="scroll-mt-24 bg-white py-24 md:py-32">
-        <div className="mx-auto max-w-[1500px] px-5 sm:px-8 md:px-11">
+        <div className="mx-auto max-w-[93.75rem] px-5 sm:px-8 md:px-11">
           <div className="grid grid-cols-1 items-end gap-12 lg:grid-cols-12">
             <div className="sh-rise lg:col-span-7">
               <Eyebrow>Your home security ecosystem</Eyebrow>
@@ -219,7 +219,7 @@ export default function SmartHomePage() {
               </h2>
             </div>
             <Reveal index={1} className="lg:col-span-5">
-              <p className="font-sans text-[16px] leading-relaxed text-slate-600">
+              <p className="font-sans text-[1rem] leading-relaxed text-slate-600">
                 Most smart homes are stitched together from devices that
                 don&apos;t talk to each other. We build a single, professionally
                 installed system where security, life-safety, and automation
@@ -252,7 +252,7 @@ export default function SmartHomePage() {
                       <h3 className="font-display text-[1.4rem] font-light leading-snug tracking-tight text-navy-deep">
                         {f.title}
                       </h3>
-                      <p className="mt-2 font-sans text-[15px] leading-relaxed text-slate-600">
+                      <p className="mt-2 font-sans text-[0.9375rem] leading-relaxed text-slate-600">
                         {f.body}
                       </p>
                     </div>
@@ -269,14 +269,14 @@ export default function SmartHomePage() {
         id="daily"
         className="scroll-mt-24 border-t border-slate-200/70 bg-white py-24 md:py-32"
       >
-        <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-16 px-5 sm:px-8 md:px-11 lg:grid-cols-12 lg:gap-x-20">
+        <div className="mx-auto grid max-w-[93.75rem] grid-cols-1 gap-16 px-5 sm:px-8 md:px-11 lg:grid-cols-12 lg:gap-x-20">
           <div className="lg:col-span-4">
             <div className="sh-rise lg:sticky lg:top-28">
               <Eyebrow>Stress less, every day</Eyebrow>
               <h2 className="mt-6 font-display text-[clamp(2rem,3.6vw,3.2rem)] font-light leading-[1.06] tracking-tight text-navy-deep">
                 The best technology is the kind you stop noticing.
               </h2>
-              <p className="mt-6 max-w-xs font-sans text-[15px] leading-relaxed text-slate-500">
+              <p className="mt-6 max-w-xs font-sans text-[0.9375rem] leading-relaxed text-slate-500">
                 Four ways the system quietly earns its place in your day —
                 scroll through.
               </p>
@@ -294,14 +294,14 @@ export default function SmartHomePage() {
                   <div className={`relative ${flip ? "md:order-2" : ""}`}>
                     {d.kind === "app" ? (
                       // Portrait app screen in a device frame
-                      <div className="mx-auto w-[58%] max-w-[220px] sm:w-[64%]">
+                      <div className="mx-auto w-[58%] max-w-[13.75rem] sm:w-[64%]">
                         <div className="sh-curtain overflow-hidden rounded-[2rem] border-[6px] border-navy-deep bg-navy-deep shadow-[0_30px_60px_-25px_rgba(10,26,82,0.55)]">
                           <div className="relative aspect-[309/640]">
                             <Image
                               src={d.image}
                               alt={d.alt}
                               fill
-                              sizes="240px"
+                              sizes="(min-width: 1920px) 480px, 240px"
                               className="object-cover"
                             />
                           </div>
@@ -327,14 +327,14 @@ export default function SmartHomePage() {
                   </div>
 
                   <div className={`sh-rise ${flip ? "md:order-1" : ""}`}>
-                    <span className="inline-flex items-center gap-3 font-sans text-[11px] uppercase tracking-eyebrow text-navy/70">
+                    <span className="inline-flex items-center gap-3 font-sans text-[0.6875rem] uppercase tracking-eyebrow text-navy/70">
                       <d.icon strokeWidth={1.4} className="h-4 w-4" />
                       {d.eyebrow}
                     </span>
                     <h3 className="mt-5 max-w-md font-display text-[clamp(1.6rem,2.6vw,2.3rem)] font-light leading-[1.1] tracking-tight text-navy-deep">
                       {d.title}
                     </h3>
-                    <p className="mt-5 max-w-md font-sans text-[16px] leading-relaxed text-slate-600">
+                    <p className="mt-5 max-w-md font-sans text-[1rem] leading-relaxed text-slate-600">
                       {d.body}
                     </p>
                   </div>
@@ -347,7 +347,7 @@ export default function SmartHomePage() {
 
       {/* ========================= VIDEO MONITORING ======================= */}
       <section id="video" className="scroll-mt-24 bg-navy-deep py-24 md:py-32">
-        <div className="mx-auto max-w-[1500px] px-5 sm:px-8 md:px-11">
+        <div className="mx-auto max-w-[93.75rem] px-5 sm:px-8 md:px-11">
           <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-12">
             <div className="sh-rise lg:col-span-7">
               <Eyebrow dark>Video monitoring</Eyebrow>
@@ -356,7 +356,7 @@ export default function SmartHomePage() {
               </h2>
             </div>
             <Reveal index={1} className="lg:col-span-5">
-              <p className="font-sans text-[16px] leading-relaxed text-white/60">
+              <p className="font-sans text-[1rem] leading-relaxed text-white/60">
                 Cameras that simply record leave you scrubbing footage after the
                 fact. Intelligent video understands what it sees — and tells you
                 only when something genuinely matters.
@@ -399,7 +399,7 @@ export default function SmartHomePage() {
                     className="absolute inset-0 bg-gradient-to-t from-navy-deep/80 to-transparent"
                   />
                   <div className="absolute bottom-0 left-0 p-7">
-                    <span className="font-sans text-[11px] uppercase tracking-eyebrow text-white/60">
+                    <span className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/60">
                       {s.label}
                     </span>
                     <p className="mt-1 font-display text-[1.5rem] font-light tracking-tight text-white">
@@ -414,14 +414,14 @@ export default function SmartHomePage() {
           {/* Saved-clips app + capability list */}
           <div className="mt-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <div className="mx-auto w-[52%] max-w-[240px] lg:w-[72%]">
+              <div className="mx-auto w-[52%] max-w-[15rem] lg:w-[72%]">
                 <div className="overflow-hidden rounded-[2rem] border-[6px] border-white/15 bg-white/5 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
                   <div className="relative aspect-[309/640]">
                     <Image
                       src={`${DIR}/Smart-Home7.jpg`}
                       alt="The app's saved clips, each tagged by room and what triggered it"
                       fill
-                      sizes="240px"
+                      sizes="(min-width: 1920px) 480px, 240px"
                       className="object-cover"
                     />
                   </div>
@@ -434,7 +434,7 @@ export default function SmartHomePage() {
                 <h3 className="font-display text-[clamp(1.6rem,2.6vw,2.3rem)] font-light leading-tight tracking-tight text-white">
                   Find the moment in seconds.
                 </h3>
-                <p className="mt-4 max-w-lg font-sans text-[16px] leading-relaxed text-white/60">
+                <p className="mt-4 max-w-lg font-sans text-[1rem] leading-relaxed text-white/60">
                   Clips arrive tagged by room and by what set them off — person,
                   pet, vehicle, package. No scrubbing through hours of footage to
                   find the ten seconds that matter.
@@ -450,7 +450,7 @@ export default function SmartHomePage() {
                       <h4 className="mt-5 font-display text-[1.2rem] font-light leading-snug tracking-tight text-white">
                         {v.title}
                       </h4>
-                      <p className="mt-2 font-sans text-[14px] leading-relaxed text-white/55">
+                      <p className="mt-2 font-sans text-[0.875rem] leading-relaxed text-white/55">
                         {v.body}
                       </p>
                     </div>
@@ -464,7 +464,7 @@ export default function SmartHomePage() {
 
       {/* ========================= HOME MANAGEMENT ======================== */}
       <section id="management" className="scroll-mt-24 bg-white py-24 md:py-32">
-        <div className="mx-auto max-w-[1500px] px-5 sm:px-8 md:px-11">
+        <div className="mx-auto max-w-[93.75rem] px-5 sm:px-8 md:px-11">
           <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-12">
             <div className="sh-rise lg:col-span-7">
               <Eyebrow>Whole-home management</Eyebrow>
@@ -473,7 +473,7 @@ export default function SmartHomePage() {
               </h2>
             </div>
             <Reveal index={1} className="lg:col-span-5">
-              <p className="font-sans text-[16px] leading-relaxed text-slate-600">
+              <p className="font-sans text-[1rem] leading-relaxed text-slate-600">
                 The same platform that guards your home runs its lighting,
                 shades, climate, and audio — every comfort and safeguard,
                 managed from one place.
@@ -559,7 +559,7 @@ export default function SmartHomePage() {
                   <h3 className="font-display text-[1.6rem] font-light leading-tight tracking-tight text-white">
                     Fire & Carbon Monoxide
                   </h3>
-                  <p className="mt-3 font-sans text-[15px] leading-relaxed text-white/70">
+                  <p className="mt-3 font-sans text-[0.9375rem] leading-relaxed text-white/70">
                     The instant a fire or CO alarm triggers, the system can pause
                     your HVAC to stop circulating smoke — life-safety acting on
                     its own, the moment it counts.
@@ -572,7 +572,7 @@ export default function SmartHomePage() {
                     ].map((item) => (
                       <li
                         key={item}
-                        className="flex items-center gap-3 font-sans text-[14px] text-white/70"
+                        className="flex items-center gap-3 font-sans text-[0.875rem] text-white/70"
                       >
                         <Check
                           strokeWidth={2}
@@ -625,7 +625,7 @@ function ManagementCard({
         <h3 className="mt-5 font-display text-[1.6rem] font-light leading-tight tracking-tight text-white">
           {title}
         </h3>
-        <p className="mt-3 max-w-sm font-sans text-[15px] leading-relaxed text-white/70">
+        <p className="mt-3 max-w-sm font-sans text-[0.9375rem] leading-relaxed text-white/70">
           {body}
         </p>
       </div>

@@ -33,7 +33,7 @@ export default function PrivacyPage() {
 
       <section className="bg-white">
         <div className="mx-auto max-w-3xl px-5 py-16 sm:px-8 md:px-11 md:py-24">
-          <p className="font-sans text-[13px] uppercase tracking-eyebrow text-slate-400">
+          <p className="font-sans text-[0.8125rem] uppercase tracking-eyebrow text-slate-400">
             Last updated {LAST_UPDATED}
           </p>
 
@@ -147,7 +147,7 @@ export default function PrivacyPage() {
                 If you have questions about this Privacy Policy or how we handle
                 your information, contact us at:
               </p>
-              <address className="mt-4 not-italic font-sans text-[15px] leading-relaxed text-slate-600">
+              <address className="mt-4 not-italic font-sans text-[0.9375rem] leading-relaxed text-slate-600">
                 {BUSINESS.name}
                 <br />
                 {BUSINESS.street}
@@ -192,7 +192,7 @@ function Block({ title, children }: { title: string; children: React.ReactNode }
       <h2 className="font-display text-[1.6rem] font-light leading-snug tracking-tight text-navy-deep">
         {title}
       </h2>
-      <div className="mt-4 space-y-4 font-sans text-[15px] leading-relaxed text-slate-600">
+      <div className="mt-4 space-y-4 font-sans text-[0.9375rem] leading-relaxed text-slate-600">
         {children}
       </div>
     </div>

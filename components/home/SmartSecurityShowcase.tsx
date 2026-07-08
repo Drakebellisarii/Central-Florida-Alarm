@@ -40,7 +40,7 @@ const PATHS: Path[] = [
 export function SmartSecurityShowcase() {
   return (
     <section id="smart-security" className="bg-white">
-      <div className="mx-auto max-w-[1500px] px-5 py-20 sm:px-8 md:px-11 md:py-28">
+      <div className="mx-auto max-w-[93.75rem] px-5 py-20 sm:px-8 md:px-11 md:py-28">
 
         {/* The two paths, side by side */}
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
@@ -67,7 +67,7 @@ export function SmartSecurityShowcase() {
 
               {/* Top meta row — index + eyebrow, magazine-style */}
               <div className="relative z-10 flex items-center justify-between p-8 md:p-11">
-                <span className="font-sans text-[11px] uppercase tracking-eyebrow text-white/75">
+                <span className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/75">
                   {p.eyebrow}
                 </span>
                 <span
@@ -83,10 +83,10 @@ export function SmartSecurityShowcase() {
                 <h3 className="font-display text-[clamp(2.3rem,4.4vw,3.8rem)] font-light leading-none tracking-tight text-white">
                   {p.title}
                 </h3>
-                <p className="mt-5 max-w-md font-sans text-[15px] leading-relaxed text-white/80">
+                <p className="mt-5 max-w-md font-sans text-[0.9375rem] leading-relaxed text-white/80">
                   {p.line}
                 </p>
-                <span className="mt-7 inline-flex items-center gap-3 font-sans text-[12px] uppercase tracking-wide2 text-white">
+                <span className="mt-7 inline-flex items-center gap-3 font-sans text-[0.75rem] uppercase tracking-wide2 text-white">
                   Explore
                   <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 transition-all duration-500 ease-expo group-hover:border-white group-hover:bg-white">
                     <ArrowRight

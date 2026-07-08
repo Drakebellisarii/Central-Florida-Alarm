@@ -2,13 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Cpu, ShieldCheck, Tv, Lightbulb, Blinds, Wifi, Plus } from "lucide-react";
-
-const CREED = ["Since 1968", "One Mission", "Quality"];
+import { Cpu, ShieldCheck, Radar, Tv, Lightbulb, Blinds, Wifi, Plus } from "lucide-react";
 
 const PILLARS = [
   { icon: Cpu, label: "Automation", body: "Lighting, climate, and AV coordinated by one quiet logic." },
   { icon: ShieldCheck, label: "Security & Fire Safety", body: "Surveillance, access, and alarm joined with smoke, CO, and fire detection — monitored as one." },
+  { icon: Radar, label: "24/7 System Monitoring", body: "State of the art local monitoring for any impending emergency event." },
   { icon: Tv, label: "Audio & Video", body: "Whole-house music, private cinema, and displays that disappear." },
   { icon: Lightbulb, label: "Lighting Control", body: "Tunable light that flatters the architecture and sets itself." },
   { icon: Blinds, label: "Motorized Shades", body: "Quiet shading that tracks the sun and tucks away for the view." },
@@ -55,17 +54,10 @@ export function AboutSection() {
       {/* ── Left — editorial mission ──────────────────────────────────── */}
       <div className="flex min-w-0 flex-col justify-center px-6 py-20 sm:px-8 md:w-[55%] md:px-10 md:py-16 lg:px-16 lg:py-20 xl:px-20">
 
-        {/* Creed — the brand line, sitting just above the promise */}
-        <div className="reveal-scroll flex flex-wrap items-center gap-x-5 gap-y-2 font-sans text-[12px] uppercase tracking-eyebrow text-navy/55">
-          {CREED.map((word, i) => (
-            <span key={word} className="flex items-center gap-x-5">
-              {i > 0 && (
-                <span aria-hidden className="h-1 w-1 rounded-full bg-navy/30" />
-              )}
-              {word}
-            </span>
-          ))}
-        </div>
+        {/* Label above the promise */}
+        <p className="reveal-scroll font-sans text-[0.75rem] uppercase tracking-eyebrow text-navy/55">
+          Our Mission Statement
+        </p>
 
         {/* The promise — the centerpiece. Sized down and given room to breathe,
             with a quiet two-tone fall so the payoff lands without any bold. */}
@@ -133,7 +125,7 @@ export function AboutSection() {
                             isOpen ? "text-navy-deep" : "text-navy/40"
                           }`}
                         />
-                        <h3 className="font-display text-[16px] leading-snug text-navy-deep">
+                        <h3 className="font-display text-[1rem] leading-snug text-navy-deep">
                           {p.label}
                         </h3>
                       </div>
@@ -144,7 +136,7 @@ export function AboutSection() {
                           isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                         }`}
                       >
-                        <p className="min-h-0 pt-1.5 font-sans text-[12px] leading-relaxed text-slate-400">
+                        <p className="min-h-0 pt-1.5 font-sans text-[0.75rem] leading-relaxed text-slate-400">
                           {p.body}
                         </p>
                       </div>

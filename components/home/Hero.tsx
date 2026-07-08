@@ -14,9 +14,7 @@ const VIDEO_SRC: Record<DeviceType, string> = {
   mobile: "/iphone-hero-hig.mp4",
   // Tablets share the portrait phone clip — no separate iPad encode.
   tablet: "/iphone-hero-hig.mp4",
-  // -v2 busts the year-long immutable cache after the clip was re-encoded
-  // from a 17MB all-intra master down to a 6MB 720p.
-  desktop: "/Hero-1080.mp4",
+  desktop: "/Desktop-v2.mp4",
 };
 
 // Last frame of each clip — the finished estate. Used as the static poster for
@@ -125,36 +123,36 @@ export function Hero() {
       />
 
       {/* ── Logo — top right ────────────────────────────────────────── */}
-      <div className="reveal-fade-in pointer-events-none absolute right-8 top-24 z-20 sm:right-12 sm:top-24 md:right-14 md:top-28">
+      <div className="reveal-fade-in pointer-events-none absolute right-8 top-24 z-20 sm:right-12 sm:top-24 md:right-14 md:top-28 short:right-6 short:top-14">
         <Image
           src="/images/cfas-logo-light.png"
           alt="Central Florida Automation Services"
           width={200}
           height={99}
-          className="h-16 w-auto sm:h-20 md:h-24 2xl:h-28"
+          className="h-14 w-auto sm:h-16 md:h-20 2xl:h-24 short:h-9"
           priority
         />
       </div>
 
       {/* ── Copy ────────────────────────────────────────────────────── */}
-      <div className="relative z-20 mx-auto w-full max-w-[1500px] px-5 pb-24 sm:px-8 sm:pb-32 md:px-11 md:pb-36 lg:pb-28 xl:pb-32 2xl:max-w-[1760px] 2xl:pb-40">
+      <div className="relative z-20 mx-auto w-full max-w-[93.75rem] px-5 pb-24 sm:px-8 sm:pb-32 md:px-11 md:pb-36 lg:pb-28 xl:pb-32 2xl:max-w-[110rem] 2xl:pb-40 short:pb-8">
         <div className="max-w-[64rem] 2xl:max-w-[76rem]">
 
           <h1 className="font-hero font-light leading-[0.95] tracking-[-0.025em]">
-            <span className="reveal-load rd-1 block text-[clamp(1.55rem,6vw,5.25rem)] text-white">
+            <span className="reveal-load rd-1 block text-[clamp(1.55rem,min(6vw,13vh),5.25rem)] text-white">
               Central Florida&apos;s leader
             </span>
-            <span className="reveal-load rd-2 block text-[clamp(1.55rem,6vw,5.25rem)] text-white/80">
+            <span className="reveal-load rd-2 block text-[clamp(1.55rem,min(6vw,13vh),5.25rem)] text-white/80">
               in smart home automation
             </span>
-            <span className="reveal-load rd-3 block text-[clamp(1.55rem,6vw,5.25rem)] text-white/50">
+            <span className="reveal-load rd-3 block text-[clamp(1.55rem,min(6vw,13vh),5.25rem)] text-white/50">
               since 1968.
             </span>
           </h1>
 
-          <div className="reveal-load rd-4 mt-7 h-px w-24 bg-white/70 sm:mt-10 2xl:w-32" />
+          <div className="reveal-load rd-4 mt-7 h-px w-24 bg-white/70 sm:mt-10 2xl:w-32 short:mt-3" />
 
-          <p className="reveal-load rd-5 mt-5 max-w-[42rem] font-display text-[clamp(1rem,2vw,1.9rem)] font-light leading-[1.55] tracking-[-0.005em] text-white/75 sm:mt-8 2xl:max-w-[52rem]">
+          <p className="reveal-load rd-5 mt-5 max-w-[42rem] font-display text-[clamp(1rem,2vw,1.9rem)] font-light leading-[1.55] tracking-[-0.005em] text-white/75 sm:mt-8 2xl:max-w-[52rem] short:mt-3 short:text-[0.95rem]">
             {SUBTITLE}
           </p>
 

@@ -16,7 +16,7 @@ export function CTABanner({
 }) {
   return (
     <section className={light ? "bg-navy-deep" : "bg-[#0d0f14]"}>
-      <div className="mx-auto max-w-[1500px] px-5 py-24 sm:px-8 md:px-11 md:py-32">
+      <div className="mx-auto max-w-[93.75rem] px-5 py-24 sm:px-8 md:px-11 md:py-32">
 
         {/* Top rule + eyebrow */}
         <Reveal>
@@ -26,7 +26,7 @@ export function CTABanner({
             }`}
           >
             <span
-              className={`font-sans text-[10px] uppercase tracking-eyebrow ${
+              className={`font-sans text-[0.625rem] uppercase tracking-eyebrow ${
                 light ? "text-white/55" : "text-white/35"
               }`}
             >
@@ -45,7 +45,7 @@ export function CTABanner({
               {heading}
             </h2>
             <p
-              className={`mt-7 max-w-lg font-sans text-[15px] leading-relaxed ${
+              className={`mt-7 max-w-lg font-sans text-[0.9375rem] leading-relaxed ${
                 light ? "text-white/65" : "text-white/45"
               }`}
             >
@@ -59,8 +59,8 @@ export function CTABanner({
                 href="/contact"
                 className={
                   light
-                    ? "group inline-flex items-center gap-3 bg-white px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-navy-deep transition-colors duration-300 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-                    : "group inline-flex items-center gap-3 bg-navy-logo px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-white transition-colors duration-300 hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/50"
+                    ? "group inline-flex items-center gap-3 bg-white px-8 py-4 font-sans text-[0.75rem] uppercase tracking-wide2 text-navy-deep transition-colors duration-300 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                    : "group inline-flex items-center gap-3 bg-navy-logo px-8 py-4 font-sans text-[0.75rem] uppercase tracking-wide2 text-white transition-colors duration-300 hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/50"
                 }
               >
                 Request a Consultation
@@ -71,7 +71,7 @@ export function CTABanner({
               </Link>
               <a
                 href={BUSINESS.phoneHref}
-                className={`inline-flex items-center gap-3 font-sans text-[14px] transition-colors ${
+                className={`inline-flex items-center gap-3 font-sans text-[0.875rem] transition-colors ${
                   light
                     ? "text-white/55 hover:text-white"
                     : "text-white/40 hover:text-white/80"

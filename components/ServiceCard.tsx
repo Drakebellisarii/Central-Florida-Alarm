@@ -26,20 +26,20 @@ export function ServiceCard({
           <ServiceIcon icon={icon} className="h-7 w-7" />
         </span>
         {typeof index === "number" && (
-          <span className="font-sans text-[12px] tracking-wide text-slate-300">
+          <span className="font-sans text-[0.75rem] tracking-wide text-slate-300">
             {String(index + 1).padStart(2, "0")}
           </span>
         )}
       </div>
 
       <div>
-        <h3 className="font-display text-[24px] leading-tight text-navy-deep transition-colors group-hover:text-navy">
+        <h3 className="font-display text-[1.5rem] leading-tight text-navy-deep transition-colors group-hover:text-navy">
           {name}
         </h3>
-        <p className="mt-3 font-sans text-[14px] leading-relaxed text-slate-500">
+        <p className="mt-3 font-sans text-[0.875rem] leading-relaxed text-slate-500">
           {summary}
         </p>
-        <span className="mt-5 inline-flex items-center gap-2 font-sans text-[11px] uppercase tracking-wide2 text-navy/50">
+        <span className="mt-5 inline-flex items-center gap-2 font-sans text-[0.6875rem] uppercase tracking-wide2 text-navy/50">
           Learn more
           <ArrowUpRight
             strokeWidth={1.25}

@@ -38,7 +38,7 @@ export default function ServiceAreasPage() {
       />
 
       <section className="bg-white">
-        <div className="mx-auto max-w-[1500px] px-5 py-24 sm:px-8 md:px-11 md:py-32">
+        <div className="mx-auto max-w-[93.75rem] px-5 py-24 sm:px-8 md:px-11 md:py-32">
           <Reveal>
             <h2 className="max-w-3xl font-display text-[clamp(2rem,3.6vw,3rem)] font-light leading-[1.08] tracking-tight text-navy-deep">
               From the Butler Chain to Bay Hill to the brick streets of Winter Park.
@@ -53,7 +53,7 @@ export default function ServiceAreasPage() {
                     strokeWidth={1.25}
                     className="mt-0.5 h-3.5 w-3.5 shrink-0 text-navy-logo/50"
                   />
-                  <span className="font-sans text-[14px] leading-snug text-slate-600">
+                  <span className="font-sans text-[0.875rem] leading-snug text-slate-600">
                     {area.name}
                   </span>
                 </div>

@@ -9,14 +9,14 @@ export function BrandStrip({
 }) {
   return (
     <div className="flex flex-col gap-4">
-      <span className="font-sans text-[10px] uppercase tracking-eyebrow text-slate-400">
+      <span className="font-sans text-[0.625rem] uppercase tracking-eyebrow text-slate-400">
         {label}
       </span>
       <div className="flex flex-wrap items-center gap-2">
         {brands.map((b) => (
           <span
             key={b}
-            className="border border-navy-logo/20 px-3 py-1.5 font-sans text-[10px] uppercase tracking-[0.14em] text-navy-logo/55"
+            className="border border-navy-logo/20 px-3 py-1.5 font-sans text-[0.625rem] uppercase tracking-[0.14em] text-navy-logo/55"
           >
             {b}
           </span>

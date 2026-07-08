@@ -60,7 +60,7 @@ export function PageHero({
         </>
       )}
 
-      <div className="relative mx-auto max-w-[1500px] px-5 pb-16 pt-36 sm:px-8 md:px-11 md:pb-20 md:pt-44">
+      <div className="relative mx-auto max-w-[93.75rem] px-5 pb-16 pt-36 sm:px-8 md:px-11 md:pb-20 md:pt-44 short:pb-10 short:pt-24">
         <Breadcrumbs items={crumbs} tone={light ? "onDark" : "warm"} />
         <h1
           className={`mt-10 max-w-4xl font-hero text-[clamp(2.1rem,7vw,5rem)] font-light leading-[1.05] tracking-tight ${
@@ -71,7 +71,7 @@ export function PageHero({
         </h1>
         {lead && (
           <p
-            className={`mt-7 max-w-2xl font-sans text-[17px] leading-relaxed ${
+            className={`mt-7 max-w-2xl font-sans text-[1.0625rem] leading-relaxed ${
               light ? "text-white/70" : "text-bone-dim"
             }`}
           >

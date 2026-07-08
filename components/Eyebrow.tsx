@@ -11,7 +11,7 @@ export function Eyebrow({
 }) {
   return (
     <span
-      className={`inline-flex items-center gap-3 font-sans text-[11px] uppercase tracking-eyebrow ${
+      className={`inline-flex items-center gap-3 font-sans text-[0.6875rem] uppercase tracking-eyebrow ${
         dark ? "text-white/50" : "text-navy/70"
       } ${className}`}
     >

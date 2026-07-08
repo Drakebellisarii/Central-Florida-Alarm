@@ -172,10 +172,10 @@ export function TestimonialsSection() {
             className="max-w-3xl"
           >
             <figcaption className="flex flex-col items-center gap-1">
-              <p className="font-sans text-[17px] font-semibold tracking-wide text-white sm:text-[20px]">
+              <p className="font-sans text-[1.0625rem] font-semibold tracking-wide text-white sm:text-[1.25rem]">
                 {TESTIMONIALS[active].name}
               </p>
-              <p className="font-sans text-[11px] uppercase tracking-eyebrow text-white/40 sm:text-[14px]">
+              <p className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40 sm:text-[0.875rem]">
                 {TESTIMONIALS[active].role}
               </p>
             </figcaption>

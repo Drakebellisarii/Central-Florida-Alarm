@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Youtube, Phone, MapPin, Mail } from "lucide-react";
 import { BUSINESS } from "@/lib/seo";
-import { SERVICE_NAV, AREA_NAV } from "@/lib/content";
+import { SERVICE_NAV } from "@/lib/content";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -12,10 +12,10 @@ export function Footer() {
 
   return (
     <footer className="relative border-t border-white/10 bg-navy-deep">
-      <div className="mx-auto max-w-[1500px] px-5 pb-12 pt-12 sm:px-8 md:px-11 md:pb-16 md:pt-16">
+      <div className="mx-auto max-w-[93.75rem] px-5 pb-12 pt-12 sm:px-8 md:px-11 md:pb-16 md:pt-16">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-x-8 md:gap-y-12 lg:gap-10">
           {/* Brand + NAP */}
-          <div className="md:col-span-12 md:mb-2 lg:col-span-4 lg:mb-0">
+          <div className="md:col-span-12 md:mb-2 lg:col-span-5 lg:mb-0">
             <Image
               src="/images/cfas-logo-light.png"
               alt="Central Florida Automation Services"
@@ -23,7 +23,7 @@ export function Footer() {
               height={99}
               className="h-20 w-auto"
             />
-            <p className="mt-6 font-sans text-[11px] uppercase tracking-eyebrow text-white/45">
+            <p className="mt-6 font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/45">
               Since 1968 &nbsp;&middot;&nbsp; One Mission &nbsp;&middot;&nbsp; Quality
             </p>
             <p className="mt-5 max-w-xs font-display text-lg leading-snug text-white/60">
@@ -38,7 +38,7 @@ export function Footer() {
                 className="flex items-start gap-3 text-white/50 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
               >
                 <MapPin strokeWidth={1.25} className="mt-0.5 h-4 w-4 shrink-0" />
-                <span className="font-sans text-[14px] leading-relaxed">
+                <span className="font-sans text-[0.875rem] leading-relaxed">
                   {BUSINESS.name}
                   <br />
                   {BUSINESS.street}
@@ -51,11 +51,11 @@ export function Footer() {
                 className="mt-4 flex items-center gap-3 text-white/60 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
               >
                 <Phone strokeWidth={1.25} className="h-4 w-4 shrink-0" />
-                <span className="font-sans text-[14px]">{BUSINESS.phone}</span>
+                <span className="font-sans text-[0.875rem]">{BUSINESS.phone}</span>
               </a>
               <div className="mt-3 flex items-start gap-3 text-white/60">
                 <Mail strokeWidth={1.25} className="mt-0.5 h-4 w-4 shrink-0" />
-                <div className="font-sans text-[14px] leading-relaxed">
+                <div className="font-sans text-[0.875rem] leading-relaxed">
                   <p>
                     <span className="text-white/35">Office</span>{" "}
                     <a
@@ -92,41 +92,25 @@ export function Footer() {
           </div>
 
           {/* Services — links disabled for now */}
-          <div className="md:col-span-4 lg:col-span-3 lg:mt-16">
-            <h2 className="font-sans text-[11px] uppercase tracking-eyebrow text-white/40">
+          <div className="md:col-span-6 lg:col-span-4 lg:mt-16">
+            <h2 className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40">
               Services
             </h2>
             <ul className="mt-5 space-y-3">
               {SERVICE_NAV.map((s) => (
-                <li key={s.href} className="font-sans text-[14px] text-white/55">
+                <li key={s.href} className="font-sans text-[0.875rem] text-white/55">
                   {s.name}
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Areas — links disabled for now */}
-          <div className="md:col-span-4 lg:col-span-2 lg:mt-16">
-            <h2 className="font-sans text-[11px] uppercase tracking-eyebrow text-white/40">
-              Service Areas
-            </h2>
-            <ul className="mt-5 space-y-3">
-              {AREA_NAV.map((a) => (
-                <li key={a.href} className="font-sans text-[14px] text-white/55">
-                  {a.name}
-                </li>
-              ))}
-              <li className="font-sans text-[14px] text-white/55">Blog</li>
-              <li className="font-sans text-[14px] text-white/55">Contact</li>
-            </ul>
-          </div>
-
           {/* Credentials */}
-          <div className="md:col-span-4 lg:col-span-3 lg:mt-16">
-            <h2 className="font-sans text-[11px] uppercase tracking-eyebrow text-white/40">
+          <div className="md:col-span-6 lg:col-span-3 lg:mt-16">
+            <h2 className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40">
               Licensed and Insured
             </h2>
-            <ul className="mt-5 space-y-1.5 font-sans text-[13px] text-white/35">
+            <ul className="mt-5 space-y-1.5 font-sans text-[0.8125rem] text-white/35">
               {BUSINESS.licenses.map((lic) => (
                 <li key={lic}>
                   <span className="text-white/50">FL</span> {lic}
@@ -141,17 +125,29 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5">
-            <p className="font-sans text-[12px] text-white/30">
+            <p className="font-sans text-[0.75rem] text-white/30">
               &copy; {year} {BUSINESS.name}. All rights reserved.
             </p>
             <Link
+              href="/contact"
+              className="font-sans text-[0.75rem] text-white/40 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+            >
+              Contact
+            </Link>
+            <Link
+              href="/blog"
+              className="font-sans text-[0.75rem] text-white/40 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+            >
+              Blog
+            </Link>
+            <Link
               href="/privacy"
-              className="font-sans text-[12px] text-white/40 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+              className="font-sans text-[0.75rem] text-white/40 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
             >
               Privacy Policy
             </Link>
           </div>
-          <p className="font-sans text-[12px] text-white/30">
+          <p className="font-sans text-[0.75rem] text-white/30">
             {BUSINESS.region} smart home and security integration.
           </p>
         </div>

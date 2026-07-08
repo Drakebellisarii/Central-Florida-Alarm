@@ -44,13 +44,13 @@ export default function ContactPage() {
             aria-hidden="true"
             className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-navy-deep to-transparent"
           />
-          <div className="relative mx-auto max-w-[1500px] px-5 pb-20 pt-36 sm:px-8 md:px-11 md:pb-24 md:pt-44">
+          <div className="relative mx-auto max-w-[93.75rem] px-5 pb-20 pt-36 sm:px-8 md:px-11 md:pb-24 md:pt-44 short:pb-10 short:pt-24">
             <Breadcrumbs items={crumbs} tone="onDark" />
             <div className="mt-10 max-w-2xl">
               <h1 className="font-hero text-[clamp(2.1rem,6.5vw,4.4rem)] font-light leading-[1.05] tracking-tight text-white">
                 Tell us about the property.
               </h1>
-              <p className="mt-7 max-w-md font-sans text-[17px] leading-relaxed text-white/70">
+              <p className="mt-7 max-w-md font-sans text-[1.0625rem] leading-relaxed text-white/70">
                 Whether you are reviewing plans with an architect or living in a home
                 that has not kept up, the first step is a conversation. There is no
                 charge for it, and no pressure after it.
@@ -59,7 +59,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-[1500px] px-5 pb-24 pt-16 sm:px-8 md:px-11 md:pb-32 md:pt-20">
+        <div className="mx-auto max-w-[93.75rem] px-5 pb-24 pt-16 sm:px-8 md:px-11 md:pb-32 md:pt-20">
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-12">
             {/* Left: NAP */}
             <div className="lg:col-span-5">
@@ -76,14 +76,14 @@ export default function ContactPage() {
                 <ContactRow icon={<Mail strokeWidth={1.25} className="h-5 w-5" />} label="Email">
                   <a
                     href={BUSINESS.emailHref}
-                    className="font-sans text-[16px] text-navy-deep transition-colors hover:text-navy-logo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
+                    className="font-sans text-[1rem] text-navy-deep transition-colors hover:text-navy-logo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
                   >
                     {BUSINESS.email}
                   </a>
                 </ContactRow>
 
                 <ContactRow icon={<MapPin strokeWidth={1.25} className="h-5 w-5" />} label="Visit">
-                  <address className="font-sans text-[16px] not-italic leading-relaxed text-navy-deep">
+                  <address className="font-sans text-[1rem] not-italic leading-relaxed text-navy-deep">
                     {BUSINESS.street}
                     <br />
                     {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
@@ -96,7 +96,7 @@ export default function ContactPage() {
             <div className="lg:col-span-6 lg:col-start-7">
               <div className="border border-slate-200 bg-slate-50 p-7 shadow-[0_24px_60px_-32px_rgba(10,26,82,0.35)] sm:p-9 md:p-10">
                 <h2 className="font-display text-2xl text-navy-deep">Request a consultation</h2>
-                <p className="mt-2 font-sans text-[14px] text-slate-500">
+                <p className="mt-2 font-sans text-[0.875rem] text-slate-500">
                   We reply within one business day.
                 </p>
                 <div className="mt-8">
@@ -126,7 +126,7 @@ function ContactRow({
         {icon}
       </span>
       <div>
-        <dt className="font-sans text-[11px] uppercase tracking-eyebrow text-slate-500">
+        <dt className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-slate-500">
           {label}
         </dt>
         <dd className="mt-1.5">{children}</dd>

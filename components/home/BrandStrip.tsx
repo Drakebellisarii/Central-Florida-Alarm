@@ -47,14 +47,14 @@ export function BrandStrip() {
 
   return (
     <section className="border-y border-navy/10 bg-white">
-      <div className="mx-auto max-w-[1400px] px-5 py-16 sm:px-8 md:px-10 md:py-20">
+      <div className="mx-auto max-w-[87.5rem] px-5 py-16 sm:px-8 md:px-10 md:py-20">
 
         <motion.p
           initial={reduce ? { opacity: 1 } : { opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: EASE }}
-          className="font-sans text-[11px] uppercase tracking-eyebrow text-navy/35"
+          className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-navy/35"
         >
           The systems we build around
         </motion.p>
@@ -83,7 +83,7 @@ export function BrandStrip() {
                   height={b.h}
                   className={`${b.cls} w-auto brightness-0 opacity-40 transition-opacity duration-500 group-hover:opacity-75`}
                 />
-                <p className="font-sans text-[10px] uppercase tracking-eyebrow text-navy/30">
+                <p className="font-sans text-[0.625rem] uppercase tracking-eyebrow text-navy/30">
                   {b.category}
                 </p>
               </div>

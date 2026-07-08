@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -8,7 +8,9 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { BUSINESS } from "@/lib/seo";
 
-const NAV_HEIGHT = 76;
+// Bar height lives in the h-[4.75rem] class so it scales with the root
+// font-size on large displays; 76 is only the pre-measure fallback.
+const NAV_HEIGHT_FALLBACK = 76;
 
 /**
  * Two-state header. Fully transparent over a page's dark hero, settling
@@ -23,6 +25,7 @@ export function Navbar() {
   const [solid, setSolid] = useState(false);
   const pathname = usePathname();
   const reduce = useReducedMotion();
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -45,8 +48,9 @@ export function Navbar() {
     const update = () => {
       ticking = false;
       let next = false;
+      const navHeight = headerRef.current?.offsetHeight ?? NAV_HEIGHT_FALLBACK;
       if (sentinel && sentinel.getBoundingClientRect().bottom < 0) next = true;
-      if (marker && marker.getBoundingClientRect().top <= NAV_HEIGHT) next = true;
+      if (marker && marker.getBoundingClientRect().top <= navHeight) next = true;
       setSolid(next);
     };
     const onScroll = () => {
@@ -68,6 +72,7 @@ export function Navbar() {
   return (
     <>
       <header
+        ref={headerRef}
         className={`fixed inset-x-0 top-0 z-50 transition-colors duration-700 ease-expo ${
           solid
             ? "bg-white shadow-[0_1px_0_rgba(1,22,137,0.08),0_2px_16px_rgba(1,22,137,0.06)]"
@@ -76,8 +81,7 @@ export function Navbar() {
       >
         <nav
           aria-label="Primary"
-          className="mx-auto flex max-w-[1500px] items-center justify-between px-5 sm:px-8 md:px-11"
-          style={{ height: NAV_HEIGHT }}
+          className="mx-auto flex h-[4.75rem] max-w-[93.75rem] items-center justify-between px-5 sm:px-8 md:px-11"
         >
           {/* Logo — crossfades between light and dark marks */}
           <Link
@@ -87,13 +91,13 @@ export function Navbar() {
               solid ? "focus-visible:ring-navy-logo/30" : "focus-visible:ring-white/40"
             }`}
           >
-            <span className="relative block h-10 w-[120px] sm:h-12 sm:w-[140px]">
+            <span className="relative block h-10 w-[7.5rem] sm:h-12 sm:w-[8.75rem]">
               <Image
                 src="/images/cfas-logo.png"
                 alt="Central Florida Automation Services"
                 fill
                 priority
-                sizes="140px"
+                sizes="(min-width: 1920px) 280px, 140px"
                 className={`object-contain object-left transition-opacity duration-700 ${
                   solid ? "opacity-100" : "opacity-0"
                 }`}
@@ -104,7 +108,7 @@ export function Navbar() {
                 aria-hidden="true"
                 fill
                 priority
-                sizes="140px"
+                sizes="(min-width: 1920px) 280px, 140px"
                 className={`object-contain object-left transition-opacity duration-700 ${
                   solid ? "opacity-0" : "opacity-100"
                 }`}
@@ -132,7 +136,7 @@ export function Navbar() {
           <div className="hidden items-center gap-3 lg:flex">
             <Link
               href="/existing-clients"
-              className={`inline-flex items-center gap-2 border px-4 py-2 font-sans text-[11px] uppercase tracking-wide2 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 ${
+              className={`inline-flex items-center gap-2 border px-4 py-2 font-sans text-[0.6875rem] uppercase tracking-wide2 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 ${
                 solid
                   ? "border-navy-logo/25 text-navy-logo/70 hover:border-navy-logo hover:text-navy-logo focus-visible:ring-navy-logo/30"
                   : "border-white/30 text-white/80 hover:border-white hover:text-white focus-visible:ring-white/40"
@@ -142,7 +146,7 @@ export function Navbar() {
             </Link>
             <Link
               href="/fix-my-stuff"
-              className={`group inline-flex items-center gap-2.5 px-5 py-2.5 font-sans text-[11px] uppercase tracking-wide2 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 ${
+              className={`group inline-flex items-center gap-2.5 px-5 py-2.5 font-sans text-[0.6875rem] uppercase tracking-wide2 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 ${
                 solid
                   ? "bg-navy-logo text-white hover:bg-navy focus-visible:ring-navy-logo/50"
                   : "bg-white text-navy-deep hover:bg-paper focus-visible:ring-white/60"
@@ -183,7 +187,7 @@ export function Navbar() {
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-50 flex flex-col bg-navy-deep lg:hidden"
           >
-            <div className="flex h-[76px] items-center justify-between border-b border-white/[0.07] px-5 sm:px-8">
+            <div className="flex h-[4.75rem] items-center justify-between border-b border-white/[0.07] px-5 sm:px-8">
               <Image
                 src="/images/cfas-logo-light.png"
                 alt="Central Florida Automation Services"
@@ -212,7 +216,7 @@ export function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="group flex items-center justify-between py-3 font-display text-[22px] leading-tight text-white transition-colors hover:text-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+                    className="group flex items-center justify-between py-3 font-display text-[1.375rem] leading-tight text-white transition-colors hover:text-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
                   >
                     {item.label}
                     <ArrowRight strokeWidth={1} className="h-4 w-4 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-40" />
@@ -228,17 +232,17 @@ export function Navbar() {
               >
                 <Link
                   href="/fix-my-stuff"
-                  className="flex w-full items-center justify-center bg-white px-7 py-4 font-sans text-[12px] uppercase tracking-wide2 text-navy-deep"
+                  className="flex w-full items-center justify-center bg-white px-7 py-4 font-sans text-[0.75rem] uppercase tracking-wide2 text-navy-deep"
                 >
                   Fix my stuff
                 </Link>
                 <Link
                   href="/existing-clients"
-                  className="flex w-full items-center justify-center border border-white/25 px-7 py-4 font-sans text-[12px] uppercase tracking-wide2 text-white/80"
+                  className="flex w-full items-center justify-center border border-white/25 px-7 py-4 font-sans text-[0.75rem] uppercase tracking-wide2 text-white/80"
                 >
                   Existing Clients
                 </Link>
-                <p className="pt-2 font-sans text-[13px] leading-relaxed text-white/40">
+                <p className="pt-2 font-sans text-[0.8125rem] leading-relaxed text-white/40">
                   {BUSINESS.street}<br />
                   {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
                 </p>
@@ -263,7 +267,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className={`group relative py-2 font-sans text-[12px] uppercase tracking-wide2 transition-colors duration-500 focus-visible:outline-none focus-visible:ring-2 ${
+      className={`group relative py-2 font-sans text-[0.75rem] uppercase tracking-wide2 transition-colors duration-500 focus-visible:outline-none focus-visible:ring-2 ${
         solid
           ? "text-navy-logo/60 hover:text-navy-logo focus-visible:ring-navy-logo/30"
           : "text-white/65 hover:text-white focus-visible:ring-white/40"

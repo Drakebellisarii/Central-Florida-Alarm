@@ -17,7 +17,7 @@ type Props = {
 };
 
 const base =
-  "group inline-flex items-center justify-center gap-3 px-7 py-4 font-sans text-[12px] uppercase tracking-wide2 transition-colors duration-500 ease-expo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-2 focus-visible:ring-offset-ink active:translate-y-px";
+  "group inline-flex items-center justify-center gap-3 px-7 py-4 font-sans text-[0.75rem] uppercase tracking-wide2 transition-colors duration-500 ease-expo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-2 focus-visible:ring-offset-ink active:translate-y-px";
 
 const variants: Record<Variant, string> = {
   // bone fill, ink text — for use on dark surfaces

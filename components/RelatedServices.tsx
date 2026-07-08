@@ -11,7 +11,7 @@ export function RelatedServices({ slugs }: { slugs: string[] }) {
 
   return (
     <section className="border-t border-bone/10 bg-ink">
-      <div className="mx-auto max-w-[1500px] px-5 py-24 sm:px-8 md:px-11 md:py-28">
+      <div className="mx-auto max-w-[93.75rem] px-5 py-24 sm:px-8 md:px-11 md:py-28">
         <Reveal>
           <h2 className="font-display text-[clamp(1.9rem,3.5vw,2.8rem)] font-light leading-tight tracking-tight text-bone">
             Often part of the same system

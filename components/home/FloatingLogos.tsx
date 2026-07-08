@@ -98,7 +98,7 @@ export function FloatingLogos() {
                   style={{ boxShadow: "0 0 5px rgba(0,0,0,0.9)" }}
                 />
                 <p
-                  className="font-sans text-[9px] uppercase tracking-eyebrow text-white/90"
+                  className="font-sans text-[0.5625rem] uppercase tracking-eyebrow text-white/90"
                   style={{ textShadow: "0 1px 5px rgba(0,0,0,0.95), 0 0 16px rgba(0,0,0,0.7)" }}
                 >
                   The systems we build around

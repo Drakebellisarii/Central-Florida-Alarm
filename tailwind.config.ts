@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        // Landscape phones: wide enough to hit sm/md layouts but with
+        // almost no vertical room. Lets sections relax full-height and
+        // heavy vertical padding where it would squish.
+        short: { raw: "(min-width: 480px) and (max-height: 540px)" },
+      },
       colors: {
         // Canvas (dark-theme pages: contact, service, areas)
         ink: {

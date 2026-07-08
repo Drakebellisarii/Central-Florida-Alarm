@@ -32,21 +32,21 @@ const PATHS = [
 
 export default function SmartSecurityPage() {
   return (
-    <div className="bg-white pt-[76px]">
+    <div className="bg-white pt-[4.75rem]">
       {/* Compact heading — the two paths below are the focal point */}
-      <section className="mx-auto max-w-[1500px] px-5 pb-12 pt-16 text-center sm:px-8 md:px-11 md:pb-16 md:pt-24">
+      <section className="mx-auto max-w-[93.75rem] px-5 pb-12 pt-16 text-center sm:px-8 md:px-11 md:pb-16 md:pt-24">
         <h1 className="mx-auto max-w-3xl font-hero text-[clamp(2.6rem,5.5vw,4.6rem)] font-light leading-[1.0] tracking-tight text-navy-deep">
           Built for your space.
         </h1>
-        <p className="mx-auto mt-6 max-w-xl font-sans text-[17px] leading-relaxed text-slate-600">
+        <p className="mx-auto mt-6 max-w-xl font-sans text-[1.0625rem] leading-relaxed text-slate-600">
           Where you live or where you work — choose where you need us and we will
           take it from there.
         </p>
       </section>
 
       {/* The two paths */}
-      <section className="mx-auto max-w-[1600px] px-5 pb-20 sm:px-8 md:px-11 md:pb-28">
-        <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
+      <section className="mx-auto max-w-[100rem] px-5 pb-20 sm:px-8 md:px-11 md:pb-28">
+        <div className="mx-auto grid max-w-[75rem] grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
           {PATHS.map((p) => (
             <Link
               key={p.href}
@@ -89,16 +89,16 @@ export default function SmartSecurityPage() {
 
               {/* Content */}
               <div className="relative z-10 p-8 md:p-11">
-                <span className="font-sans text-[11px] uppercase tracking-eyebrow text-white/70">
+                <span className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/70">
                   {p.eyebrow}
                 </span>
                 <h2 className="mt-3 font-display text-[clamp(2.4rem,4.5vw,3.8rem)] font-light leading-none tracking-tight text-white">
                   {p.title}
                 </h2>
-                <p className="mt-5 max-w-md font-sans text-[15px] leading-relaxed text-white/75">
+                <p className="mt-5 max-w-md font-sans text-[0.9375rem] leading-relaxed text-white/75">
                   {p.line}
                 </p>
-                <span className="mt-7 inline-flex items-center gap-3 font-sans text-[12px] uppercase tracking-wide2 text-white">
+                <span className="mt-7 inline-flex items-center gap-3 font-sans text-[0.75rem] uppercase tracking-wide2 text-white">
                   Explore
                   <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 transition-all duration-500 ease-expo group-hover:border-white group-hover:bg-white">
                     <ArrowRight

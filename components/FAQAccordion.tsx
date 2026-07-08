@@ -22,7 +22,7 @@ export function FAQAccordion({ faqs }: { faqs: FAQ[] }) {
                 onClick={() => setOpen(isOpen ? null : i)}
                 className="flex w-full items-center justify-between gap-6 py-7 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze"
               >
-                <span className="font-display text-[19px] leading-snug text-bone md:text-[22px]">
+                <span className="font-display text-[1.1875rem] leading-snug text-bone md:text-[1.375rem]">
                   {faq.q}
                 </span>
                 <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center border border-bone/20 text-bronze transition-colors">
@@ -43,7 +43,7 @@ export function FAQAccordion({ faqs }: { faqs: FAQ[] }) {
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   className="overflow-hidden"
                 >
-                  <p className="max-w-prose2 pb-8 pr-12 font-sans text-[15px] leading-relaxed text-bone-dim">
+                  <p className="max-w-prose2 pb-8 pr-12 font-sans text-[0.9375rem] leading-relaxed text-bone-dim">
                     {faq.a}
                   </p>
                 </motion.div>

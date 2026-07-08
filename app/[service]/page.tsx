@@ -67,7 +67,7 @@ export default function ServicePage({
 
       {/* Overview */}
       <section className="bg-ink">
-        <div className="mx-auto max-w-[1500px] px-5 py-24 sm:px-8 md:px-11 md:py-32">
+        <div className="mx-auto max-w-[93.75rem] px-5 py-24 sm:px-8 md:px-11 md:py-32">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
             <Reveal className="lg:col-span-4">
               <p className="font-display text-[clamp(1.6rem,2.4vw,2rem)] font-light leading-snug text-bone">
@@ -75,7 +75,7 @@ export default function ServicePage({
               </p>
             </Reveal>
             <Reveal index={1} className="lg:col-span-7 lg:col-start-6">
-              <div className="space-y-6 font-sans text-[17px] leading-relaxed text-bone-dim">
+              <div className="space-y-6 font-sans text-[1.0625rem] leading-relaxed text-bone-dim">
                 {service.overview.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}
@@ -87,7 +87,7 @@ export default function ServicePage({
 
       {/* The CFAS approach */}
       <section className="border-y border-bone/10 bg-ink-deep">
-        <div className="mx-auto max-w-[1500px] px-5 py-24 sm:px-8 md:px-11 md:py-32">
+        <div className="mx-auto max-w-[93.75rem] px-5 py-24 sm:px-8 md:px-11 md:py-32">
           <Reveal>
             <p className="max-w-4xl font-display text-[clamp(1.7rem,3vw,2.6rem)] font-light leading-[1.25] tracking-tight text-bone">
               {service.approach}
@@ -98,7 +98,7 @@ export default function ServicePage({
 
       {/* Image row */}
       <section className="bg-ink">
-        <div className="mx-auto max-w-[1500px] px-5 py-20 sm:px-8 md:px-11 md:py-28">
+        <div className="mx-auto max-w-[93.75rem] px-5 py-20 sm:px-8 md:px-11 md:py-28">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             {service.gallery.map((img, i) => (
               <Reveal
@@ -126,7 +126,7 @@ export default function ServicePage({
 
       {/* Brands + scope */}
       <section className="border-t border-bone/10 bg-ink-deep">
-        <div className="mx-auto max-w-[1500px] px-5 py-24 sm:px-8 md:px-11 md:py-32">
+        <div className="mx-auto max-w-[93.75rem] px-5 py-24 sm:px-8 md:px-11 md:py-32">
           <div className="grid grid-cols-1 gap-14 lg:grid-cols-12">
             <Reveal className="lg:col-span-5">
               <h2 className="font-display text-[clamp(1.9rem,3.2vw,2.8rem)] font-light leading-tight tracking-tight text-bone">
@@ -147,10 +147,10 @@ export default function ServicePage({
                     key={item.label}
                     className="grid grid-cols-1 gap-1 border-b border-bone/10 py-5 sm:grid-cols-12 sm:gap-6"
                   >
-                    <dt className="font-display text-[18px] text-bone sm:col-span-5">
+                    <dt className="font-display text-[1.125rem] text-bone sm:col-span-5">
                       {item.label}
                     </dt>
-                    <dd className="font-sans text-[15px] leading-relaxed text-stone sm:col-span-7">
+                    <dd className="font-sans text-[0.9375rem] leading-relaxed text-stone sm:col-span-7">
                       {item.detail}
                     </dd>
                   </div>
@@ -163,7 +163,7 @@ export default function ServicePage({
 
       {/* FAQ */}
       <section className="border-t border-bone/10 bg-ink">
-        <div className="mx-auto max-w-[1500px] px-5 py-24 sm:px-8 md:px-11 md:py-32">
+        <div className="mx-auto max-w-[93.75rem] px-5 py-24 sm:px-8 md:px-11 md:py-32">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
             <Reveal className="lg:col-span-4">
               <h2 className="font-display text-[clamp(1.9rem,3.2vw,2.8rem)] font-light leading-tight tracking-tight text-bone">

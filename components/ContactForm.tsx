@@ -19,8 +19,10 @@ const PROJECT_TYPES = [
 
 type Errors = Partial<Record<"name" | "email" | "phone" | "projectType" | "message", string>>;
 
+// 16px on touch sizes — anything smaller makes iOS Safari zoom the page
+// when a field is focused.
 const fieldBase =
-  "w-full border border-slate-300 bg-white px-4 py-3.5 font-sans text-[15px] text-navy-deep placeholder:text-slate-400 transition-colors focus:border-navy-logo focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-navy-logo";
+  "w-full border border-slate-300 bg-white px-4 py-3.5 font-sans text-[1rem] text-navy-deep placeholder:text-slate-400 transition-colors focus:border-navy-logo focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-navy-logo lg:text-[0.9375rem]";
 
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -84,12 +86,12 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="flex min-h-[420px] flex-col justify-center border border-navy-logo/30 bg-white p-10">
+      <div className="flex min-h-[26.25rem] flex-col justify-center border border-navy-logo/30 bg-white p-10">
         <span className="flex h-12 w-12 items-center justify-center border border-navy-logo text-navy-logo">
           <Check strokeWidth={1.25} className="h-6 w-6" />
         </span>
         <h2 className="mt-7 font-display text-3xl text-navy-deep">Thank you. We have it.</h2>
-        <p className="mt-4 max-w-md font-sans text-[15px] leading-relaxed text-slate-600">
+        <p className="mt-4 max-w-md font-sans text-[0.9375rem] leading-relaxed text-slate-600">
           A member of our team will be in touch within one business day. If it is
           time sensitive, please call us directly at{" "}
           <a href="tel:+14078398485" className="text-navy-logo hover:text-navy">
@@ -106,7 +108,7 @@ export function ContactForm() {
       {status === "error" && (
         <p
           role="alert"
-          className="border border-red-200 bg-red-50 px-4 py-3 font-sans text-[14px] text-red-700"
+          className="border border-red-200 bg-red-50 px-4 py-3 font-sans text-[0.875rem] text-red-700"
         >
           Something went wrong sending your message. Please call us at 407-839-8485
           or try again.
@@ -175,7 +177,7 @@ export function ContactForm() {
       </div>
 
       <fieldset className="flex flex-col gap-3">
-        <legend className="mb-1 font-sans text-[13px] text-slate-600">
+        <legend className="mb-1 font-sans text-[0.8125rem] text-slate-600">
           Services of interest
         </legend>
         <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
@@ -184,7 +186,7 @@ export function ContactForm() {
             return (
               <label
                 key={s.slug}
-                className="group flex cursor-pointer items-center gap-3 font-sans text-[14px] text-slate-600"
+                className="group flex cursor-pointer items-center gap-3 font-sans text-[0.875rem] text-slate-600"
               >
                 <span
                   className={`flex h-5 w-5 shrink-0 items-center justify-center border transition-colors ${
@@ -223,7 +225,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="group mt-2 inline-flex items-center justify-center gap-3 bg-navy-logo px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-white transition-colors duration-500 ease-expo hover:bg-navy disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+        className="group mt-2 inline-flex items-center justify-center gap-3 bg-navy-logo px-8 py-4 font-sans text-[0.75rem] uppercase tracking-wide2 text-white transition-colors duration-500 ease-expo hover:bg-navy disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo focus-visible:ring-offset-2 focus-visible:ring-offset-white"
       >
         {status === "submitting" ? (
           <>
@@ -259,7 +261,7 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={htmlFor} className="font-sans text-[13px] text-slate-600">
+      <label htmlFor={htmlFor} className="font-sans text-[0.8125rem] text-slate-600">
         {label}
         {required && <span className="ml-1 text-navy-logo">*</span>}
       </label>
@@ -268,7 +270,7 @@ function Field({
         <p
           id={`${htmlFor}-error`}
           role="alert"
-          className="font-sans text-[13px] text-red-600"
+          className="font-sans text-[0.8125rem] text-red-600"
         >
           {error}
         </p>

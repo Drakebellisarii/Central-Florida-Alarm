@@ -15,6 +15,35 @@
   }
 }
 
+/* ------------------------------------------------------------------ */
+/* Large-display scaling.                                              */
+/*                                                                     */
+/* Every Tailwind size on this site is rem-based, so stepping the root */
+/* font-size up scales type, spacing, and container widths together on */
+/* big monitors, conference-room TVs, and 4K displays — the layout     */
+/* keeps its proportions instead of stranding small text in a sea of   */
+/* white. Breakpoints themselves are px-based and unaffected.          */
+/* ------------------------------------------------------------------ */
+@media (min-width: 1920px) {
+  :root { --frame-inset: 28px; }
+  html { font-size: 17px; }
+}
+
+@media (min-width: 2300px) {
+  :root { --frame-inset: 34px; }
+  html { font-size: 20px; }
+}
+
+@media (min-width: 3000px) {
+  :root { --frame-inset: 44px; }
+  html { font-size: 25px; }
+}
+
+@media (min-width: 3800px) {
+  :root { --frame-inset: 56px; }
+  html { font-size: 31px; }
+}
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -118,6 +147,24 @@ body {
       animation-range: entry 5% entry 55%;
     }
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* Modal open transition — backdrop fade + card pop.                   */
+/* ------------------------------------------------------------------ */
+@keyframes modal-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modal-pop-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .modal-backdrop-in { animation: modal-backdrop-in 0.25s ease-out both; }
+  .modal-pop-in { animation: modal-pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
 }
 
 /* ------------------------------------------------------------------ */
