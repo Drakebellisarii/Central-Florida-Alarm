@@ -152,7 +152,7 @@ export function Navbar() {
                   : "bg-white text-navy-deep hover:bg-paper focus-visible:ring-white/60"
               }`}
             >
-              Service Request
+              Repair Request
               <ArrowRight
                 strokeWidth={1.25}
                 className="h-3.5 w-3.5 transition-transform duration-500 ease-expo group-hover:translate-x-0.5"

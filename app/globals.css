@@ -167,6 +167,28 @@ body {
   .modal-pop-in { animation: modal-pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
 }
 
+/* Monitoring modal — the warning banner stamps in from the viewer's side
+   of the screen after the card lands, then the icon pulses twice. */
+@keyframes warning-stamp {
+  from { opacity: 0; transform: scale(2.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes warning-pulse {
+  from { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  to   { box-shadow: 0 0 0 1.5rem rgba(220, 38, 38, 0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .warning-stamp {
+    transform-origin: left center;
+    animation: warning-stamp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+  }
+  .warning-pulse {
+    animation: warning-pulse 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s 2;
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Smart Home page — scoped, more dramatic scroll choreography.        */
 /* Pure CSS scroll-driven; content stays visible where unsupported.    */

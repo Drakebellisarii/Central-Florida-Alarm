@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Cpu, ShieldCheck, Radar, Tv, Lightbulb, Blinds, Wifi, Plus } from "lucide-react";
+import { Cpu, ShieldCheck, Flame, Radar, Tv, Lightbulb, Blinds, Wifi, Plus } from "lucide-react";
 
 const PILLARS = [
   { icon: Cpu, label: "Automation", body: "Lighting, climate, and AV coordinated by one quiet logic." },
-  { icon: ShieldCheck, label: "Security & Fire Safety", body: "Surveillance, access, and alarm joined with smoke, CO, and fire detection — monitored as one." },
+  { icon: ShieldCheck, label: "Security", body: "Surveillance and access control woven into daily life, not bolted on." },
+  { icon: Flame, label: "Fire Safety", body: "Smoke, CO, and fire detection monitored the moment danger begins." },
   { icon: Radar, label: "24/7 System Monitoring", body: "State of the art local monitoring for any impending emergency event." },
   { icon: Tv, label: "Audio & Video", body: "Whole-house music, private cinema, and displays that disappear." },
   { icon: Lightbulb, label: "Lighting Control", body: "Tunable light that flatters the architecture and sets itself." },
@@ -16,18 +17,12 @@ const PILLARS = [
 
 export function AboutSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  // Which capability row is expanded — only one description shows at a time.
+  // Which capability card is expanded — only one description shows at a time.
   const [openPillar, setOpenPillar] = useState<number | null>(null);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
-    // Set playback rate once metadata is available (setting it before
-    // loadedmetadata fires is silently ignored on mobile browsers).
-    const applyRate = () => { video.playbackRate = 0.25; };
-    video.addEventListener("loadedmetadata", applyRate);
-    if (video.readyState >= 1) applyRate();
 
     // On mobile the video is below the fold and won't autoplay until the
     // user scrolls to it — watch for it entering the viewport and play then.
@@ -44,7 +39,6 @@ export function AboutSection() {
 
     return () => {
       io.disconnect();
-      video.removeEventListener("loadedmetadata", applyRate);
     };
   }, []);
 
@@ -55,30 +49,28 @@ export function AboutSection() {
       <div className="flex min-w-0 flex-col justify-center px-6 py-20 sm:px-8 md:w-[55%] md:px-10 md:py-16 lg:px-16 lg:py-20 xl:px-20">
 
         {/* Label above the promise */}
-        <p className="reveal-scroll font-sans text-[0.75rem] uppercase tracking-eyebrow text-navy/55">
+        <p className="reveal-scroll font-sans text-[1.25rem] font-semibold uppercase tracking-eyebrow text-navy/70">
           Our Mission Statement
         </p>
 
         {/* The promise — the centerpiece. Sized down and given room to breathe,
             with a quiet two-tone fall so the payoff lands without any bold. */}
         <blockquote className="reveal-scroll mt-6 max-w-xl">
-          <p className="font-display text-[clamp(1.35rem,2.3vw,2.05rem)] leading-[1.45] tracking-[-0.005em] text-navy-deep">
-            <span className="text-navy-deep/45">
-              To be sure every client is so satisfied with our performance{" "}
-            </span>
-            that they would definitely do business with us again.
+          <p className="font-display text-[clamp(1.35rem,2.3vw,2.05rem)] leading-[1.45] tracking-[-0.005em] text-navy-logo">
+            To be sure every client is so satisfied with our performance that
+            they would definitely do business with us again.
           </p>
         </blockquote>
 
-        {/* Capabilities — a numbered serif ledger. Each row shows only its name;
-            tapping it reveals the description and inks the row in. Open one at a
-            time, accordion-style. */}
-        <ul className="mt-10 border-t border-slate-100">
+        {/* Capabilities — a 2-column grid of dropdowns so all eight pillars
+            fit without the section running long. Tapping a row reveals its
+            description; only one is open at a time. */}
+        <div className="mt-10 grid grid-cols-1 border-t border-slate-100 sm:grid-cols-2 sm:gap-x-10">
           {PILLARS.map((p, i) => {
             const Icon = p.icon;
             const isOpen = openPillar === i;
             return (
-              <li
+              <div
                 key={p.label}
                 className="reveal-scroll border-b border-slate-100"
                 style={{ animationDelay: `${i * 0.05}s` }}
@@ -105,12 +97,12 @@ export function AboutSection() {
                   />
 
                   <div
-                    className={`relative flex items-center gap-5 py-5 pr-3 transition-[padding] duration-500 ease-out group-hover:pl-6 ${
+                    className={`relative flex items-center gap-4 py-5 pr-3 transition-[padding] duration-500 ease-out group-hover:pl-6 ${
                       isOpen ? "pl-6" : "pl-4"
                     }`}
                   >
                     <span
-                      className={`w-8 shrink-0 font-display text-[1.55rem] leading-none transition-colors duration-300 group-hover:text-navy-deep ${
+                      className={`w-7 shrink-0 font-display text-[1.3rem] leading-none transition-colors duration-300 group-hover:text-navy-deep ${
                         isOpen ? "text-navy-deep" : "text-navy/20"
                       }`}
                     >
@@ -125,7 +117,7 @@ export function AboutSection() {
                             isOpen ? "text-navy-deep" : "text-navy/40"
                           }`}
                         />
-                        <h3 className="font-display text-[1rem] leading-snug text-navy-deep">
+                        <h3 className="font-display text-[0.95rem] leading-snug text-navy-deep">
                           {p.label}
                         </h3>
                       </div>
@@ -152,13 +144,13 @@ export function AboutSection() {
                     />
                   </div>
                 </button>
-              </li>
+              </div>
             );
           })}
-        </ul>
+        </div>
 
         {/* Association logos */}
-        <div className="reveal-scroll mt-12 border-t border-slate-100 pt-8">
+        <div className="reveal-scroll mt-12 pt-8">
           <div className="flex flex-wrap items-center justify-center gap-6 sm:flex-nowrap sm:gap-8 md:gap-5 lg:gap-6 xl:gap-8">
             <Image
               src="/images/GOBA.png"
@@ -191,22 +183,20 @@ export function AboutSection() {
       {/* ── Right — portrait video (full-width on mobile, side panel on tablet/desktop) */}
       <div className="relative flex h-[65vh] items-center justify-center overflow-hidden bg-navy-deep sm:h-[75vh] md:h-auto md:w-[45%] lg:h-auto lg:w-[45%]">
         <div className="grain absolute inset-0 opacity-30" />
-        {/* Portrait 9:16 container centered within the right panel */}
-        <div
-          className="relative z-10 h-full overflow-hidden"
-          style={{ width: "min(96%, calc(100dvh * 9 / 10))" }}
-        >
+        {/* Container fills the right panel — video is cropped to match once
+            it's re-exported at the panel's portrait aspect ratio. */}
+        <div className="relative z-10 h-full w-full overflow-hidden">
           <video
             ref={videoRef}
             autoPlay
             muted
+            loop
             playsInline
             preload="auto"
             poster="/images/blinds-poster.jpg"
             className="absolute inset-0 h-full w-full object-cover"
-            style={{ objectPosition: "75% center" }}
           >
-            <source src="/Blinds-loop.mp4" type="video/mp4" />
+            <source src="/CFAS-Blind2.mp4" type="video/mp4" />
           </video>
         </div>
       </div>

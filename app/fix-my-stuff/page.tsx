@@ -50,7 +50,7 @@ export default function FixMyStuffPage() {
             <Breadcrumbs items={crumbs} tone="onDark" />
             <div className="mt-10">
               <h1 className="font-hero text-[clamp(2.6rem,5.5vw,4.4rem)] font-light leading-[1.0] tracking-tight text-white">
-                Let&rsquo;s fix your stuff.
+                Let&rsquo;s fix the problem.
               </h1>
             </div>
           </div>

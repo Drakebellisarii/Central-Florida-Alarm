@@ -17,6 +17,7 @@ export function PageHero({
   imageAlt = "",
   crumbs,
   light = false,
+  tint = "strong",
 }: {
   title: string;
   lead?: string;
@@ -24,7 +25,10 @@ export function PageHero({
   imageAlt?: string;
   crumbs: Crumb[];
   light?: boolean;
+  /** "soft" lets more of the photo through — less of the navy color wash. */
+  tint?: "strong" | "soft";
 }) {
+  const soft = tint === "soft";
   return (
     <section
       className={`relative isolate overflow-hidden ${
@@ -42,13 +46,17 @@ export function PageHero({
             priority
             sizes="100vw"
             className={`object-cover object-center ${
-              light ? "opacity-35" : "opacity-40"
+              light ? (soft ? "opacity-50" : "opacity-35") : "opacity-40"
             }`}
           />
           <div
             aria-hidden="true"
             className={`absolute inset-0 ${
-              light ? "bg-navy-deep/70" : "bg-ink/70"
+              light
+                ? soft
+                  ? "bg-navy-deep/50"
+                  : "bg-navy-deep/70"
+                : "bg-ink/70"
             }`}
           />
           <div

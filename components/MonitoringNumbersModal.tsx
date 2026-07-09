@@ -56,22 +56,23 @@ export function MonitoringNumbersModal() {
         </button>
 
         <div className="px-7 pb-9 pt-10 sm:px-10 sm:pb-10">
-          <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-amber-500/10 text-amber-600">
-            <TriangleAlert strokeWidth={1.5} className="h-5 w-5" />
-          </span>
-
-          <p className="mt-5 font-sans text-[0.6875rem] uppercase tracking-eyebrow text-amber-600">
-            Important
-          </p>
+          <div className="warning-stamp flex items-center gap-5">
+            <span className="warning-pulse inline-flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-red-600/10 text-red-600">
+              <TriangleAlert strokeWidth={2.25} className="h-14 w-14" />
+            </span>
+            <p className="font-hero text-[clamp(1.875rem,7vw,2.75rem)] uppercase leading-none tracking-[0.08em] text-red-600">
+              Important
+            </p>
+          </div>
           <h2
             id="monitoring-numbers-title"
-            className="mt-2 font-display text-[1.7rem] font-light leading-tight tracking-tight text-navy-deep"
+            className="mt-6 font-display text-[1.7rem] font-light leading-tight tracking-tight text-navy-deep"
           >
             Save these numbers in your contacts.
           </h2>
 
           <p className="mt-5 font-sans text-[0.9375rem] leading-relaxed text-slate-600">
-            Many phones silently screen calls from 800 numbers as spam.
+            Many phones silently screen calls from 1-800 numbers as spam.
             That&rsquo;s a problem when our monitoring center calls to verify
             an alarm — a missed call can mean a missed chance to stop a false
             dispatch. Save these as{" "}
@@ -83,7 +84,7 @@ export function MonitoringNumbersModal() {
 
           <div className="mt-6 space-y-2 border-y border-slate-200 py-6">
             <p className="font-display text-[1.15rem] font-normal tracking-tight text-navy-deep">
-              800-432-1429 <span className="text-slate-400">and</span> 800-633-4738
+              1-800-432-1429 <span className="text-slate-400">and</span> 1-800-633-4738
             </p>
             <p className="font-sans text-[0.875rem] text-slate-500">
               SMS Short Code <span className="font-medium text-navy-deep">60281</span>

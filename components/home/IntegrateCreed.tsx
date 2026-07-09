@@ -17,9 +17,11 @@ export function IntegrateCreed() {
 
         {/* Motto — the brand line, sitting above the headword */}
         <Reveal>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-sans text-[0.9375rem] uppercase tracking-eyebrow text-bone/60 sm:text-[1.0625rem]">
+          {/* Must never wrap on phones: nowrap + viewport-scaled size, gaps,
+              and tracking keep all three words on one line down to ~320px. */}
+          <div className="flex flex-nowrap items-center gap-x-3 gap-y-2 whitespace-nowrap font-sans text-[clamp(0.5625rem,2.8vw,0.9375rem)] uppercase tracking-[0.12em] text-bone/60 sm:flex-wrap sm:gap-x-6 sm:whitespace-normal sm:text-[1.0625rem] sm:tracking-eyebrow">
             {CREED.map((word, i) => (
-              <span key={word} className="flex items-center gap-x-6">
+              <span key={word} className="flex items-center gap-x-3 sm:gap-x-6">
                 {i > 0 && (
                   <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-white/30" />
                 )}

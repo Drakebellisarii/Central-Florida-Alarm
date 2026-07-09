@@ -100,15 +100,15 @@ export function Hero() {
         </video>
       </div>
 
-      {/* ── Color grade ─────────────────────────────────────────────── */}
-      <div aria-hidden="true" className="absolute inset-0 bg-black/25" />
+      {/* ── Color grade — weighted to the left, where the copy sits ──── */}
+      <div aria-hidden="true" className="absolute inset-0 bg-black/5" />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent"
+        className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/75 via-black/25 to-transparent"
+        className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/30 via-black/8 to-transparent"
       />
 
       {/* ── Bottom bar — logo blue, fades out into the scene ────────── */}
@@ -138,14 +138,14 @@ export function Hero() {
       <div className="relative z-20 mx-auto w-full max-w-[93.75rem] px-5 pb-24 sm:px-8 sm:pb-32 md:px-11 md:pb-36 lg:pb-28 xl:pb-32 2xl:max-w-[110rem] 2xl:pb-40 short:pb-8">
         <div className="max-w-[64rem] 2xl:max-w-[76rem]">
 
-          <h1 className="font-hero font-light leading-[0.95] tracking-[-0.025em]">
+          <h1 className="font-hero font-light leading-[0.95] tracking-[-0.025em] lg:[text-shadow:0_2px_28px_rgba(0,0,0,0.5)]">
             <span className="reveal-load rd-1 block text-[clamp(1.55rem,min(6vw,13vh),5.25rem)] text-white">
               Central Florida&apos;s leader
             </span>
-            <span className="reveal-load rd-2 block text-[clamp(1.55rem,min(6vw,13vh),5.25rem)] text-white/80">
+            <span className="reveal-load rd-2 block text-[clamp(1.55rem,min(6vw,13vh),5.25rem)] text-white/80 lg:text-white">
               in smart home automation
             </span>
-            <span className="reveal-load rd-3 block text-[clamp(1.55rem,min(6vw,13vh),5.25rem)] text-white/50">
+            <span className="reveal-load rd-3 block text-[clamp(1.55rem,min(6vw,13vh),5.25rem)] text-white/50 lg:text-white">
               since 1968.
             </span>
           </h1>

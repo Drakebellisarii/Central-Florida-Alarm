@@ -30,7 +30,7 @@ const CARDS: ActionCard[] = [
   {
     n: 1,
     title: "Visit our client portal",
-    buttons: [{ label: "Log In", href: "#" }],
+    buttons: [{ label: "Log In", href: "https://atlanticcompanies.simprosuite.com/customer/" }],
   },
   {
     n: 2,
@@ -40,17 +40,17 @@ const CARDS: ActionCard[] = [
   {
     n: 3,
     title: "How will you contact me in an emergency?",
-    buttons: [{ label: "Learn More", href: "#" }],
+    buttons: [{ label: "Learn More", href: "/existing-clients/reminders" }],
   },
   {
     n: 4,
     title: "Need service? Submit a service request",
-    buttons: [{ label: "Learn More", href: "#" }],
+    buttons: [{ label: "Learn More", href: "/fix-my-stuff" }],
   },
   {
     n: 5,
     title: "Alarm won't stop beeping?",
-    buttons: [{ label: "Get Help", href: "#" }],
+    buttons: [{ label: "Get Help", href: "/existing-clients/reminders#power-loss" }],
   },
   {
     n: 6,
@@ -64,7 +64,7 @@ const CARDS: ActionCard[] = [
   {
     n: 7,
     title: "Alarm monitoring customer portal",
-    buttons: [{ label: "Learn More", href: "#" }],
+    buttons: [{ label: "Learn More", href: "https://myalarms.com/Account/Login?ReturnUrl=%2F" }],
   },
 ];
 
