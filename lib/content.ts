@@ -12,9 +12,9 @@ export type Testimonial = {
 export const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      "We have handed CFAS some of the most complicated homes we have ever built, and they have never been the reason a closing slipped. They show up when they say they will, they coordinate with the rest of the trades, and the system works the day the owner walks in. That is rarer than it should be.",
+      "Dealing with Bruce and Kory Gartley can only be described as a pure pleasure. The required installation was very difficult with many owner requested modifications. Their technicians were very knowledgeable, and the timeliness and quality of their workmanship cannot be better described in this recommendation. I strongly recommend Central Florida Automation Services.",
     name: "Bing Kearney",
-    role: "General Contractor",
+    role: "Class A General Contractor, Isleworth",
   },
   {
     quote:

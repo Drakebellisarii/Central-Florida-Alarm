@@ -176,24 +176,26 @@ export default function SmartHomePage() {
             />
           </div>
 
-          <span className="reveal-load rd-1 mt-10 inline-flex items-center gap-3 font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/60">
-            <span aria-hidden className="h-px w-7 bg-white/30" />
-            Powered by Alarm.com
-          </span>
+          <div className="reveal-load rd-1 mt-10 max-w-md">
+            <Eyebrow dark>Interesting fact</Eyebrow>
+            <p className="mt-3 font-display text-[1.0625rem] font-light italic leading-snug text-white/70">
+              Central Florida Automation Services was the first Alarm.com
+              provider in Central Florida.
+            </p>
+          </div>
 
           <h1 className="reveal-load rd-2 mt-6 max-w-4xl font-hero text-[clamp(2.4rem,6.4vw,5.3rem)] font-light leading-[1.03] tracking-tight text-white">
-            Security, comfort, and control — in one quiet app.
+            Security, comfort, and control in one easy to use app.
           </h1>
           <p className="reveal-load rd-3 mt-7 max-w-2xl font-sans text-[1.0625rem] leading-relaxed text-white/75">
             One platform for your home&apos;s security, cameras, locks,
-            lighting, and climate. Designed and installed by CFAS, it brings
-            every system under a single, considered interface — so protecting
-            your home feels effortless.
+            lighting, and climate. Designed and installed by CFAS
+            Craftspeople.
           </p>
 
           <nav
             aria-label="Sections"
-            className="reveal-load rd-4 mt-12 flex flex-wrap gap-x-3 gap-y-3 border-t border-white/15 pt-8"
+            className="reveal-load rd-4 mt-12 hidden flex-wrap gap-x-3 gap-y-3 border-t border-white/15 pt-8 sm:flex"
           >
             {TABS.map((t) => (
               <a

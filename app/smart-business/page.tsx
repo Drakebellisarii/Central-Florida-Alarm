@@ -29,6 +29,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Eyebrow } from "@/components/Eyebrow";
 import { AmbientVideo } from "@/components/smart-home/AmbientVideo";
 import { SBMotion } from "@/components/smart-business/SBMotion";
+import { SBHeroVideo } from "@/components/smart-business/SBHeroVideo";
 
 export const metadata: Metadata = buildMetadata({
   title: "Smart Business Security | Central Florida Automation Services",
@@ -181,18 +182,12 @@ export default function SmartBusinessPage() {
         <NavSentinel />
 
         <div aria-hidden className="absolute inset-0 overflow-hidden">
-          <video
-            data-sb-hero-media
+          <SBHeroVideo
             className="h-full w-full scale-105 object-cover opacity-45"
             poster={`${DIR}/amb-access-poster.jpg`}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-          >
-            <source src={`${DIR}/amb-access.mp4`} type="video/mp4" />
-          </video>
+            desktopSrc={`${DIR}/amb-access.mp4`}
+            mobileSrc="/Smart-biz.mp4"
+          />
         </div>
         <div aria-hidden className="absolute inset-0 bg-navy-deep/55" />
         <div
@@ -212,10 +207,13 @@ export default function SmartBusinessPage() {
             />
           </div>
 
-          <span className="reveal-load rd-1 mt-10 inline-flex items-center gap-3 font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/60">
-            <span aria-hidden className="h-px w-7 bg-white/30" />
-            Powered by Alarm.com
-          </span>
+          <div className="reveal-load rd-1 mt-10 max-w-md">
+            <Eyebrow dark>Interesting fact</Eyebrow>
+            <p className="mt-3 font-display text-[1.0625rem] font-light italic leading-snug text-white/70">
+              Central Florida Automation Services was the first Alarm.com
+              provider in Central Florida.
+            </p>
+          </div>
 
           <h1 className="reveal-load rd-2 mt-6 max-w-4xl font-hero text-[clamp(2.4rem,6.4vw,5.3rem)] font-light leading-[1.03] tracking-tight text-white">
             Run every location like you&apos;re standing in it.

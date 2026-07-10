@@ -28,9 +28,9 @@ export const BUSINESS = {
   licenses: ["EF0001226", "EF20002121", "EF20002120"],
   installations: "50,000+",
   social: {
-    facebook: "https://www.facebook.com/cfalarm/",
-    instagram: "https://www.instagram.com/atlantic.security/",
-    youtube: "https://www.youtube.com/channel/UCuSfSxKR4Gr9tqd_KJXZmWA",
+    facebook:
+      "https://www.facebook.com/people/Central-Florida-Automation-Services/61591435864828/",
+    instagram: "https://www.instagram.com/cfas.fl/",
   },
 } as const;
 
@@ -129,11 +129,7 @@ export function localBusinessLd(areaServed?: string[]) {
       "Lake Nona",
       "Celebration",
     ]).map((name) => ({ "@type": "City", name })),
-    sameAs: [
-      BUSINESS.social.facebook,
-      BUSINESS.social.instagram,
-      BUSINESS.social.youtube,
-    ],
+    sameAs: [BUSINESS.social.facebook, BUSINESS.social.instagram],
   };
 }
 

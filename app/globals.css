@@ -325,3 +325,32 @@ body {
     stroke: transparent;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Footer — rotating Google review card                                */
+/*                                                                     */
+/* All slides occupy the same grid cell; each fades in for its third   */
+/* of a 27s cycle (staggered via inline animation-delay: 0s/9s/18s).   */
+/* Base opacity is 0 so only the active slide shows.                   */
+/* ------------------------------------------------------------------ */
+@keyframes footer-review-fade {
+  0% { opacity: 0; }
+  3%, 30% { opacity: 1; }
+  36%, 100% { opacity: 0; }
+}
+
+.footer-review-slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  animation: footer-review-fade 27s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-review-slide {
+    animation: none;
+  }
+
+  .footer-review-slide:first-child {
+    opacity: 1;
+  }
+}
