@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { buildMetadata, localBusinessLd, breadcrumbLd, BUSINESS } from "@/lib/seo";
 import { NavSentinel } from "@/components/NavSentinel";
@@ -28,109 +27,53 @@ export default function ContactPage() {
       <section className="relative bg-white">
         <NavSentinel />
 
-        {/* Blue masthead band — blue-tinted photo behind brand navy, matching
-            the service-area page headers (PageHero light). */}
-        <div className="relative isolate overflow-hidden bg-navy-deep">
-          <Image
-            src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80"
-            alt="Aerial view of a Central Florida lakefront community at dusk"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center opacity-35"
-          />
-          <div aria-hidden="true" className="absolute inset-0 bg-navy-deep/70" />
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-navy-deep to-transparent"
-          />
-          <div className="relative mx-auto max-w-[93.75rem] px-5 pb-20 pt-36 sm:px-8 md:px-11 md:pb-24 md:pt-44 short:pb-10 short:pt-24">
+        {/* Blue header band — matches the service-request page */}
+        <div className="bg-navy-deep">
+          <div className="mx-auto max-w-[93.75rem] px-5 pb-20 pt-36 sm:px-8 md:px-11 md:pb-24 md:pt-44 short:pb-10 short:pt-24">
             <Breadcrumbs items={crumbs} tone="onDark" />
-            <div className="mt-10 max-w-2xl">
-              <h1 className="font-hero text-[clamp(2.1rem,6.5vw,4.4rem)] font-light leading-[1.05] tracking-tight text-white">
+            <div className="mt-10">
+              <h1 className="font-hero text-[clamp(2.6rem,5.5vw,4.4rem)] font-light leading-[1.0] tracking-tight text-white">
                 Tell us about the property.
               </h1>
-              <p className="mt-7 max-w-md font-sans text-[1.0625rem] leading-relaxed text-white/70">
-                Whether you are reviewing plans with an architect or living in a home
-                that has not kept up, the first step is a conversation. There is no
-                charge for it, and no pressure after it.
-              </p>
             </div>
           </div>
         </div>
 
-        <div className="mx-auto max-w-[93.75rem] px-5 pb-24 pt-16 sm:px-8 md:px-11 md:pb-32 md:pt-20">
-          <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-12">
-            {/* Left: NAP */}
-            <div className="lg:col-span-5">
-              <dl className="space-y-7">
-                <ContactRow icon={<Phone strokeWidth={1.25} className="h-5 w-5" />} label="Call">
-                  <a
-                    href={BUSINESS.phoneHref}
-                    className="font-display text-2xl text-navy-deep transition-colors hover:text-navy-logo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
-                  >
-                    {BUSINESS.phone}
-                  </a>
-                </ContactRow>
+        <div className="mx-auto max-w-2xl px-5 pb-24 pt-16 sm:px-8 md:pb-32 md:pt-20">
+          <ContactForm />
 
-                <ContactRow icon={<Mail strokeWidth={1.25} className="h-5 w-5" />} label="Email">
-                  <a
-                    href={BUSINESS.emailHref}
-                    className="font-sans text-[1rem] text-navy-deep transition-colors hover:text-navy-logo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
-                  >
-                    {BUSINESS.email}
-                  </a>
-                </ContactRow>
-
-                <ContactRow icon={<MapPin strokeWidth={1.25} className="h-5 w-5" />} label="Visit">
-                  <address className="font-sans text-[1rem] not-italic leading-relaxed text-navy-deep">
-                    {BUSINESS.street}
-                    <br />
-                    {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
-                  </address>
-                </ContactRow>
-              </dl>
+          {/* Direct lines */}
+          <div className="mt-16 border-t border-slate-200 pt-10 text-center">
+            <p className="font-sans text-[0.9375rem] leading-relaxed text-slate-600">
+              Prefer to talk first? Reach us directly.
+            </p>
+            <div className="mt-7 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-12">
+              <a
+                href={BUSINESS.phoneHref}
+                className="flex items-center gap-3.5 text-navy-deep transition-colors hover:text-navy-logo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
+              >
+                <Phone strokeWidth={1.25} className="h-5 w-5 shrink-0 text-navy-logo" />
+                <span className="font-display text-[1.5rem] leading-none tracking-tight">
+                  {BUSINESS.phone}
+                </span>
+              </a>
+              <a
+                href={BUSINESS.emailHref}
+                className="flex items-center gap-3.5 text-navy-deep transition-colors hover:text-navy-logo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
+              >
+                <Mail strokeWidth={1.25} className="h-5 w-5 shrink-0 text-navy-logo" />
+                <span className="font-display text-[1.3rem] leading-none tracking-tight">
+                  {BUSINESS.email}
+                </span>
+              </a>
             </div>
-
-            {/* Right: form */}
-            <div className="lg:col-span-6 lg:col-start-7">
-              <div className="border border-slate-200 bg-slate-50 p-7 shadow-[0_24px_60px_-32px_rgba(10,26,82,0.35)] sm:p-9 md:p-10">
-                <h2 className="font-display text-2xl text-navy-deep">Request a consultation</h2>
-                <p className="mt-2 font-sans text-[0.875rem] text-slate-500">
-                  We reply within one business day.
-                </p>
-                <div className="mt-8">
-                  <ContactForm />
-                </div>
-              </div>
-            </div>
+            <address className="mt-8 flex items-center justify-center gap-2.5 font-sans text-[0.875rem] not-italic leading-relaxed text-slate-500">
+              <MapPin strokeWidth={1.25} className="h-4 w-4 shrink-0 text-navy-logo" />
+              {BUSINESS.street}, {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
+            </address>
           </div>
         </div>
       </section>
     </>
-  );
-}
-
-function ContactRow({
-  icon,
-  label,
-  children,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex gap-5">
-      <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center border border-slate-200 text-navy-logo">
-        {icon}
-      </span>
-      <div>
-        <dt className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-slate-500">
-          {label}
-        </dt>
-        <dd className="mt-1.5">{children}</dd>
-      </div>
-    </div>
   );
 }

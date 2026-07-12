@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, M_PLUS_Rounded_1c } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -43,6 +43,14 @@ const jakarta = Plus_Jakarta_Sans({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+// M PLUS Rounded 1c — soft rounded display, reserved for oversized numerals.
+const mPlusRounded = M_PLUS_Rounded_1c({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-numeral",
+  weight: ["100", "300"],
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title:
@@ -78,7 +86,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${gloock.variable} ${dmSerifText.variable} ${jakarta.variable}`}>
+    <html
+      lang="en"
+      className={`${gloock.variable} ${dmSerifText.variable} ${jakarta.variable} ${mPlusRounded.variable}`}
+    >
       <body className="bg-white font-sans text-navy-deep antialiased">
         <a
           href="#content"

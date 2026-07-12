@@ -53,6 +53,8 @@ const config: Config = {
         display: ["var(--font-dm-serif)", "Georgia", "serif"],
         // Plus Jakarta Sans — body and smaller UI text.
         sans: ["var(--font-jakarta)", "system-ui", "sans-serif"],
+        // M PLUS Rounded 1c — oversized numerals only.
+        numeral: ["var(--font-numeral)", "system-ui", "sans-serif"],
       },
       letterSpacing: {
         eyebrow: "0.22em",

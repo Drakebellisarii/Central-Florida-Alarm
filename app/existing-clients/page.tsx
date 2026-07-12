@@ -3,6 +3,7 @@ import { buildMetadata, localBusinessLd, breadcrumbLd } from "@/lib/seo";
 import { NavSentinel } from "@/components/NavSentinel";
 import { JsonLd } from "@/components/JsonLd";
 import { MonitoringNumbersModal } from "@/components/MonitoringNumbersModal";
+import { ServiceAgreementModal } from "@/components/ServiceAgreementModal";
 
 const crumbs = [
   { name: "Home", path: "/" },
@@ -19,9 +20,7 @@ export const metadata: Metadata = buildMetadata({
 /* ------------------------------------------------------------------ */
 /* Existing-client action cards.                                       */
 /*                                                                     */
-/* TODO: replace each `href: "#"` with the real destination. For the   */
-/* "Register your alarm" card, point each region button at that area's */
-/* alarm-registration / false-alarm page.                              */
+/* TODO: replace each `href: "#"` with the real destination.           */
 /* ------------------------------------------------------------------ */
 type CardButton = { label: string; href: string };
 type ActionCard = { n: number; title: string; buttons: CardButton[] };
@@ -35,7 +34,8 @@ const CARDS: ActionCard[] = [
   {
     n: 2,
     title: "I am interested in your service agreement",
-    buttons: [{ label: "Learn More", href: "#" }],
+    // Opens the ServiceAgreementModal form instead of navigating.
+    buttons: [],
   },
   {
     n: 3,
@@ -55,10 +55,29 @@ const CARDS: ActionCard[] = [
   {
     n: 6,
     title: "Register your alarm",
+    // Official registration pages per jurisdiction. Mount Dora has no
+    // online registration, so it links to the alarm coordinator's email.
     buttons: [
-      { label: "Orlando", href: "#" },
-      { label: "Daytona", href: "#" },
-      { label: "Tampa", href: "#" },
+      {
+        label: "City of Orlando",
+        href: "https://www.orlando.gov/Our-Government/Records-and-Documents/Registrations-and-Applications/Register-Your-Security-Alarm",
+      },
+      { label: "Orange County", href: "https://www.ocso.com/securityalarms/" },
+      { label: "Altamonte Springs", href: "https://www.altamonte.org/422/Alarm-Services" },
+      {
+        label: "Casselberry",
+        href: "https://www.casselberry.org/FormCenter/Online-Forms-4/Security-Alarm-Registration-59",
+      },
+      { label: "Kissimmee", href: "https://www.crywolfservices.com/kissimmeefl/RegForm/NewRegFormV2.aspx" },
+      {
+        label: "Volusia County",
+        href: "https://www.volusiasheriff.gov/file/61/VSO-Alarm-Registration.pdf",
+      },
+      {
+        label: "Daytona Beach",
+        href: "https://product.cityalarmpermit.com/FAMSCitizen/DaytonaBeach/terms-condition.htm",
+      },
+      { label: "Mount Dora", href: "mailto:AndreanoJ@mountdora.gov" },
     ],
   },
   {
@@ -84,10 +103,6 @@ export default function ExistingClientsPage() {
             <h1 className="max-w-3xl font-hero text-[clamp(2.4rem,5vw,4rem)] font-light leading-[1.0] tracking-tight text-white">
               Welcome back.
             </h1>
-            <p className="mt-6 max-w-xl font-sans text-[1.0625rem] leading-relaxed text-white/70">
-              Everything for the systems in your home — portals, service, and
-              support — gathered in one place.
-            </p>
           </div>
         </div>
 
@@ -108,15 +123,34 @@ export default function ExistingClientsPage() {
                   </h2>
 
                   <div className="mt-auto flex w-full flex-wrap justify-center gap-2 pt-7">
-                    {card.buttons.map((b) => (
-                      <a
-                        key={b.label}
-                        href={b.href}
-                        className="inline-flex items-center justify-center bg-navy-logo px-7 py-3 font-sans text-[0.75rem] uppercase tracking-wide2 text-white transition-colors duration-300 hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
-                      >
-                        {b.label}
-                      </a>
-                    ))}
+                    {card.n === 2 ? (
+                      <ServiceAgreementModal />
+                    ) : card.n === 6 ? (
+                      // Many jurisdictions — compact outline pills instead
+                      // of the full-size button.
+                      card.buttons.map((b) => (
+                        <a
+                          key={b.label}
+                          href={b.href}
+                          {...(b.href.startsWith("http")
+                            ? { target: "_blank", rel: "noopener noreferrer" }
+                            : {})}
+                          className="inline-flex items-center justify-center border border-navy-logo/30 px-4 py-2 font-sans text-[0.6875rem] uppercase tracking-wide2 text-navy-deep transition-colors duration-300 hover:border-navy-logo hover:bg-navy-logo hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
+                        >
+                          {b.label}
+                        </a>
+                      ))
+                    ) : (
+                      card.buttons.map((b) => (
+                        <a
+                          key={b.label}
+                          href={b.href}
+                          className="inline-flex items-center justify-center bg-navy-logo px-7 py-3 font-sans text-[0.75rem] uppercase tracking-wide2 text-white transition-colors duration-300 hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
+                        >
+                          {b.label}
+                        </a>
+                      ))
+                    )}
                   </div>
                 </div>
               </li>

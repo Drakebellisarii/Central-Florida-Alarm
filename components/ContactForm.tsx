@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, ArrowUpRight, Loader2 } from "lucide-react";
+import { Check, ArrowUpRight, ChevronDown, Loader2 } from "lucide-react";
 import { SERVICES } from "@/lib/services";
 
 /* ------------------------------------------------------------------ */
@@ -20,9 +20,10 @@ const PROJECT_TYPES = [
 type Errors = Partial<Record<"name" | "email" | "phone" | "projectType" | "message", string>>;
 
 // 16px on touch sizes — anything smaller makes iOS Safari zoom the page
-// when a field is focused.
+// when a field is focused. Underline-only fields; focus thickens the rule
+// via a shadow so the layout never shifts.
 const fieldBase =
-  "w-full border border-slate-300 bg-white px-4 py-3.5 font-sans text-[1rem] text-navy-deep placeholder:text-slate-400 transition-colors focus:border-navy-logo focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-navy-logo lg:text-[0.9375rem]";
+  "w-full border-b border-slate-300 bg-transparent px-0 py-3 font-sans text-[1rem] text-navy-deep placeholder:text-slate-400 transition-[border-color,box-shadow] focus:border-navy-logo focus:shadow-[0_1px_0_0_#011689] focus-visible:outline-none lg:text-[0.9375rem]";
 
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -86,7 +87,7 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="flex min-h-[26.25rem] flex-col justify-center border border-navy-logo/30 bg-white p-10">
+      <div className="flex min-h-[26.25rem] flex-col justify-center">
         <span className="flex h-12 w-12 items-center justify-center border border-navy-logo text-navy-logo">
           <Check strokeWidth={1.25} className="h-6 w-6" />
         </span>
@@ -115,7 +116,7 @@ export function ContactForm() {
         </p>
       )}
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-x-10 gap-y-6 sm:grid-cols-2">
         <Field label="Name" htmlFor="name" error={errors.name} required>
           <input
             id="name"
@@ -156,28 +157,35 @@ export function ContactForm() {
         </Field>
 
         <Field label="Project type" htmlFor="projectType" error={errors.projectType} required>
-          <select
-            id="projectType"
-            name="projectType"
-            defaultValue=""
-            aria-invalid={!!errors.projectType}
-            aria-describedby={errors.projectType ? "projectType-error" : undefined}
-            className={`${fieldBase} appearance-none`}
-          >
-            <option value="" disabled>
-              Select one
-            </option>
-            {PROJECT_TYPES.map((t) => (
-              <option key={t} value={t}>
-                {t}
+          <div className="relative">
+            <select
+              id="projectType"
+              name="projectType"
+              defaultValue=""
+              aria-invalid={!!errors.projectType}
+              aria-describedby={errors.projectType ? "projectType-error" : undefined}
+              className={`${fieldBase} cursor-pointer appearance-none pr-6`}
+            >
+              <option value="" disabled>
+                Select one
               </option>
-            ))}
-          </select>
+              {PROJECT_TYPES.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              strokeWidth={1.5}
+              aria-hidden="true"
+              className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+            />
+          </div>
         </Field>
       </div>
 
       <fieldset className="flex flex-col gap-3">
-        <legend className="mb-1 font-sans text-[0.8125rem] text-slate-600">
+        <legend className="mb-1 font-sans text-[0.6875rem] uppercase tracking-wide2 text-slate-500">
           Services of interest
         </legend>
         <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
@@ -261,7 +269,10 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={htmlFor} className="font-sans text-[0.8125rem] text-slate-600">
+      <label
+        htmlFor={htmlFor}
+        className="font-sans text-[0.6875rem] uppercase tracking-wide2 text-slate-500"
+      >
         {label}
         {required && <span className="ml-1 text-navy-logo">*</span>}
       </label>

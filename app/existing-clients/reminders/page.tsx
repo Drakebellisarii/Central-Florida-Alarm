@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  Mail,
   MessageSquareText,
   Phone,
   PhoneCall,
@@ -9,9 +10,7 @@ import {
 } from "lucide-react";
 import { BUSINESS, buildMetadata, localBusinessLd, breadcrumbLd } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
-import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/Reveal";
-import { CTABanner } from "@/components/CTABanner";
 import { JsonLd } from "@/components/JsonLd";
 
 const crumbs = [
@@ -34,25 +33,22 @@ export const metadata: Metadata = buildMetadata({
 function ReminderSection({
   n,
   id,
-  eyebrow,
   title,
   children,
 }: {
   n: string;
   id: string;
-  eyebrow: string;
   title: string;
   children: React.ReactNode;
 }) {
   return (
     <section id={id} className="border-t border-slate-200 scroll-mt-24">
       <div className="mx-auto grid max-w-[93.75rem] grid-cols-1 gap-10 px-5 py-16 sm:px-8 md:grid-cols-12 md:gap-8 md:px-11 md:py-24">
-        {/* Numeral + eyebrow rail */}
+        {/* Numeral rail */}
         <div className="md:col-span-4 lg:col-span-3">
           <Reveal>
             <div className="md:sticky md:top-28">
-              <Eyebrow>{eyebrow}</Eyebrow>
-              <span className="mt-5 block font-display text-[4.5rem] font-light leading-none tracking-tight text-navy-logo md:text-[6rem]">
+              <span className="block font-numeral text-[5rem] font-thin leading-none text-navy-logo md:text-[7rem]">
                 {n}
               </span>
             </div>
@@ -86,8 +82,7 @@ export default function RemindersPage() {
       <PageHero
         light
         crumbs={crumbs}
-        title="Five reminders worth a minute of your time."
-        lead="The small details that make your system work exactly the way it should when it matters most — collected in one place for every CFAS client."
+        title="Five important reminders for all of our clients."
       />
 
       <div className="bg-white">
@@ -97,7 +92,6 @@ export default function RemindersPage() {
         <ReminderSection
           n="01"
           id="monitoring-numbers"
-          eyebrow="Reminder one"
           title="Save these numbers before you need them."
         >
           <Reveal index={2}>
@@ -162,7 +156,6 @@ export default function RemindersPage() {
         <ReminderSection
           n="02"
           id="code-word"
-          eyebrow="Reminder two"
           title="Don't forget your password!"
         >
           <Reveal index={2}>
@@ -196,7 +189,6 @@ export default function RemindersPage() {
         <ReminderSection
           n="03"
           id="register"
-          eyebrow="Reminder three"
           title="Register your alarm with your county."
         >
           <Reveal index={2}>
@@ -229,7 +221,6 @@ export default function RemindersPage() {
         <ReminderSection
           n="04"
           id="arming-basics"
-          eyebrow="Reminder four"
           title="The basics: arming and disarming your system."
         >
           <Reveal index={2}>
@@ -283,7 +274,6 @@ export default function RemindersPage() {
         <ReminderSection
           n="05"
           id="power-loss"
-          eyebrow="Reminder five"
           title="We lost power and now the system won't stop beeping."
         >
           <Reveal index={2}>
@@ -318,7 +308,7 @@ export default function RemindersPage() {
                   key={item.step}
                   className="grid grid-cols-[3.5rem_1fr] gap-x-5 border-t border-slate-200 py-7 first:border-t-0 first:pt-0"
                 >
-                  <span className="font-display text-[2rem] font-light leading-none text-navy-logo">
+                  <span className="font-numeral text-[2rem] font-light leading-none text-navy-logo">
                     {i + 1}
                   </span>
                   <div>
@@ -350,12 +340,42 @@ export default function RemindersPage() {
           </Reveal>
         </ReminderSection>
 
-        {/* Back link */}
-        <div className="border-t border-slate-200">
-          <div className="mx-auto max-w-[93.75rem] px-5 py-10 sm:px-8 md:px-11">
+        {/* Contact + back link */}
+        <div className="border-t border-slate-200 bg-white">
+          <div className="mx-auto flex max-w-[93.75rem] flex-col justify-between gap-12 px-5 py-16 sm:px-8 md:flex-row md:items-end md:py-20 md:px-11">
+            <div>
+              <h2 className="font-display text-[clamp(1.7rem,2.6vw,2.2rem)] font-light leading-tight tracking-tight text-navy-deep">
+                Questions about any of these?
+              </h2>
+              <p className="mt-3 font-sans text-[0.9375rem] leading-relaxed text-slate-600">
+                We&rsquo;re happy to walk through it with you.
+              </p>
+
+              <div className="mt-9 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-12">
+                <a
+                  href={BUSINESS.phoneHref}
+                  className="flex items-center gap-3.5 text-navy-deep transition-colors hover:text-navy-logo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
+                >
+                  <Phone strokeWidth={1.25} className="h-5 w-5 shrink-0 text-navy-logo" />
+                  <span className="font-display text-[1.5rem] leading-none tracking-tight">
+                    {BUSINESS.phone}
+                  </span>
+                </a>
+                <a
+                  href={`mailto:${BUSINESS.officeEmail}`}
+                  className="flex items-center gap-3.5 text-navy-deep transition-colors hover:text-navy-logo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
+                >
+                  <Mail strokeWidth={1.25} className="h-5 w-5 shrink-0 text-navy-logo" />
+                  <span className="font-display text-[1.3rem] leading-none tracking-tight">
+                    {BUSINESS.officeEmail}
+                  </span>
+                </a>
+              </div>
+            </div>
+
             <Link
               href="/existing-clients"
-              className="group inline-flex items-center gap-3 font-sans text-[0.75rem] uppercase tracking-wide2 text-navy/70 transition-colors duration-300 hover:text-navy-logo"
+              className="group inline-flex items-center gap-3 font-sans text-[0.75rem] uppercase tracking-wide2 text-navy/70 transition-colors duration-300 hover:text-navy-logo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/40"
             >
               <ArrowRight strokeWidth={1.25} className="h-4 w-4 rotate-180 transition-transform duration-300 group-hover:-translate-x-0.5" />
               All client resources
@@ -363,13 +383,6 @@ export default function RemindersPage() {
           </div>
         </div>
       </div>
-
-      <CTABanner
-        light
-        eyebrow="Here when you need us"
-        heading="Questions about any of these?"
-        body="A two-minute phone call now beats a 2 a.m. surprise later. If anything on this list raises a question about your system, we're happy to walk through it with you."
-      />
     </>
   );
 }

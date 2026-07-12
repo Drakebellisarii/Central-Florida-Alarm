@@ -15,9 +15,10 @@ type Errors = Partial<
 >;
 
 // 16px on touch sizes — anything smaller makes iOS Safari zoom the page
-// when a field is focused.
+// when a field is focused. Underline-only fields; focus thickens the rule
+// via a shadow so the layout never shifts.
 const fieldBase =
-  "w-full border border-slate-300 bg-white px-4 py-3.5 font-sans text-[1rem] text-navy-deep placeholder:text-slate-400 transition-colors focus:border-navy-logo focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-navy-logo lg:text-[0.9375rem]";
+  "w-full border-b border-slate-300 bg-transparent px-0 py-3 font-sans text-[1rem] text-navy-deep placeholder:text-slate-400 transition-[border-color,box-shadow] focus:border-navy-logo focus:shadow-[0_1px_0_0_#011689] focus-visible:outline-none lg:text-[0.9375rem]";
 
 export function ServiceRequestForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -70,7 +71,7 @@ export function ServiceRequestForm() {
 
   if (status === "success") {
     return (
-      <div className="flex min-h-[26.25rem] flex-col justify-center border border-navy-logo/30 bg-white p-10">
+      <div className="flex min-h-[26.25rem] flex-col justify-center">
         <span className="flex h-12 w-12 items-center justify-center border border-navy-logo text-navy-logo">
           <Check strokeWidth={1.25} className="h-6 w-6" />
         </span>
@@ -101,7 +102,7 @@ export function ServiceRequestForm() {
         </p>
       )}
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-x-10 gap-y-6 sm:grid-cols-2">
         <Field label="Name" htmlFor="name" error={errors.name} required>
           <input
             id="name"
@@ -159,7 +160,7 @@ export function ServiceRequestForm() {
         <textarea
           id="message"
           name="message"
-          rows={5}
+          rows={4}
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
           className={`${fieldBase} resize-none`}
@@ -206,7 +207,10 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={htmlFor} className="font-sans text-[0.8125rem] text-slate-600">
+      <label
+        htmlFor={htmlFor}
+        className="font-sans text-[0.6875rem] uppercase tracking-wide2 text-slate-500"
+      >
         {label}
         {required && <span className="ml-1 text-navy-logo">*</span>}
       </label>
