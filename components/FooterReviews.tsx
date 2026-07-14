@@ -38,15 +38,6 @@ function Stars({ rating, className }: { rating: number; className?: string }) {
   );
 }
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((p) => p[0]?.toUpperCase())
-    .join("");
-}
-
 // Right-hand footer column: rating summary plus a single review quote that
 // crossfades through the featured reviews (CSS-only, see .footer-review-slide).
 export async function FooterReviews() {
@@ -57,9 +48,11 @@ export async function FooterReviews() {
   const writeHref = `https://search.google.com/local/writereview?placeid=${placeId}`;
   const viewHref = `https://www.google.com/maps/place/?q=place_id:${placeId}`;
   // The Places API caps out at 5 reviews; feature the three strongest,
-  // one per author. The fade timing in globals.css assumes three slots.
+  // one per author. Quotes render in full (never clipped), so prefer
+  // shorter ones as the tiebreak — keeps the footer column compact instead
+  // of a wall of text setting the height for all three rotating slides.
   const featured = [...data.reviews]
-    .sort((a, b) => b.rating - a.rating || b.text.length - a.text.length)
+    .sort((a, b) => b.rating - a.rating || a.text.length - b.text.length)
     .filter((r, i, arr) => arr.findIndex((o) => o.authorName === r.authorName) === i)
     .slice(0, 3);
 
@@ -70,20 +63,17 @@ export async function FooterReviews() {
         Reviews
       </h2>
 
-      <div className="mt-6">
-        <span className="block font-display text-4xl font-light leading-none text-white">
-          {data.rating.toFixed(1)}
-        </span>
-        <Stars rating={data.rating} className="mt-2.5" />
-        <span className="mt-1.5 block font-sans text-[0.75rem] text-white/40">
-          {data.totalReviews.toLocaleString()} Google reviews
+      <div className="mt-4 flex items-center gap-2.5">
+        <Stars rating={data.rating} />
+        <span className="font-sans text-[0.8125rem] text-white/70">
+          {data.rating.toFixed(1)} · {data.totalReviews.toLocaleString()} reviews
         </span>
       </div>
 
-      <div aria-hidden="true" className="mt-7 h-px w-10 bg-white/15" />
-
-      {/* Slides stack in the same grid cell; the tallest sets the height,
-          so the footer never shifts as quotes rotate. */}
+      {/* Slides stack in the same grid cell so the footer never shifts as
+          quotes rotate, but each slide carries its own buttons — that way
+          the buttons sit right under that slide's own text instead of
+          pinned to the bottom of whichever slide is tallest. */}
       <div className="mt-6 grid">
         {featured.map((r, i) => (
           <figure
@@ -91,51 +81,33 @@ export async function FooterReviews() {
             className="footer-review-slide"
             style={{ animationDelay: `${i * 9}s` }}
           >
-            <blockquote className="font-display text-[1.0625rem] leading-relaxed text-white/70 line-clamp-4">
+            <blockquote className="border-l-2 border-white/25 pl-4 font-display text-[0.9375rem] leading-relaxed text-white/70">
               &ldquo;{r.text}&rdquo;
             </blockquote>
-            <figcaption className="mt-5 flex items-center gap-3">
-              {r.authorPhotoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={r.authorPhotoUrl}
-                  alt=""
-                  referrerPolicy="no-referrer"
-                  className="h-8 w-8 shrink-0 rounded-full object-cover"
-                />
-              ) : (
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 font-sans text-[0.6875rem] text-white/60">
-                  {initials(r.authorName)}
-                </div>
-              )}
-              <div className="min-w-0">
-                <p className="truncate font-sans text-[0.8125rem] font-medium text-white/90">
-                  {r.authorName}
-                </p>
-                <p className="font-sans text-[0.6875rem] text-white/40">{r.relativeTime}</p>
-              </div>
+            <figcaption className="mt-3 font-sans text-[0.75rem] text-white/40">
+              {r.authorName} <span className="text-white/25">·</span> {r.relativeTime}
             </figcaption>
+
+            <div className="mt-6 flex flex-wrap items-center gap-3 font-sans text-[0.75rem]">
+              <a
+                href={writeHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-white/25 px-4 py-1.5 text-white/85 transition-colors hover:border-white hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+              >
+                Leave a review
+              </a>
+              <a
+                href={viewHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-white/25 px-4 py-1.5 text-white/85 transition-colors hover:border-white hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+              >
+                View all reviews
+              </a>
+            </div>
           </figure>
         ))}
-      </div>
-
-      <div className="mt-7 flex flex-col items-start gap-3.5">
-        <a
-          href={writeHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-full border border-white/15 px-4 py-1.5 font-sans text-[0.75rem] text-white/60 transition-colors hover:border-white/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-        >
-          Leave a review
-        </a>
-        <a
-          href={viewHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-sans text-[0.75rem] text-white/40 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-        >
-          View all reviews
-        </a>
       </div>
     </div>
   );

@@ -35,18 +35,11 @@ export const metadata: Metadata = buildMetadata({
 
 const DIR = "/Smart-Home";
 
-const TABS = [
-  { label: "Security & Safety", href: "#security" },
-  { label: "Daily Life", href: "#daily" },
-  { label: "Video Monitoring", href: "#video" },
-  { label: "Home Management", href: "#management" },
-];
-
 const ECOSYSTEM = [
   {
     icon: ShieldCheck,
     title: "Always-On Protection",
-    body: "Cellular backup keeps your system online even when power or internet drops — coverage that never rests on a single point of failure.",
+    body: "Cellular backup keeps your system online even when power or internet drops, coverage that never rests on a single point of failure.",
   },
   {
     icon: BadgeCheck,
@@ -56,7 +49,7 @@ const ECOSYSTEM = [
   {
     icon: Flame,
     title: "Fire & Carbon Monoxide",
-    body: "Life-safety sensors live on the same platform as your security — one unified system protecting the people inside, not just the doors.",
+    body: "Life-safety sensors live on the same platform as your security, one unified system protecting the people inside, not just the doors.",
   },
 ];
 
@@ -75,7 +68,7 @@ const DAILY: Daily[] = [
     kind: "app",
     eyebrow: "Simplify your routine",
     title: "One tap sets the whole scene.",
-    body: "Build moments like Home, Away, and Sleep that quietly adjust lighting, climate, shades, and arming together — your home anticipating you instead of waiting on you.",
+    body: "Build moments like Home, Away, and Sleep that quietly adjust lighting, climate, shades, and arming together, your home anticipating you instead of waiting on you.",
     image: `${DIR}/Smart-Home8.jpg`,
     alt: "The app home screen showing Home, Away, Sleep, and Wake Up scenes",
     icon: CalendarRange,
@@ -84,7 +77,7 @@ const DAILY: Daily[] = [
     kind: "photo",
     eyebrow: "Stay one step ahead",
     title: "Answer the door from anywhere.",
-    body: "See who's there, speak with them, and unlock from your phone — whether you're upstairs or three time zones away. Deliveries handled, guests welcomed.",
+    body: "See who's there, speak with them, and unlock from your phone, whether you're upstairs or three time zones away. Deliveries handled, guests welcomed.",
     image: `${DIR}/Smart-Home5.jpg`,
     alt: "A delivery driver waving at a smart video doorbell",
     icon: DoorOpen,
@@ -93,7 +86,7 @@ const DAILY: Daily[] = [
     kind: "photo",
     eyebrow: "Always in the loop",
     title: "Know the moment you walk in.",
-    body: "Arrivals, open doors, unexpected motion — a glance tells you what's happening at home, and a tap sets it right from wherever you are.",
+    body: "Arrivals, open doors, unexpected motion: a glance tells you what's happening at home, and a tap sets it right from wherever you are.",
     image: `${DIR}/Smart-Home6.jpg`,
     alt: "A woman arriving home as an indoor camera watches the entry",
     icon: HomeIcon,
@@ -102,7 +95,7 @@ const DAILY: Daily[] = [
     kind: "photo",
     eyebrow: "Nothing slips by",
     title: "Nothing left on the porch.",
-    body: "Smart package detection flags a drop-off the instant it lands — so a delivery is something you greet, not something you discover hours later.",
+    body: "Smart package detection flags a drop-off the instant it lands, so a delivery is something you greet, not something you discover hours later.",
     image: `${DIR}/Smart-Home3.jpg`,
     alt: "A delivery of packages left at a monitored front door",
     icon: PackageCheck,
@@ -113,12 +106,12 @@ const VIDEO_CAPS = [
   {
     icon: ScanFace,
     title: "Knows people from pets",
-    body: "AI analytics tell people from animals, vehicles, and packages — so an alert always means something worth a look.",
+    body: "AI analytics tell people from animals, vehicles, and packages, so an alert always means something worth a look.",
   },
   {
     icon: DoorOpen,
     title: "Open the door, one press",
-    body: "See a visitor and let them in from the same live view — no second app, no second device.",
+    body: "See a visitor and let them in from the same live view, no second app, no second device.",
   },
   {
     icon: Mic,
@@ -128,19 +121,13 @@ const VIDEO_CAPS = [
   {
     icon: LayoutGrid,
     title: "Everything at a glance",
-    body: "Clear status across every device and room — the whole home readable in a single, calm view.",
+    body: "Clear status across every device and room, the whole home readable in a single, calm view.",
   },
 ];
 
 export default function SmartHomePage() {
   return (
     <div className="bg-white">
-      {/* Page scroll-progress bar */}
-      <div
-        aria-hidden
-        className="sh-progress fixed inset-x-0 top-0 z-[60] h-[3px] bg-navy-logo"
-      />
-
       {/* ============================== HERO ============================== */}
       <section className="relative isolate flex min-h-[92vh] flex-col justify-end overflow-hidden bg-navy-deep">
         <NavSentinel />
@@ -151,14 +138,17 @@ export default function SmartHomePage() {
             poster={`${DIR}/hero-poster.jpg`}
             autoPlay
             muted
-            loop
             playsInline
             preload="auto"
           >
-            <source src={`${DIR}/hero.mp4`} type="video/mp4" />
+            <source src="/CFAS.mp4" type="video/mp4" />
           </video>
         </div>
         <div aria-hidden className="absolute inset-0 bg-navy-deep/55" />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(120%_100%_at_50%_0%,transparent_35%,rgba(10,26,82,0.6)_100%)]"
+        />
         <div
           aria-hidden
           className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-navy-deep via-navy-deep/40 to-transparent"
@@ -176,37 +166,27 @@ export default function SmartHomePage() {
             />
           </div>
 
-          <div className="reveal-load rd-1 mt-10 max-w-md">
-            <Eyebrow dark>Interesting fact</Eyebrow>
-            <p className="mt-3 font-display text-[1.0625rem] font-light italic leading-snug text-white/70">
-              Central Florida Automation Services was the first Alarm.com
-              provider in Central Florida.
-            </p>
-          </div>
+       
 
-          <h1 className="reveal-load rd-2 mt-6 max-w-4xl font-hero text-[clamp(2.4rem,6.4vw,5.3rem)] font-light leading-[1.03] tracking-tight text-white">
-            Security, comfort, and control in one easy to use app.
+          <h1 className="reveal-load rd-2 mt-6 max-w-4xl font-hero font-light leading-[1.04] tracking-tight">
+            <span className="block text-[clamp(2.4rem,6.4vw,5.3rem)] text-white">
+              Security, comfort,
+            </span>
+            <span className="block text-[clamp(2.4rem,6.4vw,5.3rem)] text-white">
+              and control,
+            </span>
+            <span className="block text-[clamp(2.4rem,6.4vw,5.3rem)] text-white">
+              in one easy to use app.
+            </span>
           </h1>
+
+          <div className="reveal-load rd-3 mt-8 h-px w-24 bg-white/35" />
+
           <p className="reveal-load rd-3 mt-7 max-w-2xl font-sans text-[1.0625rem] leading-relaxed text-white/75">
             One platform for your home&apos;s security, cameras, locks,
             lighting, and climate. Designed and installed by CFAS
-            Craftspeople.
+            Craftspeople, Central Florida&apos;s first Alarm.com provider.
           </p>
-
-          <nav
-            aria-label="Sections"
-            className="reveal-load rd-4 mt-12 hidden flex-wrap gap-x-3 gap-y-3 border-t border-white/15 pt-8 sm:flex"
-          >
-            {TABS.map((t) => (
-              <a
-                key={t.href}
-                href={t.href}
-                className="inline-flex items-center rounded-full border border-white/25 px-5 py-2.5 font-sans text-[0.75rem] uppercase tracking-wide2 text-white/85 transition-colors duration-300 hover:border-white/70 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
-              >
-                {t.label}
-              </a>
-            ))}
-          </nav>
         </div>
       </section>
 
@@ -225,7 +205,7 @@ export default function SmartHomePage() {
                 Most smart homes are stitched together from devices that
                 don&apos;t talk to each other. We build a single, professionally
                 installed system where security, life-safety, and automation
-                work as one — and stay that way.
+                work as one, and stay that way.
               </p>
             </Reveal>
           </div>
@@ -274,13 +254,12 @@ export default function SmartHomePage() {
         <div className="mx-auto grid max-w-[93.75rem] grid-cols-1 gap-16 px-5 sm:px-8 md:px-11 lg:grid-cols-12 lg:gap-x-20">
           <div className="lg:col-span-4">
             <div className="sh-rise lg:sticky lg:top-28">
-              <Eyebrow>Stress less, every day</Eyebrow>
               <h2 className="mt-6 font-display text-[clamp(2rem,3.6vw,3.2rem)] font-light leading-[1.06] tracking-tight text-navy-deep">
                 The best technology is the kind you stop noticing.
               </h2>
               <p className="mt-6 max-w-xs font-sans text-[0.9375rem] leading-relaxed text-slate-500">
-                Four ways the system quietly earns its place in your day —
-                scroll through.
+                Four ways the system quietly earns its place in your day.
+                Scroll through.
               </p>
             </div>
           </div>
@@ -320,12 +299,6 @@ export default function SmartHomePage() {
                         />
                       </div>
                     )}
-                    <span
-                      aria-hidden
-                      className="absolute -top-6 left-0 font-display text-[3.5rem] font-light leading-none text-navy-deep/10"
-                    >
-                      0{i + 1}
-                    </span>
                   </div>
 
                   <div className={`sh-rise ${flip ? "md:order-1" : ""}`}>
@@ -350,20 +323,10 @@ export default function SmartHomePage() {
       {/* ========================= VIDEO MONITORING ======================= */}
       <section id="video" className="scroll-mt-24 bg-navy-deep py-24 md:py-32">
         <div className="mx-auto max-w-[93.75rem] px-5 sm:px-8 md:px-11">
-          <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-12">
-            <div className="sh-rise lg:col-span-7">
-              <Eyebrow dark>Video monitoring</Eyebrow>
-              <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4vw,3.4rem)] font-light leading-[1.06] tracking-tight text-white">
-                Not just recording. Actually watching.
-              </h2>
-            </div>
-            <Reveal index={1} className="lg:col-span-5">
-              <p className="font-sans text-[1rem] leading-relaxed text-white/60">
-                Cameras that simply record leave you scrubbing footage after the
-                fact. Intelligent video understands what it sees — and tells you
-                only when something genuinely matters.
-              </p>
-            </Reveal>
+          <div className="sh-rise">
+            <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4vw,3.4rem)] font-light leading-[1.06] tracking-tight text-white">
+              Not just recording. Understanding what it sees.
+            </h2>
           </div>
 
           {/* Day / night showcase */}
@@ -437,7 +400,7 @@ export default function SmartHomePage() {
                   Find the moment in seconds.
                 </h3>
                 <p className="mt-4 max-w-lg font-sans text-[1rem] leading-relaxed text-white/60">
-                  Clips arrive tagged by room and by what set them off — person,
+                  Clips arrive tagged by room and by what set them off: person,
                   pet, vehicle, package. No scrubbing through hours of footage to
                   find the ten seconds that matter.
                 </p>
@@ -469,7 +432,6 @@ export default function SmartHomePage() {
         <div className="mx-auto max-w-[93.75rem] px-5 sm:px-8 md:px-11">
           <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-12">
             <div className="sh-rise lg:col-span-7">
-              <Eyebrow>Whole-home management</Eyebrow>
               <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4vw,3.4rem)] font-light leading-[1.06] tracking-tight text-navy-deep">
                 It says alarm. It does so much more.
               </h2>
@@ -477,7 +439,7 @@ export default function SmartHomePage() {
             <Reveal index={1} className="lg:col-span-5">
               <p className="font-sans text-[1rem] leading-relaxed text-slate-600">
                 The same platform that guards your home runs its lighting,
-                shades, climate, and audio — every comfort and safeguard,
+                shades, climate, and audio, every comfort and safeguard,
                 managed from one place.
               </p>
             </Reveal>
@@ -538,7 +500,7 @@ export default function SmartHomePage() {
               <ManagementCard
                 icon={Wrench}
                 title="Professionally Installed"
-                body="Our technicians design, mount, and tune every device so the system disappears into the home — and simply works."
+                body="Our technicians design, mount, and tune every device so the system disappears into the home, and simply works."
                 wide
               >
                 <Image
@@ -563,7 +525,7 @@ export default function SmartHomePage() {
                   </h3>
                   <p className="mt-3 font-sans text-[0.9375rem] leading-relaxed text-white/70">
                     The instant a fire or CO alarm triggers, the system can pause
-                    your HVAC to stop circulating smoke — life-safety acting on
+                    your HVAC to stop circulating smoke, life-safety acting on
                     its own, the moment it counts.
                   </p>
                   <ul className="mt-6 space-y-2.5">

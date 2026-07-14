@@ -74,7 +74,7 @@ export function MonitoringNumbersModal() {
           <p className="mt-5 font-sans text-[0.9375rem] leading-relaxed text-slate-600">
             Many phones silently screen calls from 1-800 numbers as spam.
             That&rsquo;s a problem when our monitoring center calls to verify
-            an alarm — a missed call can mean a missed chance to stop a false
+            an alarm; a missed call can mean a missed chance to stop a false
             dispatch. Save these as{" "}
             <span className="font-medium text-navy-deep">
               Alarm Monitoring Center

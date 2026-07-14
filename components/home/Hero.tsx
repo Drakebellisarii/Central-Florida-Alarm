@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { NavSentinel } from "@/components/NavSentinel";
+import { CTAButton } from "@/components/CTAButton";
 
 const SUBTITLE =
   "Since 1968 we have worked beside architects, contractors, and interior designers, to enhance the convenience, safety and lifestyle of your home";
@@ -66,14 +67,22 @@ export function Hero() {
   // frame — a non-looping <video> keeps painting the final frame after it ends,
   // which is exactly the finished estate we want to rest on. No scroll input.
   // Reduced-motion visitors skip the autoplay and see the static poster.
+  const [settled, setSettled] = useState(false);
   useEffect(() => {
     const video = videoRef.current;
     if (!video || reduce) return;
+    setSettled(false);
     // The key={deviceType} swap remounts the element, but call play() ourselves
     // too so a source change always restarts the clip from the top. Muted +
     // playsInline autoplay is permitted without a user gesture.
     const p = video.play();
     if (p) p.catch(() => {});
+    // Once the build finishes, a slow drift (hero-settle, applied below)
+    // keeps the final frame feeling like a held cinematic shot instead of a
+    // freeze — a hard stop read as broken rather than intentional.
+    const onEnded = () => setSettled(true);
+    video.addEventListener("ended", onEnded);
+    return () => video.removeEventListener("ended", onEnded);
   }, [reduce, deviceType]);
 
   return (
@@ -85,6 +94,7 @@ export function Hero() {
         <video
           key={deviceType}
           ref={videoRef}
+          data-loader-target="hero-video"
           muted
           playsInline
           autoPlay={!reduce}
@@ -94,14 +104,23 @@ export function Hero() {
           // rewinds to bare concrete, so we let the navy backdrop cover the
           // sub-second gap until the first frame paints.
           poster={reduce ? POSTER_SRC[deviceType] : undefined}
-          className="absolute inset-0 h-full w-full object-cover"
+          className={`absolute inset-0 h-full w-full object-cover ${
+            settled ? "hero-settle" : ""
+          }`}
         >
           <source src={VIDEO_SRC[deviceType]} type="video/mp4" />
         </video>
       </div>
 
       {/* ── Color grade — weighted to the left, where the copy sits ──── */}
-      <div aria-hidden="true" className="absolute inset-0 bg-black/5" />
+      {/* Deepens slightly once the build settles, so the stop reads as a
+          held shot gaining depth rather than motion simply cutting out. */}
+      <div
+        aria-hidden="true"
+        className={`absolute inset-0 transition-colors duration-[3s] ease-expo ${
+          settled ? "bg-black/[0.12]" : "bg-black/5"
+        }`}
+      />
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent"
@@ -155,6 +174,15 @@ export function Hero() {
           <p className="reveal-load rd-5 mt-5 max-w-[42rem] font-display text-[clamp(1rem,2vw,1.9rem)] font-light leading-[1.55] tracking-[-0.005em] text-white/75 sm:mt-8 2xl:max-w-[52rem] short:mt-3 short:text-[0.95rem]">
             {SUBTITLE}
           </p>
+
+          <div className="reveal-load rd-6 mt-8 flex flex-wrap items-center gap-4 sm:mt-10 short:mt-4">
+            <CTAButton href="/smart-security" variant="primary">
+              Explore Smart Security
+            </CTAButton>
+            <CTAButton href="/contact" variant="ghost" arrow={false}>
+              Request a Consultation
+            </CTAButton>
+          </div>
 
         </div>
       </div>

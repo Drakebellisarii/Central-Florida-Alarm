@@ -171,6 +171,29 @@ export function ServiceAreasSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
 
+  // The Google Maps JS API (plus its tiles) is far too heavy to load with the
+  // homepage — hold it back until the visitor has scrolled within a viewport
+  // of the section, then mount the map for real.
+  const [mapReady, setMapReady] = useState(false);
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setMapReady(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setMapReady(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "100% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const areasWithCoords = AREAS.map((a) => ({
     ...a,
     coords: COORDS[a.slug] ?? null,
@@ -277,24 +300,29 @@ export function ServiceAreasSection() {
             data-map-panel
             className="h-[23.75rem] w-full overflow-hidden border border-navy/15 shadow-[0_24px_60px_-30px_rgba(10,26,82,0.45)] lg:h-[28.75rem]"
           >
-            <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
-              <Map
-                defaultCenter={{ lat: 28.62, lng: -81.45 }}
-                defaultZoom={9}
-                gestureHandling="cooperative"
-                disableDefaultUI
-                zoomControl
-                styles={MAP_STYLES}
-                className="h-full w-full"
-              >
-                <MapController target={selected?.coords ?? null} />
-                <AreaMarkers
-                  areas={areasWithCoords}
-                  selectedSlug={selectedSlug}
-                  onSelect={setSelectedSlug}
-                />
-              </Map>
-            </APIProvider>
+            {mapReady ? (
+              <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
+                <Map
+                  defaultCenter={{ lat: 28.62, lng: -81.45 }}
+                  defaultZoom={9}
+                  gestureHandling="cooperative"
+                  disableDefaultUI
+                  zoomControl
+                  styles={MAP_STYLES}
+                  className="h-full w-full"
+                >
+                  <MapController target={selected?.coords ?? null} />
+                  <AreaMarkers
+                    areas={areasWithCoords}
+                    selectedSlug={selectedSlug}
+                    onSelect={setSelectedSlug}
+                  />
+                </Map>
+              </APIProvider>
+            ) : (
+              // Placeholder in the map panel's water blue until the API mounts.
+              <div aria-hidden className="h-full w-full bg-[#c6d5ef]" />
+            )}
           </div>
 
         </div>

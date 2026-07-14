@@ -36,7 +36,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      "Our home theater is the reason the whole family fights over the remote — except there is no remote, just one button that dims the lights, drops the screen, and starts the movie. CFAS dialed in the projector and surround sound until it genuinely rivals any cinema in Orlando. The kids think it is magic.",
+      "Our home theater is the reason the whole family fights over the remote, except there is no remote, just one button that dims the lights, drops the screen, and starts the movie. CFAS dialed in the projector and surround sound until it genuinely rivals any cinema in Orlando. The kids think it is magic.",
     name: "Priya Nair",
     role: "Lake Nona, FL",
   },
@@ -48,7 +48,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      "After a break-in two doors down, we asked CFAS to secure the property properly. Cameras, motion sensors, smart locks, and 24/7 monitoring — all of it running through one app I can check from anywhere. The night we left town, the system caught a prowler at the gate and alerted us before he reached the door. Worth every penny.",
+      "After a break-in two doors down, we asked CFAS to secure the property properly. Cameras, motion sensors, smart locks, and 24/7 monitoring, all of it running through one app I can check from anywhere. The night we left town, the system caught a prowler at the gate and alerted us before he reached the door. Worth every penny.",
     name: "Daniel Hargrove",
     role: "Lake Mary, FL",
   },

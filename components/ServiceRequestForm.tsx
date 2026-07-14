@@ -3,12 +3,9 @@
 import { useState } from "react";
 import { Check, ArrowUpRight, Loader2 } from "lucide-react";
 
-/* ------------------------------------------------------------------ */
-/* Formspree endpoint. Replace REPLACE_WITH_YOUR_ID with the real form */
-/* ID from your Formspree dashboard (https://formspree.io). Shares the  */
-/* same pattern as the main contact form.                              */
-/* ------------------------------------------------------------------ */
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/REPLACE_WITH_YOUR_ID";
+// All forms post to this one API route, which emails the submission
+// through Outlook/Microsoft 365 — see app/api/send/route.ts.
+const SEND_ENDPOINT = "/api/send";
 
 type Errors = Partial<
   Record<"name" | "email" | "phone" | "address" | "message", string>
@@ -57,8 +54,7 @@ export function ServiceRequestForm() {
     setStatus("submitting");
     try {
       const data = new FormData(form);
-      data.append("_subject", "New service request — Fix my stuff");
-      const res = await fetch(FORMSPREE_ENDPOINT, {
+      const res = await fetch(SEND_ENDPOINT, {
         method: "POST",
         body: data,
         headers: { Accept: "application/json" },
@@ -75,7 +71,7 @@ export function ServiceRequestForm() {
         <span className="flex h-12 w-12 items-center justify-center border border-navy-logo text-navy-logo">
           <Check strokeWidth={1.25} className="h-6 w-6" />
         </span>
-        <h2 className="mt-7 font-display text-3xl text-navy-deep">Got it — help is on the way.</h2>
+        <h2 className="mt-7 font-display text-3xl text-navy-deep">Got it. Help is on the way.</h2>
         <p className="mt-4 max-w-md font-sans text-[0.9375rem] leading-relaxed text-slate-600">
           A service coordinator will reach out within one business day to schedule
           your visit. If a system is down and it cannot wait, please call us now at{" "}

@@ -56,7 +56,7 @@ export function IntegrateCreed() {
 
             <p className="mt-10 max-w-lg font-sans text-[0.875rem] leading-relaxed text-bone/45 sm:text-[0.9375rem]">
               Which is exactly what we are. Not a single brand or a box on a
-              shelf — the team that makes every system in the home speak as one.
+              shelf: the team that makes every system in the home speak as one.
             </p>
           </div>
         </Reveal>

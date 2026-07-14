@@ -15,28 +15,36 @@ export function CTABanner({
   light?: boolean;
 }) {
   return (
-    <section className={light ? "bg-paper" : "bg-[#0d0f14]"}>
-      <div className="mx-auto max-w-[93.75rem] px-5 py-14 sm:px-8 md:px-11 md:py-20">
+    <section
+      className={light ? "border-y border-navy/10 bg-white" : "bg-[#0d0f14]"}
+    >
+      <div className="mx-auto max-w-[93.75rem] px-5 py-16 sm:px-8 md:px-11 md:py-24">
         {/* Top rule + eyebrow */}
-        <Reveal>
-          <div className="flex items-center gap-6">
-            <span
-              className={`font-sans text-[0.625rem] uppercase tracking-eyebrow ${
-                light ? "text-stone" : "text-white/35"
-              }`}
-            >
-              {eyebrow}
-            </span>
-            <span
-              className={`h-px flex-1 ${light ? "bg-navy/10" : "bg-white/[0.06]"}`}
-            />
-          </div>
-        </Reveal>
+        {eyebrow && (
+          <Reveal>
+            <div className="flex items-center gap-6">
+              <span
+                className={`font-sans text-[0.625rem] uppercase tracking-eyebrow ${
+                  light ? "text-stone" : "text-white/35"
+                }`}
+              >
+                {eyebrow}
+              </span>
+              <span
+                className={`h-px flex-1 ${light ? "bg-navy/10" : "bg-white/[0.06]"}`}
+              />
+            </div>
+          </Reveal>
+        )}
 
-        <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-12 md:items-center">
+        <div
+          className={`grid grid-cols-1 gap-10 md:grid-cols-12 md:items-center ${
+            eyebrow ? "mt-10" : ""
+          }`}
+        >
           <Reveal className="md:col-span-7">
             <h2
-              className={`font-display text-[clamp(1.7rem,2.6vw,2.5rem)] font-light leading-[1.15] tracking-tight ${
+              className={`font-display text-[clamp(2.2rem,3.8vw,3.4rem)] font-light leading-[1.12] tracking-tight ${
                 light ? "text-navy-deep" : "text-white"
               }`}
             >

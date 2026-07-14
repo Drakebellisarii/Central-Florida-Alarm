@@ -39,7 +39,7 @@ export default function SmartSecurityPage() {
           Built for your space.
         </h1>
         <p className="mx-auto mt-6 max-w-xl font-sans text-[1.0625rem] leading-relaxed text-slate-600">
-          Where you live or where you work — choose where you need us and we will
+          Where you live or where you work, choose where you need us and we will
           take it from there.
         </p>
       </section>

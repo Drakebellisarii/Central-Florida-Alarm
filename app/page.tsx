@@ -1,3 +1,4 @@
+import { PageLoader } from "@/components/PageLoader";
 import { Hero } from "@/components/home/Hero";
 import { AboutSection } from "@/components/home/AboutSection";
 import { IntegrateCreed } from "@/components/home/IntegrateCreed";
@@ -13,6 +14,7 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={localBusinessLd()} />
+      <PageLoader />
 
       {/*
         Hero + About share a positioning context. The hero footage autoplays

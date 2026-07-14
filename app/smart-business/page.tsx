@@ -26,7 +26,6 @@ import {
 import { buildMetadata } from "@/lib/seo";
 import { NavSentinel } from "@/components/NavSentinel";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { Eyebrow } from "@/components/Eyebrow";
 import { AmbientVideo } from "@/components/smart-home/AmbientVideo";
 import { SBMotion } from "@/components/smart-business/SBMotion";
 import { SBHeroVideo } from "@/components/smart-business/SBHeroVideo";
@@ -34,7 +33,7 @@ import { SBHeroVideo } from "@/components/smart-business/SBHeroVideo";
 export const metadata: Metadata = buildMetadata({
   title: "Smart Business Security | Central Florida Automation Services",
   description:
-    "Alarm.com for Business, designed and installed by CFAS — intrusion, access control, video surveillance, and energy automation on one platform, across every location.",
+    "Alarm.com for Business, designed and installed by CFAS: intrusion, access control, video surveillance, and energy automation on one platform, across every location.",
   path: "/smart-business",
 });
 
@@ -44,12 +43,12 @@ const PILLARS = [
   {
     icon: ShieldCheck,
     title: "Intrusion, armed from anywhere",
-    body: "Arm and disarm remotely, keep a panic button within reach, and stay online through cellular backup — protection that doesn't depend on your power or your internet.",
+    body: "Arm and disarm remotely, keep a panic button within reach, and stay online through cellular backup: protection that doesn't depend on your power or your internet.",
   },
   {
     icon: BellRing,
     title: "Alerts with judgment",
-    body: "Opening and closing reports, unexpected-activity notifications, and real-time alarms — the platform tells you what happened, not just that something did.",
+    body: "Opening and closing reports, unexpected-activity notifications, and real-time alarms: the platform tells you what happened, not just that something did.",
   },
   {
     icon: BadgeCheck,
@@ -62,7 +61,7 @@ const ACCESS = [
   {
     icon: KeyRound,
     title: "Keyless entry",
-    body: "Employees badge in with a card, fob, or their phone. A lost credential is revoked in seconds — not re-keyed over a weekend.",
+    body: "Employees badge in with a card, fob, or their phone. A lost credential is revoked in seconds, not re-keyed over a weekend.",
   },
   {
     icon: CalendarClock,
@@ -72,7 +71,7 @@ const ACCESS = [
   {
     icon: Users,
     title: "Every entry, attributed",
-    body: "The access log reads like a story — who opened which door, and when — searchable by name.",
+    body: "The access log reads like a story (who opened which door, and when), searchable by name.",
   },
   {
     icon: DoorOpen,
@@ -85,12 +84,12 @@ const VIDEO_CAPS = [
   {
     icon: ScanFace,
     title: "Analytics that discriminate",
-    body: "Person, vehicle, or animal — every alert carries the distinction, so a raccoon in the lot never wakes you at 3 AM.",
+    body: "Person, vehicle, or animal: every alert carries the distinction, so a raccoon in the lot never wakes you at 3 AM.",
   },
   {
     icon: Workflow,
     title: "Clips tied to events",
-    body: "Footage links itself to the alarm and access events around it — search by who badged in, not by timestamp.",
+    body: "Footage links itself to the alarm and access events around it: search by who badged in, not by timestamp.",
   },
   {
     icon: MonitorPlay,
@@ -100,7 +99,7 @@ const VIDEO_CAPS = [
   {
     icon: CloudUpload,
     title: "Recorded to the cloud",
-    body: "Critical clips are saved off-site the instant they happen — beyond the reach of a stolen recorder.",
+    body: "Critical clips are saved off-site the instant they happen, beyond the reach of a stolen recorder.",
   },
 ];
 
@@ -127,7 +126,7 @@ const OPERATIONS: Operation[] = [
     kind: "video",
     eyebrow: "Open & close",
     title: "Opening and closing the store is one tap.",
-    body: "Disarm and unlock at open, arm and lock at close — lights and HVAC follow along with each scene, run from the sidewalk or scheduled to the minute.",
+    body: "Disarm and unlock at open, arm and lock at close; lights and HVAC follow along with each scene, run from the sidewalk or scheduled to the minute.",
     icon: Store,
     video: `${DIR}/amb-open.mp4`,
     poster: `${DIR}/amb-open-poster.jpg`,
@@ -136,17 +135,17 @@ const OPERATIONS: Operation[] = [
   {
     kind: "app",
     eyebrow: "Accountability",
-    title: "Opened on time — and you'll know if it isn't.",
+    title: "Opened on time, and you'll know if it isn't.",
     body: "Opening and closing reports land automatically. If the store isn't disarmed by 7:05, you hear about it at 7:06.",
     icon: BellRing,
-    image: `${DIR}/Buisness-9.png`,
+    image: `${DIR}/Buisness-9.webp`,
     alt: "The app confirming the business opened on time, with doors and thermostat in view",
   },
   {
     kind: "photo",
     eyebrow: "Beyond the front door",
     title: "Access that reaches the gate.",
-    body: "Garages, gates, and drive-up readers run on the same credentials as the lobby — parking and fleet entrances included.",
+    body: "Garages, gates, and drive-up readers run on the same credentials as the lobby, parking and fleet entrances included.",
     icon: Truck,
     image: `${DIR}/Buisness-7.jpg`,
     alt: "A driver reaching from their car to badge into a parking garage reader",
@@ -155,7 +154,7 @@ const OPERATIONS: Operation[] = [
     kind: "video",
     eyebrow: "Back of house",
     title: "Storerooms stay on a need-to-enter basis.",
-    body: "Inventory, server rooms, and cash offices restricted by role and by hour — with a log entry for every visit.",
+    body: "Inventory, server rooms, and cash offices restricted by role and by hour, with a log entry for every visit.",
     icon: Lock,
     video: `${DIR}/amb-door.mp4`,
     poster: `${DIR}/amb-door-poster.jpg`,
@@ -167,12 +166,6 @@ export default function SmartBusinessPage() {
   return (
     <div className="bg-white">
       <SBMotion />
-
-      {/* Page scroll-progress bar */}
-      <div
-        aria-hidden
-        className="sh-progress fixed inset-x-0 top-0 z-[60] h-[3px] bg-navy-logo"
-      />
 
       {/* ============================== HERO ============================== */}
       <section
@@ -207,22 +200,18 @@ export default function SmartBusinessPage() {
             />
           </div>
 
-          <div className="reveal-load rd-1 mt-10 max-w-md">
-            <Eyebrow dark>Interesting fact</Eyebrow>
-            <p className="mt-3 font-display text-[1.0625rem] font-light italic leading-snug text-white/70">
-              Central Florida Automation Services was the first Alarm.com
-              provider in Central Florida.
-            </p>
-          </div>
-
-          <h1 className="reveal-load rd-2 mt-6 max-w-4xl font-hero text-[clamp(2.4rem,6.4vw,5.3rem)] font-light leading-[1.03] tracking-tight text-white">
+          <h1 className="reveal-load rd-2 mt-10 max-w-4xl font-hero text-[clamp(2.4rem,6.4vw,5.3rem)] font-light leading-[1.03] tracking-tight text-white">
             Run every location like you&apos;re standing in it.
           </h1>
+
+          <div className="reveal-load rd-3 mt-8 h-px w-24 bg-white/35" />
+
           <p className="reveal-load rd-3 mt-7 max-w-2xl font-sans text-[1.0625rem] leading-relaxed text-white/75">
             Alarm.com for Business unites intrusion, access control, video
-            surveillance, and energy on a single platform — designed,
-            installed, and serviced by CFAS. Arm a site, unlock a door, or
-            pull up a camera from wherever the day has taken you.
+            surveillance, and energy on a single platform, designed,
+            installed, and serviced by CFAS, Central Florida&apos;s first
+            Alarm.com provider. Arm a site, unlock a door, or pull up a
+            camera from wherever the day has taken you.
           </p>
         </div>
       </section>
@@ -238,7 +227,7 @@ export default function SmartBusinessPage() {
             </div>
             <div data-sb-rise className="lg:col-span-5">
               <p className="font-sans text-[1rem] leading-relaxed text-slate-600">
-                Most businesses run on a patchwork — an alarm from one company,
+                Most businesses run on a patchwork: an alarm from one company,
                 cameras from another, and a spreadsheet of who still has keys.
                 We replace the patchwork with one professionally installed
                 platform that answers to a single app.
@@ -354,7 +343,7 @@ export default function SmartBusinessPage() {
               />
             </div>
             <p className="mt-6 text-center font-sans text-[0.75rem] uppercase tracking-eyebrow text-white/40">
-              The web command center — every camera, every site, live
+              The web command center: every camera, every site, live
             </p>
           </div>
 
@@ -431,8 +420,7 @@ export default function SmartBusinessPage() {
 
           <div className="lg:col-span-7">
             <div data-sb-rise>
-              <Eyebrow dark>Multi-location</Eyebrow>
-              <h2 className="mt-6 max-w-xl font-display text-[clamp(2rem,4vw,3.4rem)] font-light leading-[1.06] tracking-tight text-white">
+              <h2 className="max-w-xl font-display text-[clamp(2rem,4vw,3.4rem)] font-light leading-[1.06] tracking-tight text-white">
                 Ten sites should feel like one.
               </h2>
               <p className="mt-6 max-w-lg font-sans text-[1rem] leading-relaxed text-white/60">
@@ -466,7 +454,7 @@ export default function SmartBusinessPage() {
                 A business day, handled end to end.
               </h2>
               <p className="mt-6 max-w-xs font-sans text-[0.9375rem] leading-relaxed text-slate-500">
-                Four moments the platform quietly absorbs — scroll through.
+                Four moments the platform quietly absorbs. Scroll through.
               </p>
             </div>
           </div>
@@ -577,7 +565,7 @@ export default function SmartBusinessPage() {
                   Energy on your hours
                 </h3>
                 <p className="mt-3 font-sans text-[0.9375rem] leading-relaxed text-white/70">
-                  The system knows when the building is empty — so the
+                  The system knows when the building is empty, so the
                   building acts like it.
                 </p>
                 <ul className="mt-6 space-y-2.5">
@@ -602,7 +590,7 @@ export default function SmartBusinessPage() {
             <BentoCard
               icon={FileText}
               title="The building's paperwork, filed"
-              body="Warranties, service invoices, and inspection dates live with the system they cover — with reminders before anything lapses."
+              body="Warranties, service invoices, and inspection dates live with the system they cover, with reminders before anything lapses."
             >
               <Image
                 src={`${DIR}/Buisness-10.jpg`}
@@ -617,7 +605,7 @@ export default function SmartBusinessPage() {
             <BentoCard
               icon={Smartphone}
               title="Control from the lock screen"
-              body="Widgets and one-tap scenes put arm, unlock, and lights a thumb away — no digging through an app between customers."
+              body="Widgets and one-tap scenes put arm, unlock, and lights a thumb away, no digging through an app between customers."
             >
               <Image
                 src={`${DIR}/Buisness-11.jpg`}
@@ -639,8 +627,8 @@ export default function SmartBusinessPage() {
                     Activity becomes a ledger.
                   </h3>
                   <p className="mt-3 max-w-xl font-sans text-[0.9375rem] leading-relaxed text-white/70">
-                    Trend reports turn each day into something you can act on
-                    — staff the rush, time the promotion, and spot the
+                    Trend reports turn each day into something you can act on:
+                    staff the rush, time the promotion, and spot the
                     anomaly before it becomes a loss.
                   </p>
                 </div>
@@ -672,7 +660,7 @@ export default function SmartBusinessPage() {
             className="h-9 w-auto md:h-10"
           />
           <p className="max-w-xl font-sans text-[0.875rem] leading-relaxed text-slate-500">
-            CFAS is an authorized Alarm.com for Business dealer — the platform
+            CFAS is an authorized Alarm.com for Business dealer, the platform
             behind millions of protected properties, designed and serviced
             locally since 1968.
           </p>

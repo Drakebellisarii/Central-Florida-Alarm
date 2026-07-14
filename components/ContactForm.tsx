@@ -4,11 +4,9 @@ import { useState } from "react";
 import { Check, ArrowUpRight, ChevronDown, Loader2 } from "lucide-react";
 import { SERVICES } from "@/lib/services";
 
-/* ------------------------------------------------------------------ */
-/* Formspree endpoint. Replace REPLACE_WITH_YOUR_ID with the real form */
-/* ID from your Formspree dashboard (https://formspree.io).            */
-/* ------------------------------------------------------------------ */
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/REPLACE_WITH_YOUR_ID";
+// All forms post to this one API route, which emails the submission
+// through Outlook/Microsoft 365 — see app/api/send/route.ts.
+const SEND_ENDPOINT = "/api/send";
 
 const PROJECT_TYPES = [
   "New Construction",
@@ -70,7 +68,7 @@ export function ContactForm() {
     try {
       const data = new FormData(form);
       services.forEach((s) => data.append("services", s));
-      const res = await fetch(FORMSPREE_ENDPOINT, {
+      const res = await fetch(SEND_ENDPOINT, {
         method: "POST",
         body: data,
         headers: { Accept: "application/json" },
@@ -106,6 +104,8 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
+      <input type="hidden" name="formType" value="Contact form" />
+
       {status === "error" && (
         <p
           role="alert"

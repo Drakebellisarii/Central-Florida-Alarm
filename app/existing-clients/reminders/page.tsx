@@ -108,7 +108,7 @@ export default function RemindersPage() {
             <div className="mt-10 border border-slate-200">
               <div className="border-b border-slate-200 bg-paper px-7 py-4">
                 <p className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-navy/70">
-                  Save as &ldquo;Alarm Monitoring — Answer This Call&rdquo;
+                  Save as &ldquo;Alarm Monitoring: Answer This Call&rdquo;
                 </p>
               </div>
               <div className="grid grid-cols-1 divide-y divide-slate-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
@@ -144,7 +144,7 @@ export default function RemindersPage() {
           <Reveal index={4}>
             <p className="mt-7 flex max-w-xl items-start gap-3 font-sans text-[0.875rem] leading-relaxed text-slate-500">
               <Share2 strokeWidth={1.25} className="mt-0.5 h-4 w-4 shrink-0 text-navy-logo" />
-              Pass these along to your emergency contacts and key holders —
+              Pass these along to your emergency contacts and key holders;
               the monitoring center may call them too.
             </p>
           </Reveal>
@@ -161,7 +161,7 @@ export default function RemindersPage() {
           <Reveal index={2}>
             <p className="mt-6 max-w-xl font-sans text-[0.9375rem] leading-relaxed text-slate-600">
               Your password is the vocal password you use to identify
-              yourself to our operators — it&rsquo;s how they know it&rsquo;s
+              yourself to our operators; it&rsquo;s how they know it&rsquo;s
               really you when they call to verify an alarm, and how they know
               to cancel a dispatch. Keep it somewhere your family and key
               holders can find it, but strangers can&rsquo;t.
@@ -170,7 +170,7 @@ export default function RemindersPage() {
           <Reveal index={3}>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 border-y border-slate-200 py-6">
               <p className="font-sans text-[0.9375rem] text-slate-600">
-                Forgotten it? We can help —
+                Forgotten it? We can help:
               </p>
               <a
                 href={BUSINESS.phoneHref}
@@ -196,7 +196,7 @@ export default function RemindersPage() {
               Many Central Florida counties and municipalities require alarm
               systems to be registered with the sheriff&rsquo;s office or local
               police department. An unregistered alarm can mean fines after a
-              false alarm — or a slower response when it counts. Requirements
+              false alarm, or a slower response when it counts. Requirements
               vary by county, and some offer registration online while others
               still take it by mail.
             </p>
@@ -225,7 +225,7 @@ export default function RemindersPage() {
         >
           <Reveal index={2}>
             <p className="mt-6 max-w-xl font-sans text-[0.9375rem] leading-relaxed text-slate-600">
-              When arming, you&rsquo;ll choose one of two modes — and the
+              When arming, you&rsquo;ll choose one of two modes, and the
               difference matters.
             </p>
           </Reveal>
@@ -240,7 +240,7 @@ export default function RemindersPage() {
                   Stay
                 </p>
                 <p className="mt-4 font-sans text-[0.875rem] leading-relaxed text-slate-600">
-                  Arms the perimeter — doors and windows — but leaves motion
+                  Arms the perimeter (doors and windows) but leaves motion
                   detectors off, so you can move freely around the house.
                 </p>
               </div>
@@ -252,7 +252,7 @@ export default function RemindersPage() {
                   Away
                 </p>
                 <p className="mt-4 font-sans text-[0.875rem] leading-relaxed text-slate-600">
-                  Arms everything — perimeter sensors and motion detectors —
+                  Arms everything (perimeter sensors and motion detectors)
                   for full coverage while the house is empty.
                 </p>
               </div>
@@ -278,7 +278,7 @@ export default function RemindersPage() {
         >
           <Reveal index={2}>
             <p className="mt-6 max-w-xl font-sans text-[0.9375rem] leading-relaxed text-slate-600">
-              During an extended outage — hurricane season, especially — your
+              During an extended outage (hurricane season, especially), your
               system runs on its backup battery. Once that battery runs low,
               the panel starts beeping to tell you, and it can feel like
               it&rsquo;s going crazy. To silence it, follow these three steps.
@@ -291,7 +291,7 @@ export default function RemindersPage() {
                 {
                   step: "Open the panel box",
                   detail:
-                    "Find your security panel box — usually in a closet, utility room, or the garage — and open it up.",
+                    "Find your security panel box (usually in a closet, utility room, or the garage) and open it up.",
                 },
                 {
                   step: "Disconnect the backup battery",
@@ -301,7 +301,7 @@ export default function RemindersPage() {
                 {
                   step: "Unplug the power transformer",
                   detail:
-                    "Find the transformer plugged into a wall outlet — it may be in another room or near a garage door opener — and unplug it. You may need a Phillips-head screwdriver if it's secured to the outlet.",
+                    "Find the transformer plugged into a wall outlet (it may be in another room or near a garage door opener) and unplug it. You may need a Phillips-head screwdriver if it's secured to the outlet.",
                 },
               ].map((item, i) => (
                 <li
@@ -328,7 +328,7 @@ export default function RemindersPage() {
             <p className="mt-4 max-w-xl border-t border-slate-200 pt-7 font-sans text-[0.875rem] leading-relaxed text-slate-500">
               Once power is back, reconnect the battery and plug the
               transformer back in. If the beeping returns, the battery has
-              likely reached the end of its life —{" "}
+              likely reached the end of its life:{" "}
               <Link
                 href="/contact"
                 className="font-medium text-navy-deep underline decoration-slate-300 underline-offset-4 transition-colors duration-300 hover:text-navy-logo hover:decoration-navy-logo/40"

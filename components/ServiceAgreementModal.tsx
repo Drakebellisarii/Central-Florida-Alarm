@@ -3,12 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, ArrowUpRight, ChevronDown, Loader2, X } from "lucide-react";
 
-/* ------------------------------------------------------------------ */
-/* Formspree endpoint. Replace REPLACE_WITH_YOUR_ID with the real form */
-/* ID from your Formspree dashboard (https://formspree.io). Shares the */
-/* same pattern as the contact and service-request forms.              */
-/* ------------------------------------------------------------------ */
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/REPLACE_WITH_YOUR_ID";
+// All forms post to this one API route, which emails the submission
+// through Outlook/Microsoft 365 — see app/api/send/route.ts.
+const SEND_ENDPOINT = "/api/send";
 
 type Errors = Partial<
   Record<"name" | "email" | "phone" | "address" | "city" | "zip", string>
@@ -80,8 +77,7 @@ export function ServiceAgreementModal() {
     setStatus("submitting");
     try {
       const data = new FormData(form);
-      data.append("_subject", "Service agreement inquiry");
-      const res = await fetch(FORMSPREE_ENDPOINT, {
+      const res = await fetch(SEND_ENDPOINT, {
         method: "POST",
         body: data,
         headers: { Accept: "application/json" },

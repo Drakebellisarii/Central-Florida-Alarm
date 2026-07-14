@@ -11,7 +11,7 @@ const crumbs = [
 ];
 
 export const metadata: Metadata = buildMetadata({
-  title: "Existing Clients — Portals & Services | Central Florida Automation Services",
+  title: "Existing Clients: Portals & Services | Central Florida Automation Services",
   description:
     "Existing Central Florida Automation Services clients: visit your client portal, manage your service agreement, submit a service request, register your alarm, and more.",
   path: "/existing-clients",

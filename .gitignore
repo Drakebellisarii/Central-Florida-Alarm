@@ -9,3 +9,7 @@ npm-debug.log*
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+
+# Local-only media backups (originals & unused assets)
+/asset-backups/unused/
+/asset-backups/originals-*/

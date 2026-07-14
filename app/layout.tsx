@@ -11,7 +11,7 @@ import { SITE_URL, BUSINESS } from "@/lib/seo";
 const gloock = localFont({
   src: [
     {
-      path: "./fonts/Noto_Serif_Display/DM_Serif_Text,Gloock/Gloock/Gloock-Regular.ttf",
+      path: "./fonts/Noto_Serif_Display/DM_Serif_Text,Gloock/Gloock/Gloock-Regular.woff2",
       style: "normal",
     },
   ],
@@ -23,11 +23,11 @@ const gloock = localFont({
 const dmSerifText = localFont({
   src: [
     {
-      path: "./fonts/Noto_Serif_Display/DM_Serif_Text,Gloock/DM_Serif_Text/DMSerifText-Regular.ttf",
+      path: "./fonts/Noto_Serif_Display/DM_Serif_Text,Gloock/DM_Serif_Text/DMSerifText-Regular.woff2",
       style: "normal",
     },
     {
-      path: "./fonts/Noto_Serif_Display/DM_Serif_Text,Gloock/DM_Serif_Text/DMSerifText-Italic.ttf",
+      path: "./fonts/Noto_Serif_Display/DM_Serif_Text,Gloock/DM_Serif_Text/DMSerifText-Italic.woff2",
       style: "italic",
     },
   ],
@@ -40,7 +40,8 @@ const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-jakarta",
-  weight: ["300", "400", "500", "600", "700"],
+  // 700 intentionally omitted — nothing on the site uses font-bold.
+  weight: ["300", "400", "500", "600"],
 });
 
 // M PLUS Rounded 1c — soft rounded display, reserved for oversized numerals.

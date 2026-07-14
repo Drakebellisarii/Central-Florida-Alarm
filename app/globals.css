@@ -134,6 +134,7 @@ body {
   .rd-3 { animation-delay: 1.10s; }
   .rd-4 { animation-delay: 1.45s; }
   .rd-5 { animation-delay: 1.75s; }
+  .rd-6 { animation-delay: 2.05s; }
 
   /* Scroll-linked reveal. In browsers that support scroll-driven
      animations (Chromium/Edge) the element rises in as it enters the
@@ -146,6 +147,24 @@ body {
       animation-timeline: view();
       animation-range: entry 5% entry 55%;
     }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero footage — once the build sequence finishes and the video rests */
+/* on its final frame, a slow drift keeps the shot feeling held rather */
+/* than visibly frozen. Starts at the video's resting scale (1) so     */
+/* there's no jump the instant the class is applied.                   */
+/* ------------------------------------------------------------------ */
+@keyframes hero-settle {
+  0%, 100% { transform: scale(1) translate3d(0, 0, 0); }
+  50%      { transform: scale(1.045) translate3d(-0.8%, -0.5%, 0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-settle {
+    animation: hero-settle 22s ease-in-out infinite;
+    will-change: transform;
   }
 }
 
@@ -244,6 +263,30 @@ body {
 }
 
 /* ------------------------------------------------------------------ */
+/* Page loader — brand splash held up while the hero/about footage      */
+/* warms up. The logo breathes gently; a current travels the line       */
+/* beneath it, echoing the network motif used elsewhere on the site.    */
+/* ------------------------------------------------------------------ */
+@keyframes loader-breathe {
+  0%, 100% { opacity: 0.88; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.035); }
+}
+
+@keyframes loader-current {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(300%); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .loader-breathe {
+    animation: loader-breathe 2.4s ease-in-out infinite;
+  }
+  .loader-current {
+    animation: loader-current 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /* Floating partner-logo dock                                          */
 /* ------------------------------------------------------------------ */
 
@@ -333,15 +376,19 @@ body {
 /* of a 27s cycle (staggered via inline animation-delay: 0s/9s/18s).   */
 /* Base opacity is 0 so only the active slide shows.                   */
 /* ------------------------------------------------------------------ */
+/* pointer-events is a discrete (non-interpolated) property, so it jumps at
+   each keyframe stop — this keeps a hidden slide's buttons from stealing
+   clicks from the visible slide stacked underneath it. */
 @keyframes footer-review-fade {
-  0% { opacity: 0; }
-  3%, 30% { opacity: 1; }
-  36%, 100% { opacity: 0; }
+  0% { opacity: 0; pointer-events: none; }
+  3%, 30% { opacity: 1; pointer-events: auto; }
+  36%, 100% { opacity: 0; pointer-events: none; }
 }
 
 .footer-review-slide {
   grid-area: 1 / 1;
   opacity: 0;
+  pointer-events: none;
   animation: footer-review-fade 27s ease-in-out infinite;
 }
 
@@ -352,5 +399,6 @@ body {
 
   .footer-review-slide:first-child {
     opacity: 1;
+    pointer-events: auto;
   }
 }

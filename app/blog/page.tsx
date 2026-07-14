@@ -43,7 +43,7 @@ export default function BlogPage() {
             New posts are on the way.
           </p>
           <p className="mt-4 max-w-md font-sans text-[0.9375rem] leading-relaxed text-navy-deep/60">
-            Check back soon — we&rsquo;re putting the finishing touches on this
+            Check back soon. We&rsquo;re putting the finishing touches on this
             space.
           </p>
         </div>

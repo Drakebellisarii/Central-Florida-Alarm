@@ -188,6 +188,7 @@ export function AboutSection() {
         <div className="relative z-10 h-full w-full overflow-hidden">
           <video
             ref={videoRef}
+            data-loader-target="about-video"
             autoPlay
             muted
             loop

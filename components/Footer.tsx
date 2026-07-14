@@ -121,7 +121,7 @@ export function Footer() {
           </div>
 
           {/* Google reviews */}
-          <div className="md:col-span-12 lg:col-span-4 lg:mt-16">
+          <div className="md:col-span-12 lg:col-span-4 lg:mt-16 lg:pl-8">
             <FooterReviews />
           </div>
         </div>

@@ -98,8 +98,8 @@ export default function ServiceAreasPage() {
         </div>
 
         {/* The directory */}
-        <div className="mx-auto max-w-[93.75rem] px-5 pb-24 pt-16 sm:px-8 md:px-11 md:pb-32 md:pt-20">
-          <div className="divide-y divide-navy/10 border-y border-navy/10">
+        <div className="mx-auto max-w-[93.75rem] px-5 pb-16 pt-16 sm:px-8 md:px-11 md:pb-20 md:pt-20">
+          <div className="divide-y divide-navy/10 border-t border-navy/10">
             {REGIONS.map((region, r) => (
               <div
                 key={region.name}
@@ -138,8 +138,8 @@ export default function ServiceAreasPage() {
       </section>
 
       <CTABanner
-        eyebrow="Don't see your community"
-        heading="We likely serve it. Ask."
+        eyebrow=""
+        heading="Don't see your community? We likely serve it."
         body="Our territory covers most of Central Florida. If you are in or near Greater Orlando, there is a good chance we already work in your neighborhood."
         light
       />
