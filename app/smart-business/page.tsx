@@ -469,17 +469,18 @@ export default function SmartBusinessPage() {
                 >
                   <div className={flip ? "md:order-2" : ""}>
                     {o.kind === "app" ? (
-                      /* Phone mockup, sized to its own aspect so it isn't lost in a box */
+                      /* Phone mockup — transparent cutout floats directly on the
+                         page, no wash panel behind it (the asset has alpha). */
                       <div
                         data-sb-curtain
-                        className="relative mx-auto aspect-[9/16] max-w-[17.5rem] overflow-hidden rounded-sm bg-navy-deep/[0.04]"
+                        className="relative mx-auto aspect-[9/16] max-w-[17.5rem]"
                       >
                         <Image
                           src={o.image!}
                           alt={o.alt}
                           fill
                           sizes="(min-width: 1920px) 560px, 280px"
-                          className="object-contain p-3"
+                          className="object-contain"
                         />
                       </div>
                     ) : (

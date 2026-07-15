@@ -48,15 +48,17 @@ export function AboutSection() {
       {/* ── Left — editorial mission ──────────────────────────────────── */}
       <div className="flex min-w-0 flex-col justify-center px-6 py-20 sm:px-8 md:w-[55%] md:px-10 md:py-16 lg:px-16 lg:py-20 xl:px-20">
 
-        {/* Label above the promise */}
-        <p className="reveal-scroll font-sans text-[1.25rem] font-semibold uppercase tracking-eyebrow text-navy/70">
+        {/* Label above the promise — standard site eyebrow, quiet and clearly
+            subordinate to the statement it introduces. */}
+        <p className="reveal-scroll font-sans text-[0.8125rem] uppercase tracking-eyebrow text-navy/40">
           Our Mission Statement
         </p>
 
-        {/* The promise — the centerpiece. Sized down and given room to breathe,
-            with a quiet two-tone fall so the payoff lands without any bold. */}
+        {/* The promise — the centerpiece. One blue only (navy-deep, the same
+            heading tone as the rest of the light pages) so nothing competes
+            with it. */}
         <blockquote className="reveal-scroll mt-6 max-w-xl">
-          <p className="font-display text-[clamp(1.35rem,2.3vw,2.05rem)] leading-[1.45] tracking-[-0.005em] text-navy-logo">
+          <p className="font-display text-[clamp(1.35rem,2.3vw,2.05rem)] leading-[1.45] tracking-[-0.005em] text-navy-deep">
             To be sure every client is so satisfied with our performance that
             they would definitely do business with us again.
           </p>
@@ -65,14 +67,14 @@ export function AboutSection() {
         {/* Capabilities — a 2-column grid of dropdowns so all eight pillars
             fit without the section running long. Tapping a row reveals its
             description; only one is open at a time. */}
-        <div className="mt-10 grid grid-cols-1 border-t border-slate-100 sm:grid-cols-2 sm:gap-x-10">
+        <div className="mt-10 grid grid-cols-1 border-t border-navy/10 sm:grid-cols-2 sm:gap-x-10">
           {PILLARS.map((p, i) => {
             const Icon = p.icon;
             const isOpen = openPillar === i;
             return (
               <div
                 key={p.label}
-                className="reveal-scroll border-b border-slate-100"
+                className="reveal-scroll border-b border-navy/10"
                 style={{ animationDelay: `${i * 0.05}s` }}
               >
                 <button
@@ -128,7 +130,7 @@ export function AboutSection() {
                           isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                         }`}
                       >
-                        <p className="min-h-0 pt-1.5 font-sans text-[0.75rem] leading-relaxed text-slate-400">
+                        <p className="min-h-0 pt-1.5 font-sans text-[0.75rem] leading-relaxed text-stone">
                           {p.body}
                         </p>
                       </div>
@@ -138,7 +140,7 @@ export function AboutSection() {
                     <Plus
                       aria-hidden
                       strokeWidth={1.5}
-                      className={`h-4 w-4 shrink-0 self-start text-navy/35 transition-all duration-300 ease-out group-hover:text-navy-deep ${
+                      className={`h-4 w-4 shrink-0 self-start text-navy/40 transition-all duration-300 ease-out group-hover:text-navy-deep ${
                         isOpen ? "rotate-45 text-navy-deep" : ""
                       }`}
                     />
@@ -159,7 +161,7 @@ export function AboutSection() {
               height={60}
               className="h-14 w-auto object-contain opacity-85 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-16 md:h-12 lg:h-14 xl:h-16 2xl:h-20"
             />
-            <span className="hidden h-12 w-px bg-slate-200 sm:block sm:h-16 md:h-10" />
+            <span className="hidden h-12 w-px bg-navy/10 sm:block sm:h-16 md:h-10" />
             <Image
               src="/images/MCBC_Logo.jpg"
               alt="Master Custom Builder Council"
@@ -167,7 +169,7 @@ export function AboutSection() {
               height={60}
               className="h-14 w-auto object-contain opacity-85 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-16 md:h-12 lg:h-14 xl:h-16 2xl:h-20"
             />
-            <span className="hidden h-12 w-px bg-slate-200 sm:block sm:h-16 md:h-10" />
+            <span className="hidden h-12 w-px bg-navy/10 sm:block sm:h-16 md:h-10" />
             <Image
               src="/images/Lutron-platinum.png"
               alt="Lutron Platinum Dealer 2026"

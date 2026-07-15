@@ -1,5 +1,9 @@
 import type { ReactNode } from "react";
 
+/**
+ * Section tag — the quiet uppercase letter-spaced label, pure typography.
+ * No line, no chip, no decoration: the tracking does the work.
+ */
 export function Eyebrow({
   children,
   className = "",
@@ -11,14 +15,10 @@ export function Eyebrow({
 }) {
   return (
     <span
-      className={`inline-flex items-center gap-3 font-sans text-[0.6875rem] uppercase tracking-eyebrow ${
+      className={`inline-block font-sans text-[0.6875rem] uppercase tracking-eyebrow ${
         dark ? "text-white/50" : "text-navy/70"
       } ${className}`}
     >
-      <span
-        aria-hidden="true"
-        className={`h-px w-7 ${dark ? "bg-white/25" : "bg-navy/30"}`}
-      />
       {children}
     </span>
   );

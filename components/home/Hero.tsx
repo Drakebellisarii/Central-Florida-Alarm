@@ -7,29 +7,31 @@ import { NavSentinel } from "@/components/NavSentinel";
 import { CTAButton } from "@/components/CTAButton";
 
 const SUBTITLE =
-  "Since 1968 we have worked beside architects, contractors, and interior designers, to enhance the convenience, safety and lifestyle of your home";
+  "We work beside architects, contractors, and interior designers, to enhance the convenience, safety and lifestyle of your home.";
 
 type DeviceType = "mobile" | "tablet" | "desktop";
 
-const VIDEO_SRC: Record<DeviceType, string> = {
-  mobile: "/iphone-hero-hig.mp4",
-  // Tablets share the portrait phone clip — no separate iPad encode.
-  tablet: "/iphone-hero-hig.mp4",
-  desktop: "/Desktop-v2.mp4",
+// Per-device clip chains. Each clip fades in over the previous clip's held
+// final frame and plays once; the hero settles on the last one.
+const CHAIN: Record<DeviceType, string[]> = {
+  mobile: ["/iphone-hero-hig.mp4", "/Hero-inside-1.mp4", "/Hero-4.mp4"],
+  // Tablets share the portrait phone chain — no separate iPad encodes.
+  tablet: ["/iphone-hero-hig.mp4", "/Hero-inside-1.mp4", "/Hero-4.mp4"],
+  desktop: ["/Part1.mp4", "/Part2.mp4", "/Part3.mp4"],
 };
 
-// Last frame of each clip — the finished estate. Used as the static poster for
-// reduced-motion visitors, who never see the build play out.
+// Last frame of each chain — used as the static poster for reduced-motion
+// visitors, who never see the sequence play out.
 const POSTER_SRC: Record<DeviceType, string> = {
   mobile: "/images/hero-last-mobile.jpg",
   tablet: "/images/hero-last-mobile.jpg",
-  // -v2 busts the year-long immutable cache after the desktop clip changed.
-  desktop: "/images/hero-last-desktop-v2.jpg",
+  // -v3 busts the year-long immutable cache after the desktop chain changed
+  // (extracted from Part3's final frame).
+  desktop: "/images/hero-last-desktop-v3.jpg",
 };
 
 export function Hero() {
   const reduce = useReducedMotion();
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   // Three-tier device detection: phone / tablet / desktop. TVs and other
   // large landscape displays match the desktop query and get the landscape
@@ -63,53 +65,91 @@ export function Hero() {
     };
   }, []);
 
-  // Play the build through once on load, then let it hold on its last decoded
-  // frame — a non-looping <video> keeps painting the final frame after it ends,
-  // which is exactly the finished estate we want to rest on. No scroll input.
-  // Reduced-motion visitors skip the autoplay and see the static poster.
+  // The chain plays in order, each clip fading in over the previous clip's
+  // held last frame and playing once; the hero settles on the final clip's
+  // last frame (hero-settle drift, applied below). A non-looping <video>
+  // keeps painting its final frame after it ends, which is what lets each
+  // hand-off read as a held shot rather than a cut to black. If any clip
+  // can't start (blocked, still buffering, missing), the hero settles right
+  // there on the frame it's already holding — never black.
+  // Reduced-motion visitors skip the whole sequence and see the static poster.
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [settled, setSettled] = useState(false);
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video || reduce) return;
+    if (reduce) return;
+    const first = videoRefs.current[0];
+    if (!first) return;
+    setActiveIndex(0);
     setSettled(false);
-    // The key={deviceType} swap remounts the element, but call play() ourselves
-    // too so a source change always restarts the clip from the top. Muted +
+    // The key={deviceType} swap remounts the elements, but call play() ourselves
+    // too so a source change always restarts the chain from the top. Muted +
     // playsInline autoplay is permitted without a user gesture.
-    const p = video.play();
+    const p = first.play();
     if (p) p.catch(() => {});
-    // Once the build finishes, a slow drift (hero-settle, applied below)
-    // keeps the final frame feeling like a held cinematic shot instead of a
-    // freeze — a hard stop read as broken rather than intentional.
-    const onEnded = () => setSettled(true);
-    video.addEventListener("ended", onEnded);
-    return () => video.removeEventListener("ended", onEnded);
+    const handlers: [HTMLVideoElement, () => void][] = [];
+    videoRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const onEnded = () => {
+        const next = videoRefs.current[i + 1];
+        if (!next) {
+          setSettled(true);
+          return;
+        }
+        const q = next.play();
+        if (q) q.then(() => setActiveIndex(i + 1)).catch(() => setSettled(true));
+        else setActiveIndex(i + 1);
+      };
+      el.addEventListener("ended", onEnded);
+      handlers.push([el, onEnded]);
+    });
+    return () =>
+      handlers.forEach(([el, fn]) => el.removeEventListener("ended", fn));
   }, [reduce, deviceType]);
 
   return (
     <section className="sticky top-0 z-0 flex h-[100dvh] flex-col justify-end overflow-hidden bg-navy-deep">
       <NavSentinel />
 
-      {/* ── Footage — autoplays once, then rests on the final frame ─────── */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <video
-          key={deviceType}
-          ref={videoRef}
-          data-loader-target="hero-video"
-          muted
-          playsInline
-          autoPlay={!reduce}
-          preload="auto"
-          // Only reduced-motion users (no autoplay) need the still; for everyone
-          // else a poster of the *finished* house would flash before the clip
-          // rewinds to bare concrete, so we let the navy backdrop cover the
-          // sub-second gap until the first frame paints.
-          poster={reduce ? POSTER_SRC[deviceType] : undefined}
-          className={`absolute inset-0 h-full w-full object-cover ${
-            settled ? "hero-settle" : ""
-          }`}
-        >
-          <source src={VIDEO_SRC[deviceType]} type="video/mp4" />
-        </video>
+      {/* ── Footage — build plays once, interior fades in and plays once,
+             then the hero rests on the interior's final frame ─────────── */}
+      <div
+        key={deviceType}
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        {/* The first clip is the loader target and carries the reduced-motion
+            poster (reduced-motion users see only it, as a still). Later clips
+            preload behind the running footage, stay invisible until their
+            turn, then crossfade in on top. */}
+        {(reduce ? CHAIN[deviceType].slice(0, 1) : CHAIN[deviceType]).map(
+          (src, i) => (
+            <video
+              key={src}
+              ref={(el) => {
+                videoRefs.current[i] = el;
+              }}
+              data-loader-target={i === 0 ? "hero-video" : undefined}
+              muted
+              playsInline
+              autoPlay={i === 0 && !reduce}
+              preload="auto"
+              // Only reduced-motion users (no autoplay) need the still; for
+              // everyone else a poster of the finished sequence would flash
+              // before the first clip rewinds to its opening shot, so we let
+              // the navy backdrop cover the sub-second gap instead.
+              poster={i === 0 && reduce ? POSTER_SRC[deviceType] : undefined}
+              className={`absolute inset-0 h-full w-full object-cover ${
+                i === 0
+                  ? ""
+                  : `transition-opacity duration-700 ease-expo ${
+                      activeIndex >= i ? "opacity-100" : "opacity-0"
+                    }`
+              } ${settled && activeIndex === i ? "hero-settle" : ""}`}
+            >
+              <source src={src} type="video/mp4" />
+            </video>
+          )
+        )}
       </div>
 
       {/* ── Color grade — weighted to the left, where the copy sits ──── */}
@@ -176,10 +216,10 @@ export function Hero() {
           </p>
 
           <div className="reveal-load rd-6 mt-8 flex flex-wrap items-center gap-4 sm:mt-10 short:mt-4">
-            <CTAButton href="/smart-security" variant="primary">
+            <CTAButton href="/smart-security" variant="primary" compactOnMobile>
               Explore Smart Security
             </CTAButton>
-            <CTAButton href="/contact" variant="ghost" arrow={false}>
+            <CTAButton href="/contact" variant="ghost" arrow={false} compactOnMobile>
               Request a Consultation
             </CTAButton>
           </div>

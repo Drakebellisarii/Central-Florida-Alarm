@@ -69,7 +69,7 @@ const DAILY: Daily[] = [
     eyebrow: "Simplify your routine",
     title: "One tap sets the whole scene.",
     body: "Build moments like Home, Away, and Sleep that quietly adjust lighting, climate, shades, and arming together, your home anticipating you instead of waiting on you.",
-    image: `${DIR}/Smart-Home8.jpg`,
+    image: `${DIR}/Smart-Home8.webp`,
     alt: "The app home screen showing Home, Away, Sleep, and Wake Up scenes",
     icon: CalendarRange,
   },
@@ -200,14 +200,6 @@ export default function SmartHomePage() {
                 One platform, instead of a drawer full of apps.
               </h2>
             </div>
-            <Reveal index={1} className="lg:col-span-5">
-              <p className="font-sans text-[1rem] leading-relaxed text-slate-600">
-                Most smart homes are stitched together from devices that
-                don&apos;t talk to each other. We build a single, professionally
-                installed system where security, life-safety, and automation
-                work as one, and stay that way.
-              </p>
-            </Reveal>
           </div>
 
           <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
@@ -274,18 +266,18 @@ export default function SmartHomePage() {
                 >
                   <div className={`relative ${flip ? "md:order-2" : ""}`}>
                     {d.kind === "app" ? (
-                      // Portrait app screen in a device frame
-                      <div className="mx-auto w-[58%] max-w-[13.75rem] sm:w-[64%]">
-                        <div className="sh-curtain overflow-hidden rounded-[2rem] border-[6px] border-navy-deep bg-navy-deep shadow-[0_30px_60px_-25px_rgba(10,26,82,0.55)]">
-                          <div className="relative aspect-[309/640]">
-                            <Image
-                              src={d.image}
-                              alt={d.alt}
-                              fill
-                              sizes="(min-width: 1920px) 480px, 240px"
-                              className="object-cover"
-                            />
-                          </div>
+                      // Device cutout baked onto white — blends seamlessly into
+                      // this white section. No CSS shadow: the image is opaque,
+                      // so a drop-shadow would outline its full rectangle.
+                      <div className="mx-auto w-[72%] max-w-[17rem] sm:w-[78%]">
+                        <div className="sh-curtain relative aspect-[620/1268]">
+                          <Image
+                            src={d.image}
+                            alt={d.alt}
+                            fill
+                            sizes="(min-width: 1920px) 608px, 304px"
+                            className="object-contain"
+                          />
                         </div>
                       </div>
                     ) : (
@@ -379,17 +371,17 @@ export default function SmartHomePage() {
           {/* Saved-clips app + capability list */}
           <div className="mt-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <div className="mx-auto w-[52%] max-w-[15rem] lg:w-[72%]">
-                <div className="overflow-hidden rounded-[2rem] border-[6px] border-white/15 bg-white/5 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
-                  <div className="relative aspect-[309/640]">
-                    <Image
-                      src={`${DIR}/Smart-Home7.jpg`}
-                      alt="The app's saved clips, each tagged by room and what triggered it"
-                      fill
-                      sizes="(min-width: 1920px) 480px, 240px"
-                      className="object-cover"
-                    />
-                  </div>
+              {/* Transparent device cutout — floats on the dark section with a
+                  soft cast shadow following the phone's silhouette. */}
+              <div className="mx-auto w-[66%] max-w-[18rem] lg:w-[84%]">
+                <div className="relative aspect-[677/1380]">
+                  <Image
+                    src={`${DIR}/Smart-Home7.webp`}
+                    alt="The app's saved clips, each tagged by room and what triggered it"
+                    fill
+                    sizes="(min-width: 1920px) 640px, 320px"
+                    className="object-contain drop-shadow-[0_40px_60px_rgba(0,0,0,0.55)]"
+                  />
                 </div>
               </div>
             </Reveal>
