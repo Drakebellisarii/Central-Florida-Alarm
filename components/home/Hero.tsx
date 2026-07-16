@@ -7,28 +7,40 @@ import { NavSentinel } from "@/components/NavSentinel";
 import { CTAButton } from "@/components/CTAButton";
 
 const SUBTITLE =
-  "We work beside architects, contractors, and interior designers, to enhance the convenience, safety and lifestyle of your home.";
+  "We partner with architects, contractors, and interior designers, to enhance the convenience, safety and lifestyle of your home.";
 
 type DeviceType = "mobile" | "tablet" | "desktop";
 
 // Per-device clip chains. Each clip fades in over the previous clip's held
 // final frame and plays once; the hero settles on the last one.
 const CHAIN: Record<DeviceType, string[]> = {
-  mobile: ["/iphone-hero-hig.mp4", "/Hero-inside-1.mp4", "/Hero-4.mp4"],
-  // Tablets share the portrait phone chain — no separate iPad encodes.
-  tablet: ["/iphone-hero-hig.mp4", "/Hero-inside-1.mp4", "/Hero-4.mp4"],
-  desktop: ["/Part1.mp4", "/Part2.mp4", "/Part3.mp4"],
+  mobile: ["/Mobile.mp4"],
+  // Tablets share the portrait phone clip — no separate iPad encode.
+  tablet: ["/Mobile.mp4"],
+  // One continuous file — the three desktop shots are concatenated offline
+  // (ffmpeg xfade) with 0.9s cross-dissolves rendered frame-by-frame, so the
+  // hand-offs are baked into the footage instead of composited at runtime.
+  // -v3: third shot replaced with Finalized3.mp4.
+  desktop: ["/hero-desktop-seq-v3.mp4"],
 };
 
 // Last frame of each chain — used as the static poster for reduced-motion
 // visitors, who never see the sequence play out.
 const POSTER_SRC: Record<DeviceType, string> = {
-  mobile: "/images/hero-last-mobile.jpg",
-  tablet: "/images/hero-last-mobile.jpg",
-  // -v3 busts the year-long immutable cache after the desktop chain changed
-  // (extracted from Part3's final frame).
-  desktop: "/images/hero-last-desktop-v3.jpg",
+  // -v3 busts the year-long immutable cache after the portrait clip changed
+  // (extracted from Mobile.mp4's final frame).
+  mobile: "/images/hero-last-mobile-v3.jpg",
+  tablet: "/images/hero-last-mobile-v3.jpg",
+  // -v6 busts the year-long immutable cache after the desktop chain changed
+  // (extracted from the baked sequence's final frame, Finalized3's last shot).
+  desktop: "/images/hero-last-desktop-v6.jpg",
 };
+
+// Film-style cross-dissolve: the next clip starts playing this many seconds
+// before the current one ends, so the fade blends two moving images instead
+// of fading over a frozen frame. Must be comfortably longer than the CSS
+// fade below so the outgoing clip is still in motion for the whole dissolve.
+const DISSOLVE_EARLY_S = 1.2;
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -87,24 +99,52 @@ export function Hero() {
     // playsInline autoplay is permitted without a user gesture.
     const p = first.play();
     if (p) p.catch(() => {});
-    const handlers: [HTMLVideoElement, () => void][] = [];
+    const handlers: [HTMLVideoElement, string, () => void][] = [];
     videoRefs.current.forEach((el, i) => {
       if (!el) return;
+      const next = videoRefs.current[i + 1];
+      // The dissolve starts shortly before this clip ends, so both clips are
+      // in motion while the fade runs. Guarded so it only fires once.
+      let dissolved = false;
+      const startDissolve = () => {
+        if (dissolved || !next) return;
+        dissolved = true;
+        const q = next.play();
+        if (q) {
+          q.then(() => setActiveIndex(i + 1)).catch(() => {
+            // Not ready yet — let the ended handler retry at the hard cut.
+            dissolved = false;
+          });
+        } else {
+          setActiveIndex(i + 1);
+        }
+      };
+      const onTime = () => {
+        if (
+          el.duration &&
+          el.duration - el.currentTime <= DISSOLVE_EARLY_S
+        ) {
+          startDissolve();
+        }
+      };
       const onEnded = () => {
-        const next = videoRefs.current[i + 1];
         if (!next) {
           setSettled(true);
           return;
         }
+        if (dissolved) return;
+        // The early dissolve never started (slow buffer, rejected play): one
+        // last attempt, else settle on this clip's held frame — never black.
         const q = next.play();
         if (q) q.then(() => setActiveIndex(i + 1)).catch(() => setSettled(true));
         else setActiveIndex(i + 1);
       };
+      el.addEventListener("timeupdate", onTime);
       el.addEventListener("ended", onEnded);
-      handlers.push([el, onEnded]);
+      handlers.push([el, "timeupdate", onTime], [el, "ended", onEnded]);
     });
     return () =>
-      handlers.forEach(([el, fn]) => el.removeEventListener("ended", fn));
+      handlers.forEach(([el, evt, fn]) => el.removeEventListener(evt, fn));
   }, [reduce, deviceType]);
 
   return (
@@ -128,7 +168,12 @@ export function Hero() {
               ref={(el) => {
                 videoRefs.current[i] = el;
               }}
-              data-loader-target={i === 0 ? "hero-video" : undefined}
+              // The loader splash gates on the first two entries: the primary
+              // clip buffered deep enough to play through its opening shots,
+              // and (on the multi-clip mobile chain) the second clip ready.
+              data-loader-target={
+                i === 0 ? "hero-video" : i === 1 ? "hero-video-2" : undefined
+              }
               muted
               playsInline
               autoPlay={i === 0 && !reduce}
@@ -141,7 +186,7 @@ export function Hero() {
               className={`absolute inset-0 h-full w-full object-cover ${
                 i === 0
                   ? ""
-                  : `transition-opacity duration-700 ease-expo ${
+                  : `transition-opacity duration-1000 ease-in-out ${
                       activeIndex >= i ? "opacity-100" : "opacity-0"
                     }`
               } ${settled && activeIndex === i ? "hero-settle" : ""}`}

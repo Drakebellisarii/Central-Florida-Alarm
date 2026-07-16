@@ -277,12 +277,49 @@ body {
   to   { transform: translateX(300%); }
 }
 
+/* ------------------------------------------------------------------ */
+/* Service-areas vertical marquees                                     */
+/* ------------------------------------------------------------------ */
+
+@keyframes area-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+
+@keyframes area-down {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}
+
+.area-col-up   { animation: area-up   28s linear infinite; }
+.area-col-down { animation: area-down 28s linear infinite; }
+
+.area-col-wrap:hover .area-col-up,
+.area-col-wrap:hover .area-col-down {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .area-col-up, .area-col-down { animation: none; }
+}
+
+/* Hero credential note — same travelling light as the loader, but the sweep
+   rests most of the cycle so it reads as an occasional glint, not a spinner. */
+@keyframes fyi-current {
+  0%   { transform: translateX(-100%); }
+  38%  { transform: translateX(300%); }
+  100% { transform: translateX(300%); }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .loader-breathe {
     animation: loader-breathe 2.4s ease-in-out infinite;
   }
   .loader-current {
     animation: loader-current 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+  .fyi-current {
+    animation: fyi-current 4.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   }
 }
 
@@ -311,32 +348,6 @@ body {
   .logo-marquee-track {
     animation: none;
   }
-}
-
-/* ------------------------------------------------------------------ */
-/* Service-areas vertical marquees                                     */
-/* ------------------------------------------------------------------ */
-
-@keyframes area-up {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-50%); }
-}
-
-@keyframes area-down {
-  from { transform: translateY(-50%); }
-  to   { transform: translateY(0); }
-}
-
-.area-col-up   { animation: area-up   28s linear infinite; }
-.area-col-down { animation: area-down 28s linear infinite; }
-
-.area-col-wrap:hover .area-col-up,
-.area-col-wrap:hover .area-col-down {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .area-col-up, .area-col-down { animation: none; }
 }
 
 /* ------------------------------------------------------------------ */

@@ -21,6 +21,7 @@ import {
 
 import { buildMetadata } from "@/lib/seo";
 import { NavSentinel } from "@/components/NavSentinel";
+import { FirstProviderNote } from "@/components/FirstProviderNote";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/Reveal";
@@ -166,7 +167,7 @@ export default function SmartHomePage() {
             />
           </div>
 
-       
+          <FirstProviderNote className="reveal-load rd-1 mt-10" />
 
           <h1 className="reveal-load rd-2 mt-6 max-w-4xl font-hero font-light leading-[1.04] tracking-tight">
             <span className="block text-[clamp(2.4rem,6.4vw,5.3rem)] text-white">

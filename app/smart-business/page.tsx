@@ -25,6 +25,7 @@ import {
 
 import { buildMetadata } from "@/lib/seo";
 import { NavSentinel } from "@/components/NavSentinel";
+import { FirstProviderNote } from "@/components/FirstProviderNote";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { AmbientVideo } from "@/components/smart-home/AmbientVideo";
 import { SBMotion } from "@/components/smart-business/SBMotion";
@@ -200,7 +201,9 @@ export default function SmartBusinessPage() {
             />
           </div>
 
-          <h1 className="reveal-load rd-2 mt-10 max-w-4xl font-hero text-[clamp(2.4rem,6.4vw,5.3rem)] font-light leading-[1.03] tracking-tight text-white">
+          <FirstProviderNote className="reveal-load rd-1 mt-10" />
+
+          <h1 className="reveal-load rd-2 mt-6 max-w-4xl font-hero text-[clamp(2.4rem,6.4vw,5.3rem)] font-light leading-[1.03] tracking-tight text-white">
             Run every location like you&apos;re standing in it.
           </h1>
 

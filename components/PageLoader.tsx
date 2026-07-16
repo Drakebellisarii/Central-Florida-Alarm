@@ -26,11 +26,12 @@ const SKIP_SNIPPET =
 
 /**
  * Full-bleed brand splash shown on the first-ever load. Stays up until fonts
- * have swapped in and the hero <video> has enough data to paint its first
- * frame (readyState >= HAVE_CURRENT_DATA). The about-section video is below
- * the fold, so it loads behind the splash-free page instead of gating it.
- * Hero.tsx marks its <video> with data-loader-target for this component to
- * find; nothing else needs to change on its end.
+ * have swapped in, the hero footage is buffered deep enough to play its first
+ * two shots without stalling, the second mobile hero clip (if present) can
+ * start, and the about-section video has its first frame — so the reveal
+ * never lands on a stalled hero or a stale poster. Hero.tsx / AboutSection.tsx
+ * mark their <video> elements with data-loader-target for this component to
+ * find; MAX_WAIT still caps the whole wait on slow connections.
  *
  * Repeat visits skip the splash completely: everything it would hide is
  * already in the browser cache, so showing it would be pure decoration.
@@ -52,10 +53,28 @@ export function PageLoader() {
     let raf = 0;
     let timeout: ReturnType<typeof setTimeout>;
 
-    const targetReady = (selector: string) => {
+    // How deep the primary hero footage must be buffered before the reveal —
+    // through the end of the desktop sequence's second shot. Shorter clips
+    // (the mobile chain's opener) just need to be buffered to their end.
+    const HERO_BUFFER_GOAL_S = 15.3;
+
+    const bufferedThrough = (el: HTMLVideoElement, goal: number) => {
+      const target = Math.min(goal, (el.duration || goal) - 0.1);
+      for (let i = 0; i < el.buffered.length; i++) {
+        if (el.buffered.start(i) <= 0.1 && el.buffered.end(i) >= target) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    const targetReady = (selector: string, bufferGoal?: number) => {
       const el = document.querySelector<HTMLVideoElement>(selector);
-      // If the element isn't mounted yet (or errored out), don't block on it.
-      return !el || el.error !== null || el.readyState >= 2;
+      // If the element isn't mounted (desktop has no second clip; reduced
+      // motion renders none of them) or errored out, don't block on it.
+      if (!el || el.error !== null) return true;
+      if (el.readyState < 2) return false;
+      return bufferGoal === undefined || bufferedThrough(el, bufferGoal);
     };
 
     const fontsReady = () =>
@@ -79,7 +98,10 @@ export function PageLoader() {
       if (cancelled) return;
       const elapsed = Date.now() - start;
       const ready =
-        fontsReady() && targetReady('[data-loader-target="hero-video"]');
+        fontsReady() &&
+        targetReady('[data-loader-target="hero-video"]', HERO_BUFFER_GOAL_S) &&
+        targetReady('[data-loader-target="hero-video-2"]') &&
+        targetReady('[data-loader-target="about-video"]');
 
       if ((ready && elapsed >= MIN_VISIBLE_MS) || elapsed >= MAX_WAIT_MS) {
         finish();

@@ -151,31 +151,42 @@ export function AboutSection() {
           })}
         </div>
 
-        {/* Association logos */}
+        {/* Association logos — four badges share one height scale (the square
+            Lutron medal sits one step larger so it reads optically equal).
+            The row wraps below xl; hairline dividers appear only at xl+ where
+            everything is guaranteed to fit on a single line. */}
         <div className="reveal-scroll mt-12 pt-8">
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:flex-nowrap sm:gap-8 md:gap-5 lg:gap-6 xl:gap-8">
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-6 xl:flex-nowrap xl:gap-6 2xl:gap-8">
             <Image
               src="/images/GOBA.png"
               alt="Greater Orlando Builders Association"
               width={120}
               height={60}
-              className="h-14 w-auto object-contain opacity-85 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-16 md:h-12 lg:h-14 xl:h-16 2xl:h-20"
+              className="h-12 w-auto object-contain opacity-85 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-14 md:h-12 xl:h-14 2xl:h-16"
             />
-            <span className="hidden h-12 w-px bg-navy/10 sm:block sm:h-16 md:h-10" />
+            <span className="hidden h-12 w-px bg-navy/10 xl:block" />
+            <Image
+              src="/images/GOBA-Logo.png"
+              alt="GOBA Custom Home & Remodeling Council"
+              width={135}
+              height={56}
+              className="h-12 w-auto object-contain opacity-85 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-14 md:h-12 xl:h-14 2xl:h-16"
+            />
+            <span className="hidden h-12 w-px bg-navy/10 xl:block" />
             <Image
               src="/images/MCBC_Logo.jpg"
               alt="Master Custom Builder Council"
               width={200}
               height={60}
-              className="h-14 w-auto object-contain opacity-85 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-16 md:h-12 lg:h-14 xl:h-16 2xl:h-20"
+              className="h-12 w-auto object-contain opacity-85 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-14 md:h-12 xl:h-14 2xl:h-16"
             />
-            <span className="hidden h-12 w-px bg-navy/10 sm:block sm:h-16 md:h-10" />
+            <span className="hidden h-12 w-px bg-navy/10 xl:block" />
             <Image
               src="/images/Lutron-platinum.png"
               alt="Lutron Platinum Dealer 2026"
               width={200}
               height={184}
-              className="h-16 w-auto object-contain opacity-90 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-20 md:h-14 lg:h-16 xl:h-20 2xl:h-24"
+              className="h-14 w-auto object-contain opacity-90 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:opacity-100 hover:drop-shadow-[0_8px_20px_rgba(10,26,82,0.18)] sm:h-16 md:h-14 xl:h-16 2xl:h-20"
             />
           </div>
         </div>
