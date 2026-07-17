@@ -45,7 +45,7 @@ const CARDS: ActionCard[] = [
   {
     n: 4,
     title: "Need service? Submit a service request",
-    buttons: [{ label: "Learn More", href: "/fix-my-stuff" }],
+    buttons: [{ label: "Learn More", href: "/repair-request" }],
   },
   {
     n: 5,

@@ -183,10 +183,19 @@ export default function SmartBusinessPage() {
             mobileSrc="/Smart-biz.mp4"
           />
         </div>
-        <div aria-hidden className="absolute inset-0 bg-navy-deep/55" />
+        {/* Left-to-right directional scrim — heaviest where the copy sits, near-clear on the right */}
         <div
           aria-hidden
-          className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-navy-deep via-navy-deep/40 to-transparent"
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(10,26,82,0.78) 0%, rgba(10,26,82,0.48) 35%, rgba(10,26,82,0.14) 62%, transparent 80%)",
+          }}
+        />
+        {/* Bottom lift for text legibility */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-navy-deep/60 via-navy-deep/15 to-transparent"
         />
 
         <div className="relative mx-auto w-full max-w-[93.75rem] px-5 pb-16 pt-40 sm:px-8 md:px-11 md:pb-20 short:pb-10 short:pt-24">

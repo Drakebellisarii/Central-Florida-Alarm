@@ -145,7 +145,7 @@ export function Navbar() {
               Existing Clients
             </Link>
             <Link
-              href="/fix-my-stuff"
+              href="/repair-request"
               className={`group inline-flex items-center gap-2.5 px-5 py-2.5 font-sans text-[0.6875rem] uppercase tracking-wide2 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 ${
                 solid
                   ? "bg-navy-logo text-white hover:bg-navy focus-visible:ring-navy-logo/50"
@@ -231,10 +231,10 @@ export function Navbar() {
                 className="mt-6 space-y-3 border-t border-white/10 pt-8"
               >
                 <Link
-                  href="/fix-my-stuff"
+                  href="/repair-request"
                   className="flex w-full items-center justify-center bg-white px-7 py-4 font-sans text-[0.75rem] uppercase tracking-wide2 text-navy-deep"
                 >
-                  Fix my stuff
+                  Repair Request
                 </Link>
                 <Link
                   href="/existing-clients"

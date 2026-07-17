@@ -12,7 +12,7 @@ export const AREAS: Area[] = [
   { name: "Lake Mary & Heathrow",   slug: "lake-mary" },
   { name: "Sanford",                slug: "sanford" },
   { name: "Oviedo",                 slug: "oviedo" },
-  { name: "Maitland & Altamonte",   slug: "maitland" },
+  { name: "Maitland & Altamonte Springs", slug: "maitland" },
   { name: "Kissimmee & St. Cloud",  slug: "kissimmee" },
   { name: "DeLand",                 slug: "deland" },
   { name: "Ocala",                  slug: "ocala" },

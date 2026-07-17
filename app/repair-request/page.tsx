@@ -9,17 +9,17 @@ import { MonitoringNumbersModal } from "@/components/MonitoringNumbersModal";
 
 const crumbs = [
   { name: "Home", path: "/" },
-  { name: "Fix my stuff", path: "/fix-my-stuff" },
+  { name: "Repair Request", path: "/repair-request" },
 ];
 
 export const metadata: Metadata = buildMetadata({
-  title: "Fix My Stuff: Service Request | Central Florida Automation Services",
+  title: "Repair Request | Central Florida Automation Services",
   description:
-    "Something not working right? Submit a service request and a Central Florida Automation Services coordinator will reach out within one business day. Serving Central Florida since 1968.",
-  path: "/fix-my-stuff",
+    "Something not working right? Submit a repair request and a Central Florida Automation Services coordinator will reach out within one business day. Serving Central Florida since 1968.",
+  path: "/repair-request",
 });
 
-export default function FixMyStuffPage() {
+export default function RepairRequestPage() {
   return (
     <>
       <JsonLd data={localBusinessLd()} />

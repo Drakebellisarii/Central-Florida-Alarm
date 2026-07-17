@@ -9,11 +9,13 @@
 export function FirstProviderNote({ className = "" }: { className?: string }) {
   return (
     <div className={className}>
-      <p className="font-display text-[clamp(1.125rem,1.8vw,1.5rem)] font-light italic leading-snug text-white/90">
-        <span className="mr-3 font-sans text-[0.6875rem] font-semibold not-italic uppercase tracking-wide2 text-white/50">
-          FYI:
+      <p className="font-display leading-snug">
+        <span className="mr-3 font-display text-[1.0625rem] font-semibold not-italic uppercase tracking-wide2 text-white/90">
+          Interesting Fact:
         </span>
-        CFAS was Central Florida&apos;s first Alarm.com provider
+        <span className="text-[0.9375rem] font-light italic text-white/60">
+          CFAS was Central Florida&apos;s first Alarm.com provider
+        </span>
       </p>
       <div className="relative mt-3 h-px w-28 overflow-hidden bg-white/15">
         <span

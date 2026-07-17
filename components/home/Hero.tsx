@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
-import Image from "next/image";
 import { NavSentinel } from "@/components/NavSentinel";
 import { CTAButton } from "@/components/CTAButton";
 
@@ -197,22 +196,40 @@ export function Hero() {
         )}
       </div>
 
-      {/* ── Color grade — weighted to the left, where the copy sits ──── */}
-      {/* Deepens slightly once the build settles, so the stop reads as a
-          held shot gaining depth rather than motion simply cutting out. */}
+      {/* ── Directional scrim ── */}
+      {/* Anchored at bottom-left where all three headline lines sit.
+          Fades diagonally to near-clear at top-right so the sky and
+          photography read as they were shot. Three layers each do one
+          job so none of them has to be heavy. */}
+
+      {/* 1. Radial origin at bottom-left — the primary text shield */}
       <div
         aria-hidden="true"
-        className={`absolute inset-0 transition-colors duration-[3s] ease-expo ${
-          settled ? "bg-black/[0.12]" : "bg-black/5"
-        }`}
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 95% 90% at 0% 100%, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.34) 36%, rgba(0,0,0,0.10) 62%, transparent 80%)",
+        }}
       />
+
+      {/* 2. Left-to-right band — darkest on the left, practically clear by ~55% */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent"
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.28) 30%, rgba(0,0,0,0.08) 52%, transparent 68%)",
+        }}
       />
+
+      {/* 3. Bottom lift — pulls the lower copy off the floor */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/30 via-black/8 to-transparent"
+        className="absolute inset-x-0 bottom-0 h-2/5"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 55%, transparent 100%)",
+        }}
       />
 
       {/* ── Bottom bar — logo blue, fades out into the scene ────────── */}
@@ -226,46 +243,41 @@ export function Hero() {
         }}
       />
 
-      {/* ── Logo — top right ────────────────────────────────────────── */}
-      <div className="reveal-fade-in pointer-events-none absolute right-8 top-24 z-20 sm:right-12 sm:top-24 md:right-14 md:top-28 short:right-6 short:top-14">
-        <Image
-          src="/images/cfas-logo-light.png"
-          alt="Central Florida Automation Services"
-          width={200}
-          height={99}
-          className="h-14 w-auto sm:h-16 md:h-20 2xl:h-24 short:h-9"
-          priority
-        />
-      </div>
-
       {/* ── Copy ────────────────────────────────────────────────────── */}
       <div className="relative z-20 mx-auto w-full max-w-[93.75rem] px-5 pb-24 sm:px-8 sm:pb-32 md:px-11 md:pb-36 lg:pb-28 xl:pb-32 2xl:max-w-[110rem] 2xl:pb-40 short:pb-8">
         <div className="max-w-[64rem] 2xl:max-w-[76rem]">
 
-          <h1 className="font-hero font-light leading-[0.95] tracking-[-0.025em] lg:[text-shadow:0_2px_28px_rgba(0,0,0,0.5)]">
-            <span className="reveal-load rd-1 block text-[clamp(1.55rem,min(6vw,13vh),5.25rem)] text-white">
+          <h1 className="font-hero font-light leading-[0.95] tracking-[-0.025em] lg:[text-shadow:0_2px_28px_rgba(0,0,0,0.45)]">
+            <span className="reveal-load rd-1 block text-[clamp(1.55rem,min(6vw,13vh),3.5rem)] 2xl:text-[clamp(2.5rem,min(5.5vw,12vh),5.25rem)] text-white">
               Central Florida&apos;s leader
             </span>
-            <span className="reveal-load rd-2 block text-[clamp(1.55rem,min(6vw,13vh),5.25rem)] text-white/80 lg:text-white">
+            <span className="reveal-load rd-2 block text-[clamp(1.55rem,min(6vw,13vh),3.5rem)] 2xl:text-[clamp(2.5rem,min(5.5vw,12vh),5.25rem)] text-white/80 lg:text-white">
               in smart home automation
             </span>
-            <span className="reveal-load rd-3 block text-[clamp(1.55rem,min(6vw,13vh),5.25rem)] text-white/50 lg:text-white">
+            <span className="reveal-load rd-3 block text-[clamp(1.55rem,min(6vw,13vh),3.5rem)] 2xl:text-[clamp(2.5rem,min(5.5vw,12vh),5.25rem)] text-white/50 lg:text-white">
               since 1968.
             </span>
           </h1>
 
-          <div className="reveal-load rd-4 mt-7 h-px w-24 bg-white/70 sm:mt-10 2xl:w-32 short:mt-3" />
+          {/* Structural divider — gradient hairline fades into the scene */}
+          <div
+            className="reveal-load rd-4 mt-5 h-px w-64 sm:mt-6 short:mt-3"
+            style={{
+              background:
+                "linear-gradient(to right, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 65%, transparent 100%)",
+            }}
+          />
 
-          <p className="reveal-load rd-5 mt-5 max-w-[42rem] font-display text-[clamp(1rem,2vw,1.9rem)] font-light leading-[1.55] tracking-[-0.005em] text-white/75 sm:mt-8 2xl:max-w-[52rem] short:mt-3 short:text-[0.95rem]">
+          <p className="reveal-load rd-5 mt-6 max-w-[42rem] font-display text-[clamp(1rem,2vw,1.9rem)] font-light leading-[1.55] tracking-[-0.005em] text-white sm:mt-8 2xl:max-w-[52rem] short:mt-3 short:text-[0.95rem]">
             {SUBTITLE}
           </p>
 
-          <div className="reveal-load rd-6 mt-8 flex flex-wrap items-center gap-4 sm:mt-10 short:mt-4">
-            <CTAButton href="/smart-security" variant="primary" compactOnMobile>
-              Explore Smart Security
-            </CTAButton>
-            <CTAButton href="/contact" variant="ghost" arrow={false} compactOnMobile>
+          <div className="reveal-load rd-6 mt-10 flex flex-wrap items-center gap-6 sm:mt-14 short:mt-5">
+            <CTAButton href="/contact" variant="primary" compactOnMobile>
               Request a Consultation
+            </CTAButton>
+            <CTAButton href="/smart-security" variant="ghost" arrow={false} compactOnMobile>
+              Explore Smart Security
             </CTAButton>
           </div>
 
