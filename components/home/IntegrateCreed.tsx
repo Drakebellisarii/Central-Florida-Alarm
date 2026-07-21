@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "@/components/Reveal";
+import { PartnerMarquee } from "@/components/home/PartnerMarquee";
 
 /**
  * Brand creed, typeset as a dictionary entry — because integration is the
@@ -12,7 +13,7 @@ const CREED = ["Since 1968", "One Mission", "Quality"];
 
 export function IntegrateCreed() {
   return (
-    <section className="relative overflow-hidden border-y border-white/10 bg-navy-deep">
+    <section className="relative overflow-hidden border-t border-white/10 bg-navy-deep">
       <div className="mx-auto max-w-[93.75rem] px-5 py-16 sm:px-8 md:px-11 md:py-20">
 
         {/* Motto — the brand line, sitting above the headword */}
@@ -62,6 +63,11 @@ export function IntegrateCreed() {
         </Reveal>
 
       </div>
+
+      {/* Flush against the content above — no padding, no gap. The hard cut
+          from this dark section to the marquee's white plate is the divider
+          into ServicesSection below; see PartnerMarquee for the rest of it. */}
+      <PartnerMarquee />
     </section>
   );
 }

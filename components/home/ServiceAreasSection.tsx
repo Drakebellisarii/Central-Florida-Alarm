@@ -32,6 +32,7 @@ const COORDS: Record<string, { lat: number; lng: number }> = {
   maitland:        { lat: 28.6611, lng: -81.3656 },
   deland:          { lat: 29.0283, lng: -81.3031 },
   "daytona-beach": { lat: 29.2108, lng: -81.0228 },
+  "ormond-beach":  { lat: 29.2867, lng: -81.0556 },
   "bella-collina": { lat: 28.5747, lng: -81.6801 },
 };
 

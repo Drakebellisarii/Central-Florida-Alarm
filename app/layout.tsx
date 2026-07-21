@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Plus_Jakarta_Sans, M_PLUS_Rounded_1c } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -45,11 +45,26 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 // M PLUS Rounded 1c — soft rounded display, reserved for oversized numerals.
-const mPlusRounded = M_PLUS_Rounded_1c({
-  subsets: ["latin"],
-  display: "swap",
+// Self-hosted (Latin subset only, weights 100/300 as used) rather than
+// next/font/google: that font's fallback-metrics lookup fails locally (no
+// entry in Next's bundled metrics DB) and its CSS payload is large enough
+// that the dev-mode 3s fetch timeout would repeatedly abort and retry,
+// spamming "The user aborted a request." during `next dev` startup.
+const mPlusRounded = localFont({
+  src: [
+    {
+      path: "./fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.woff2",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "./fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+  ],
   variable: "--font-numeral",
-  weight: ["100", "300"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {

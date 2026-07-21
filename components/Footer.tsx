@@ -24,19 +24,19 @@ export function Footer() {
               height={99}
               className="h-20 w-auto"
             />
-            <p className="mt-6 font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/45">
+            <p className="mt-6 font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40">
               Since 1968 &nbsp;&middot;&nbsp; One Mission &nbsp;&middot;&nbsp; Quality
             </p>
-            <p className="mt-5 max-w-xs font-display text-lg leading-snug text-white/60">
+            <p className="mt-5 max-w-xs font-sans text-lg font-light leading-snug text-white/60">
               The systems disappear into the property. The trust is what you keep.
             </p>
 
-            <address className="mt-8 not-italic">
+            <address className="mt-8 flex flex-col gap-4 not-italic">
               <a
                 href={mapsHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-3 text-white/50 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                className="flex items-start gap-3 text-white/60 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
               >
                 <MapPin strokeWidth={1.25} className="mt-0.5 h-4 w-4 shrink-0" />
                 <span className="font-sans text-[0.875rem] leading-relaxed">
@@ -49,16 +49,16 @@ export function Footer() {
               </a>
               <a
                 href={BUSINESS.phoneHref}
-                className="mt-4 flex items-center gap-3 text-white/60 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                className="flex items-center gap-3 text-white/60 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
               >
                 <Phone strokeWidth={1.25} className="h-4 w-4 shrink-0" />
                 <span className="font-sans text-[0.875rem]">{BUSINESS.phone}</span>
               </a>
-              <div className="mt-3 flex items-start gap-3 text-white/60">
+              <div className="flex items-start gap-3 text-white/60">
                 <Mail strokeWidth={1.25} className="mt-0.5 h-4 w-4 shrink-0" />
                 <div className="font-sans text-[0.875rem] leading-relaxed">
                   <p>
-                    <span className="text-white/35">Office</span>{" "}
+                    <span className="text-white/40">Office</span>{" "}
                     <a
                       href={`mailto:${BUSINESS.officeEmail}`}
                       className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
@@ -67,7 +67,7 @@ export function Footer() {
                     </a>
                   </p>
                   <p className="mt-1">
-                    <span className="text-white/35">Sales</span>{" "}
+                    <span className="text-white/40">Sales</span>{" "}
                     <a
                       href={`mailto:${BUSINESS.salesEmail}`}
                       className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
@@ -94,9 +94,9 @@ export function Footer() {
             <h2 className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40">
               Services
             </h2>
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-5 space-y-2.5">
               {SERVICE_NAV.map((s) => (
-                <li key={s.href} className="font-sans text-[0.875rem] text-white/55">
+                <li key={s.href} className="font-sans text-[0.8125rem] text-white/55">
                   {s.name}
                 </li>
               ))}
@@ -108,14 +108,14 @@ export function Footer() {
             <h2 className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40">
               Licensed and Insured
             </h2>
-            <ul className="mt-5 space-y-1.5 font-sans text-[0.8125rem] text-white/35">
+            <ul className="mt-5 space-y-2.5 font-sans text-[0.8125rem] text-white/55">
               {BUSINESS.licenses.map((lic) => (
                 <li key={lic}>
-                  <span className="text-white/50">FL</span> {lic}
+                  <span className="text-white/40">FL</span> {lic}
                 </li>
               ))}
               <li>
-                <span className="text-white/50">GA</span> LU405163
+                <span className="text-white/40">GA</span> LU405163
               </li>
             </ul>
           </div>

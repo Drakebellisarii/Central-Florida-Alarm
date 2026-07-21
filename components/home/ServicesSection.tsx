@@ -7,7 +7,6 @@ import { gsap, prefersReducedMotion } from "@/lib/motion";
 
 type Offering = {
   label: string;
-  sub?: string;
   body: string;
 };
 
@@ -38,7 +37,6 @@ const OFFERINGS: Offering[] = [
   },
   {
     label: "Automation Control",
-    sub: "Crestron · Control4 · Josh.ai",
     body: "One processor, one interface, one quiet logic running every system in the home from a single source.",
   },
   {
@@ -107,15 +105,12 @@ export function ServicesSection() {
     <section
       ref={sectionRef}
       id="services"
-      className="relative scroll-mt-24 overflow-hidden border-y border-navy/10 bg-white"
+      className="relative scroll-mt-24 overflow-hidden border-b border-navy/10 bg-white"
     >
       <div className="relative mx-auto max-w-[87.5rem] px-5 py-24 sm:px-8 md:px-10 md:py-32">
 
         {/* Masthead */}
-        <div
-          data-services-intro
-          className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
-        >
+        <div data-services-intro className="flex flex-col gap-6">
           <div className="max-w-2xl">
             <h2 className="font-display text-[clamp(2.3rem,4.6vw,3.9rem)] font-light leading-[1.02] tracking-tight text-navy-deep">
               What we{" "}
@@ -143,11 +138,6 @@ export function ServicesSection() {
               <h3 className="mt-7 font-display text-[clamp(1.2rem,1.6vw,1.5rem)] font-light leading-tight text-navy-deep">
                 {o.label}
               </h3>
-              {o.sub && (
-                <p className="mt-2 font-sans text-[0.625rem] uppercase tracking-wide2 text-navy/50">
-                  {o.sub}
-                </p>
-              )}
               <p className="mt-3 font-sans text-[0.8438rem] leading-relaxed text-slate-500">
                 {o.body}
               </p>

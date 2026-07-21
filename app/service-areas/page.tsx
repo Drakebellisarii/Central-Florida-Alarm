@@ -52,7 +52,7 @@ const REGIONS: { name: string; lead: string; slugs: string[] }[] = [
   {
     name: "North & the Coast",
     lead: "Horse country, the St. Johns, and the Atlantic beaches.",
-    slugs: ["deland", "ocala", "daytona-beach", "new-smyrna"],
+    slugs: ["deland", "ocala", "daytona-beach", "ormond-beach", "new-smyrna"],
   },
 ];
 

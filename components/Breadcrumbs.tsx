@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Home } from "lucide-react";
 
 export type Crumb = { name: string; path: string };
 
@@ -44,18 +45,29 @@ export function Breadcrumbs({
       >
         {items.map((c, i) => {
           const last = i === items.length - 1;
+          // The trail always opens on Home — swap the label for a home glyph
+          // so the crumb reads as a landmark instead of competing with the
+          // page names that follow it.
+          const isHome = i === 0 && c.path === "/";
+          const label = isHome ? (
+            <Home strokeWidth={1.5} className="h-3.5 w-3.5" aria-hidden="true" />
+          ) : (
+            c.name
+          );
           return (
             <li key={c.path} className="flex items-center gap-2">
               {last ? (
                 <span className={t.current} aria-current="page">
-                  {c.name}
+                  {isHome && <span className="sr-only">{c.name}</span>}
+                  {label}
                 </span>
               ) : (
                 <Link
                   href={c.path}
+                  aria-label={isHome ? c.name : undefined}
                   className={`${t.link} focus-visible:outline-none focus-visible:ring-1`}
                 >
-                  {c.name}
+                  {label}
                 </Link>
               )}
               {!last && <span className={t.sep}>/</span>}

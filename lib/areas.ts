@@ -17,6 +17,7 @@ export const AREAS: Area[] = [
   { name: "DeLand",                 slug: "deland" },
   { name: "Ocala",                  slug: "ocala" },
   { name: "Daytona Beach",          slug: "daytona-beach" },
+  { name: "Ormond Beach",           slug: "ormond-beach" },
   { name: "New Smyrna",             slug: "new-smyrna" },
   { name: "Bella Collina",          slug: "bella-collina" },
 ];
