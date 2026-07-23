@@ -107,7 +107,7 @@ export function ServicesSection() {
       id="services"
       className="relative scroll-mt-24 overflow-hidden border-b border-navy/10 bg-white"
     >
-      <div className="relative mx-auto max-w-[87.5rem] px-5 py-24 sm:px-8 md:px-10 md:py-32">
+      <div className="relative mx-auto max-w-[87.5rem] px-5 pb-24 pt-12 sm:px-8 md:px-10 md:pb-32 md:pt-16">
 
         {/* Masthead */}
         <div data-services-intro className="flex flex-col gap-6">

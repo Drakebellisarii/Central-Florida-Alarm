@@ -3,7 +3,6 @@ import Image from "next/image";
 import { Facebook, Instagram, Phone, MapPin, Mail } from "lucide-react";
 import { BUSINESS } from "@/lib/seo";
 import { SERVICE_NAV } from "@/lib/content";
-import { FooterReviews } from "@/components/FooterReviews";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -16,7 +15,7 @@ export function Footer() {
       <div className="mx-auto max-w-[93.75rem] px-5 pb-12 pt-12 sm:px-8 md:px-11 md:pb-16 md:pt-16">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-x-8 md:gap-y-12 lg:gap-10">
           {/* Brand + NAP */}
-          <div className="md:col-span-12 md:mb-2 lg:col-span-4 lg:mb-0">
+          <div className="md:col-span-12 md:mb-2 lg:col-span-6 lg:mb-0">
             <Image
               src="/images/cfas-logo-light.png"
               alt="Central Florida Automation Services"
@@ -90,7 +89,7 @@ export function Footer() {
           </div>
 
           {/* Services — links disabled for now */}
-          <div className="md:col-span-6 lg:col-span-2 lg:mt-16">
+          <div className="md:col-span-6 lg:col-span-3 lg:mt-16">
             <h2 className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40">
               Services
             </h2>
@@ -104,7 +103,7 @@ export function Footer() {
           </div>
 
           {/* Credentials */}
-          <div className="md:col-span-6 lg:col-span-2 lg:mt-16">
+          <div className="md:col-span-6 lg:col-span-3 lg:mt-16">
             <h2 className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40">
               Licensed and Insured
             </h2>
@@ -118,11 +117,6 @@ export function Footer() {
                 <span className="text-white/40">GA</span> LU405163
               </li>
             </ul>
-          </div>
-
-          {/* Google reviews */}
-          <div className="md:col-span-12 lg:col-span-4 lg:mt-16 lg:pl-8">
-            <FooterReviews />
           </div>
         </div>
 
