@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 export const metadata: Metadata = {
   title: "Smart Security | Central Florida Automation Services",
   description:
-    "Intelligent security designed around how you live and work. Choose Smart Home or Smart Business to see how CFAS protects your space.",
+    "Intelligent security designed around how you live and work. Choose Smart Home, Smart Business, or Smart Luxury to see how CFAS protects your space.",
 };
 
 const PATHS = [
@@ -16,8 +16,8 @@ const PATHS = [
     eyebrow: "For your home",
     title: "Smart Home",
     line: "Security, cameras, locks, and life-safety woven into the property you live in.",
-    image: "/images/smarthome.webp",
-    alt: "A modern waterfront Central Florida estate at dusk",
+    image: "/images/home.webp",
+    alt: "A modern Central Florida home with palm trees and lush landscaping",
   },
   {
     href: "/smart-business",
@@ -28,39 +28,48 @@ const PATHS = [
     image: "/images/commercial-smart.webp",
     alt: "A modern Central Florida commercial building",
   },
+  {
+    href: "/smart-luxury",
+    n: "03",
+    eyebrow: "For the finer details",
+    title: "Smart Luxury",
+    line: "What's possible in a fully integrated estate, theaters, wine rooms, motorized art, and more, answered plainly.",
+    image: "/images/smarthome.webp",
+    alt: "A modern waterfront Central Florida estate at dusk",
+  },
 ];
 
 export default function SmartSecurityPage() {
   return (
     <div className="bg-white pt-[4.75rem]">
-      {/* Compact heading — the two paths below are the focal point */}
+      {/* Compact heading — the three paths below are the focal point */}
       <section className="mx-auto max-w-[93.75rem] px-5 pb-12 pt-16 text-center sm:px-8 md:px-11 md:pb-16 md:pt-24">
         <h1 className="mx-auto max-w-3xl font-hero text-[clamp(2.6rem,5.5vw,4.6rem)] font-light leading-[1.0] tracking-tight text-navy-deep">
           Built for your space.
         </h1>
         <p className="mx-auto mt-6 max-w-xl font-sans text-[1.0625rem] leading-relaxed text-slate-600">
-          Where you live or where you work, choose where you need us and we will
-          take it from there.
+          Where you live, where you work, or the finer details in between,
+          choose where you need us and we will take it from there.
         </p>
       </section>
 
-      {/* The two paths */}
+      {/* All three paths, one shared card treatment */}
       <section className="mx-auto max-w-[100rem] px-5 pb-20 sm:px-8 md:px-11 md:pb-28">
-        <div className="mx-auto grid max-w-[75rem] grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
+        <div className="mx-auto grid max-w-[87.5rem] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
           {PATHS.map((p) => (
             <Link
               key={p.href}
               href={p.href}
-              className="group relative flex min-h-[58vh] flex-col justify-end overflow-hidden rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/50 focus-visible:ring-offset-4 md:min-h-[68vh]"
+              className="group relative flex min-h-[52vh] flex-col justify-end overflow-hidden rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/50 focus-visible:ring-offset-4 lg:min-h-[60vh]"
             >
               {/* Image */}
               <Image
                 src={p.image}
                 alt={p.alt}
                 fill
-                // 1 column below md, 2 across at md+ — tell the optimizer so it
-                // ships an appropriately small file instead of a full-width one.
-                sizes="(max-width: 768px) 100vw, 50vw"
+                // 1 column below sm, 2 across at sm, 3 across at lg — tell the
+                // optimizer so it ships an appropriately small file.
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 // The cards are the top-of-page focal point; eager-load the
                 // first so it isn't gated behind lazy-loading as the LCP image.
                 priority={p.n === "01"}
@@ -88,11 +97,11 @@ export default function SmartSecurityPage() {
               </span>
 
               {/* Content */}
-              <div className="relative z-10 p-8 md:p-11">
+              <div className="relative z-10 p-8 md:p-10">
                 <span className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/70">
                   {p.eyebrow}
                 </span>
-                <h2 className="mt-3 font-display text-[clamp(2.4rem,4.5vw,3.8rem)] font-light leading-none tracking-tight text-white">
+                <h2 className="mt-3 font-display text-[clamp(2.1rem,3.2vw,3rem)] font-light leading-none tracking-tight text-white">
                   {p.title}
                 </h2>
                 <p className="mt-5 max-w-md font-sans text-[0.9375rem] leading-relaxed text-white/75">

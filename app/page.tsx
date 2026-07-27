@@ -17,34 +17,31 @@ export default function HomePage() {
       <PageLoader />
 
       {/*
-        Hero + About share a positioning context. The hero footage autoplays
-        once and rests on the finished estate while the hero pins itself
-        (sticky top-0); as you scroll, the opaque About panel rises up and
-        slides over the held final frame. The sticky scope ends with this
-        wrapper, so the hero releases once About has scrolled past.
+        Hero + Showcase share a positioning context. The hero footage
+        autoplays once and rests on the finished estate while the hero pins
+        itself (sticky top-0); as you scroll, the opaque Showcase panel rises
+        up and slides over the held final frame — this is the main
+        objective of the site, so it earns the same real estate About used
+        to occupy. The sticky scope ends with this wrapper, so the hero
+        releases once the Showcase has scrolled past.
       */}
       <div className="relative">
         <Hero />
 
-        {/* z-20 + opaque bg lets About cover the pinned hero; its top shadow
-            reads as a panel sliding up over the scene. The nav marker sits at
-            the top of this wrapper so the navbar turns solid the moment About
-            reaches the top of the viewport. */}
+        {/* z-20 + opaque bg lets the Showcase cover the pinned hero; its top
+            shadow reads as a panel sliding up over the scene. The nav marker
+            sits at the top of this wrapper so the navbar turns solid the
+            moment it reaches the top of the viewport. */}
         <div className="relative z-20">
           <div id="nav-solid-marker" aria-hidden className="absolute inset-x-0 top-0" />
-          <AboutSection />
+          <SmartSecurityShowcase />
         </div>
       </div>
 
       {/* Rest of the site — normal scroll from here */}
+      <AboutSection />
       <IntegrateCreed />
       <ServicesSection />
-
-      {/* Smart Security paths — cinematic call-to-action cards into the three
-          /smart-* pages. Dark navy so it flows straight out of the white
-          ServicesSection and into the dark testimonials below it. */}
-      <SmartSecurityShowcase />
-
       <TestimonialsSection />
       <ServiceAreasSection />
 

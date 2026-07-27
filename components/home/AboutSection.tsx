@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { FEATURED_TESTIMONIAL, MISSION_STATEMENT } from "@/lib/content";
+import { FEATURED_TESTIMONIAL } from "@/lib/content";
 
 // Four accreditation marks, all constrained to one optical height and
 // desaturated so the mix of teal, navy, and black logos reads as one family.
@@ -39,24 +39,15 @@ export function AboutSection() {
   }, []);
 
   return (
-    <section className="relative flex min-h-[100dvh] flex-col bg-white shadow-[0_-20px_80px_rgba(0,0,0,0.25)] lg:flex-row">
+    <section className="relative flex min-h-[100dvh] flex-col bg-white lg:flex-row">
 
       {/* ── Left — the testimonial is the sole content of this column ──── */}
-      <div className="order-2 flex min-w-0 flex-col justify-center px-6 py-16 sm:px-8 md:px-10 md:py-16 lg:order-1 lg:w-[42%] lg:px-16 lg:py-20 xl:px-20">
+      <div className="order-2 flex min-w-0 flex-col justify-center px-6 py-16 sm:px-8 md:px-10 md:py-16 lg:order-1 lg:w-[42%] lg:justify-end lg:px-16 lg:py-20 xl:px-20">
 
-        {/* Mission statement — a quiet lead-in, deliberately smaller and
-            lighter than the testimonial pull-quote below so it reads as
-            the promise, not the headline. */}
-        <p className="reveal-scroll font-sans text-[0.8125rem] uppercase tracking-eyebrow text-navy/40">
-          Our Mission Statement
-        </p>
-        <p className="reveal-scroll mt-5 max-w-md font-display text-[1.1875rem] font-light leading-[1.55] tracking-tight text-navy-deep">
-          {MISSION_STATEMENT}
-        </p>
-
-        <div aria-hidden className="reveal-scroll mt-9 h-px w-10 bg-navy/10" />
-
-        <p className="reveal-scroll mt-9 font-sans text-[0.6875rem] uppercase tracking-[0.18em] text-stone">
+        {/* Mission statement moved to the three-card section above — this
+            column now opens directly on the testimonial, with more room to
+            breathe. */}
+        <p className="reveal-scroll font-sans text-[0.6875rem] uppercase tracking-[0.18em] text-navy/50">
           In Their Words
         </p>
 
@@ -81,36 +72,38 @@ export function AboutSection() {
         </blockquote>
 
         <div className="reveal-scroll mt-8">
-          <div aria-hidden className="h-px w-[2.125rem] bg-navy/10" />
-          <cite className="mt-3.5 block not-italic">
-            <span className="block font-display text-base text-navy-deep">
+          <cite className="block not-italic">
+            <span className="block font-display text-[1.1875rem] text-navy-deep">
               {FEATURED_TESTIMONIAL.name}
             </span>
-            <span className="mt-1 block font-sans text-[0.78125rem] text-stone">
+            <span className="mt-1 block font-sans text-[0.8125rem] font-medium text-navy/70">
               {FEATURED_TESTIMONIAL.role}
             </span>
           </cite>
         </div>
 
-        {/* Accreditations — one straight row. Sized to still fit on one
-            line at this column's tightest case (the 42%-width lg
-            breakpoint, ~300px of usable width), then stepped up once xl+
-            gives the row more room to work with. Full color per client
-            request, no dividers. */}
+        {/* Accreditations. A real grid, not a wrapping flex row — that
+            guarantees the four marks always land 2x2 or 1x4, never an
+            orphaned 3-then-1. Sized for legibility first: the MCBC and
+            Lutron marks carry small-print text that disappears below this
+            height. Full color per client request, no dividers. */}
         <div className="reveal-scroll mt-10 border-t border-navy/10 pt-[1.625rem] lg:mt-12">
           <div className="flex flex-col items-start gap-4">
             <span className="shrink-0 whitespace-nowrap font-sans text-[0.65625rem] uppercase tracking-wide2 text-stone">
               Accredited By
             </span>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-4">
+            <div className="grid grid-cols-2 items-center gap-x-6 gap-y-5 sm:grid-cols-4 lg:grid-cols-2">
               {ACCREDITATIONS.map((logo) => (
-                <div key={logo.alt} className="flex h-7 items-center xl:h-9">
+                <div
+                  key={logo.alt}
+                  className="flex h-12 min-w-0 items-center transition-transform duration-500 ease-expo hover:scale-125 xl:h-16"
+                >
                   <Image
                     src={logo.src}
                     alt={logo.alt}
                     width={logo.width}
                     height={logo.height}
-                    className="h-full w-auto object-contain"
+                    className="h-full w-auto max-w-full object-contain"
                   />
                 </div>
               ))}
