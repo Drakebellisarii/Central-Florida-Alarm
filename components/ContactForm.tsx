@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Check, ArrowUpRight, ChevronDown, Loader2 } from "lucide-react";
-import { SERVICES } from "@/lib/services";
 
 // All forms post to this one API route, which emails the submission
 // through Outlook/Microsoft 365 — see app/api/send/route.ts.
@@ -13,6 +12,17 @@ const PROJECT_TYPES = [
   "Existing Home",
   "Commercial",
   "Service & Repair",
+] as const;
+
+const CONTACT_SERVICES = [
+  "Home Security",
+  "Business Security",
+  "Luxury Automation",
+  "Lighting Control",
+  "Motorized Shades",
+  "Audio and Video",
+  "WiFi and Networking",
+  "Magna Track Motorized Shades",
 ] as const;
 
 type Errors = Partial<Record<"name" | "email" | "phone" | "projectType" | "message", string>>;
@@ -185,15 +195,15 @@ export function ContactForm() {
       </div>
 
       <fieldset className="flex flex-col gap-3">
-        <legend className="mb-1 font-sans text-[0.6875rem] uppercase tracking-wide2 text-slate-500">
+        <legend className="mb-3 font-sans text-[0.6875rem] uppercase tracking-wide2 text-slate-500">
           Services of interest
         </legend>
         <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-          {SERVICES.map((s) => {
-            const checked = services.includes(s.name);
+          {CONTACT_SERVICES.map((name) => {
+            const checked = services.includes(name);
             return (
               <label
-                key={s.slug}
+                key={name}
                 className="group flex cursor-pointer items-center gap-3 font-sans text-[0.875rem] text-slate-600"
               >
                 <span
@@ -206,12 +216,12 @@ export function ContactForm() {
                 <input
                   type="checkbox"
                   name="services_checkbox"
-                  value={s.name}
+                  value={name}
                   checked={checked}
-                  onChange={() => toggleService(s.name)}
+                  onChange={() => toggleService(name)}
                   className="sr-only"
                 />
-                <span className="group-hover:text-navy-deep">{s.name}</span>
+                <span className="group-hover:text-navy-deep">{name}</span>
               </label>
             );
           })}

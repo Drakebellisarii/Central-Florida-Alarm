@@ -24,7 +24,8 @@ const CHAIN: Record<DeviceType, string[]> = {
 };
 
 // Last frame of each chain — used as the static poster for reduced-motion
-// visitors, who never see the sequence play out.
+// visitors, who never see the sequence play out (so they land on the
+// "resting" composition instead of the opening shot).
 const POSTER_SRC: Record<DeviceType, string> = {
   // -v3 busts the year-long immutable cache after the portrait clip changed
   // (extracted from Mobile.mp4's final frame).
@@ -33,6 +34,17 @@ const POSTER_SRC: Record<DeviceType, string> = {
   // -v6 busts the year-long immutable cache after the desktop chain changed
   // (extracted from the baked sequence's final frame, Finalized3's last shot).
   desktop: "/images/hero-last-desktop-v6.jpg",
+};
+
+// First frame of each chain — used as the poster for everyone else, so a
+// real image paints instantly (even on a cold CDN cache) instead of the
+// visitor staring at the navy backdrop until the video itself decodes.
+// Matches the video's own opening frame exactly, so there's no flash/mismatch
+// when playback takes over.
+const FIRST_POSTER_SRC: Record<DeviceType, string> = {
+  mobile: "/images/hero-first-mobile.webp",
+  tablet: "/images/hero-first-mobile.webp",
+  desktop: "/images/hero-first-desktop.webp",
 };
 
 // Film-style cross-dissolve: the next clip starts playing this many seconds
@@ -147,7 +159,17 @@ export function Hero() {
   }, [reduce, deviceType]);
 
   return (
-    <section className="sticky top-0 z-0 flex h-[100dvh] flex-col justify-end overflow-hidden bg-navy-deep">
+    <section className="relative flex min-h-[100dvh] flex-col justify-end overflow-hidden bg-navy-deep pt-[6rem]">
+      {/* min-h (not a fixed h) + this pt is a safety reserve for irregular
+          huge displays only: on standard aspect ratios the copy block never
+          gets remotely close to this much height, so the reserved space is
+          just unused headroom and nothing here moves. But on a very wide,
+          short-height panel (e.g. a big conference-room TV or video wall),
+          the rem-scaled headline + spacing stack (see globals.css font-size
+          steps) can approach the viewport's actual height; without this, the
+          bottom-anchored copy pushes its top edge up under the fixed navbar.
+          The pt guarantees clearance, and min-h lets the section grow rather
+          than clip if content ever needs more room than 100dvh provides. */}
       <NavSentinel />
 
       {/* ── Footage — build plays once, interior fades in and plays once,
@@ -156,10 +178,10 @@ export function Hero() {
         key={deviceType}
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        {/* The first clip is the loader target and carries the reduced-motion
-            poster (reduced-motion users see only it, as a still). Later clips
-            preload behind the running footage, stay invisible until their
-            turn, then crossfade in on top. */}
+        {/* The first clip is the only thing the loader splash waits on — just
+            its first frame (readyState >= 2), not a deep buffer, and not any
+            later clip. Later clips preload behind the running footage, stay
+            invisible until their turn, then crossfade in on top. */}
         {(reduce ? CHAIN[deviceType].slice(0, 1) : CHAIN[deviceType]).map(
           (src, i) => (
             <video
@@ -167,21 +189,18 @@ export function Hero() {
               ref={(el) => {
                 videoRefs.current[i] = el;
               }}
-              // The loader splash gates on the first two entries: the primary
-              // clip buffered deep enough to play through its opening shots,
-              // and (on the multi-clip mobile chain) the second clip ready.
-              data-loader-target={
-                i === 0 ? "hero-video" : i === 1 ? "hero-video-2" : undefined
-              }
+              data-loader-target={i === 0 ? "hero-video" : undefined}
               muted
               playsInline
               autoPlay={i === 0 && !reduce}
               preload="auto"
-              // Only reduced-motion users (no autoplay) need the still; for
-              // everyone else a poster of the finished sequence would flash
-              // before the first clip rewinds to its opening shot, so we let
-              // the navy backdrop cover the sub-second gap instead.
-              poster={i === 0 && reduce ? POSTER_SRC[deviceType] : undefined}
+              // Reduced-motion visitors hold on the sequence's resting last
+              // frame; everyone else gets a poster of the video's own first
+              // frame, so a real image paints immediately on a cold cache
+              // instead of the navy backdrop sitting there until the video
+              // decodes. It matches frame one exactly, so there's no flash
+              // when playback takes over.
+              poster={i === 0 ? (reduce ? POSTER_SRC[deviceType] : FIRST_POSTER_SRC[deviceType]) : undefined}
               className={`absolute inset-0 h-full w-full object-cover ${
                 i === 0
                   ? ""
@@ -232,17 +251,6 @@ export function Hero() {
         }}
       />
 
-      {/* ── Bottom bar — logo blue, fades out into the scene ────────── */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-10"
-        style={{
-          height: "clamp(10px, 1.8vh, 20px)",
-          background:
-            "linear-gradient(to right, rgba(10,26,82,0.95) 0%, rgba(10,26,82,0.75) 25%, rgba(10,26,82,0.75) 75%, rgba(10,26,82,0.95) 100%)",
-        }}
-      />
-
       {/* ── Copy ────────────────────────────────────────────────────── */}
       <div className="relative z-20 mx-auto w-full max-w-[93.75rem] px-5 pb-24 sm:px-8 sm:pb-32 md:px-11 md:pb-36 lg:pb-28 xl:pb-32 2xl:max-w-[110rem] 2xl:pb-40 short:pb-8">
         <div className="max-w-[64rem] 2xl:max-w-[76rem]">
@@ -275,9 +283,6 @@ export function Hero() {
           <div className="reveal-load rd-6 mt-10 flex flex-wrap items-center gap-6 sm:mt-14 short:mt-5">
             <CTAButton href="/contact" variant="primary" compactOnMobile>
               Request a Consultation
-            </CTAButton>
-            <CTAButton href="/smart-security" variant="ghost" arrow={false} compactOnMobile>
-              Explore Smart Security
             </CTAButton>
           </div>
 

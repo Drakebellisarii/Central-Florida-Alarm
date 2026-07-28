@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { gsap, prefersReducedMotion } from "@/lib/motion";
-import { MISSION_STATEMENT } from "@/lib/content";
 
 type Path = {
   href: string;
@@ -53,7 +52,6 @@ const PATHS: Path[] = [
 
 export function SmartSecurityShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [active, setActive] = useState<number | null>(null);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -73,14 +71,13 @@ export function SmartSecurityShowcase() {
 
       gsap.fromTo(
         "[data-ssc-card]",
-        { opacity: 0, y: 56, scale: 0.97 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 1.1,
-          ease: "power3.out",
-          stagger: 0.14,
+          duration: 0.5,
+          ease: "power2.out",
+          stagger: 0.1,
           scrollTrigger: { trigger: "[data-ssc-grid]", start: "top 82%" },
         }
       );
@@ -93,123 +90,96 @@ export function SmartSecurityShowcase() {
     <section
       ref={sectionRef}
       id="smart-security"
-      className="relative min-h-[100dvh] bg-white shadow-[0_-20px_80px_rgba(0,0,0,0.25)]"
+      className="relative min-h-[100dvh] bg-white"
     >
       <div className="mx-auto max-w-[93.75rem] px-5 py-20 sm:px-8 md:px-11 md:py-28">
 
-        {/* Masthead — orients the visitor the moment the hero releases them.
-            Mission statement lives here now, paired with the heading,
-            instead of opening the About section below. */}
-        <div
-          data-ssc-intro
-          className="mb-12 flex flex-col gap-8 md:mb-16 md:flex-row md:items-end md:justify-between md:gap-10"
-        >
-          <h2 className="max-w-xl font-display text-[clamp(2.1rem,4.2vw,3.6rem)] font-light leading-[1.05] tracking-tight text-navy-deep">
-            How can we help?
+        {/* Masthead — centered above the row, a hairline underneath to tie
+            it into the ruled grid below. */}
+        <div data-ssc-intro className="mb-12 text-center md:mb-16">
+          <h2 className="mx-auto max-w-2xl font-display text-[clamp(2.1rem,4.2vw,3.6rem)] font-light leading-[1.05] tracking-tight text-navy-deep">
+            Explore Your options
           </h2>
-          <div className="max-w-sm md:text-right">
-            <p className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-navy/40">
-              Our Mission Statement
-            </p>
-            <p className="mt-3 font-sans text-[0.9375rem] leading-relaxed text-slate-500">
-              {MISSION_STATEMENT}
-            </p>
-          </div>
         </div>
 
-        {/* All three paths, one shared card treatment. Equal weight at rest;
-            below lg they stack as full cards. At lg+ they become a
-            lookbook-style triptych — hovering (or focusing) a panel expands
-            it and dims its neighbors, a spotlight effect rather than a flat
-            grid. flexGrow only does anything once the container is `flex`
-            (lg+), so it's harmless in the stacked grid below that. */}
+        {/* Three plates, ruled rather than boxed — the same catalog grid
+            convention as the services section below (hairlines, not cards
+            floating in shadow), so the photography and the serif titles
+            carry the weight instead of shadow/rounded-corner UI chrome. */}
         <div
           data-ssc-grid
-          className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:gap-6 lg:flex lg:h-[64vh] lg:gap-3"
+          className="grid grid-cols-1 border-l border-t border-navy/15 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {PATHS.map((p, i) => {
-            const dimmed = active !== null && active !== i;
-            return (
-              <Link
-                key={p.href}
-                href={p.href}
-                data-ssc-card
-                onMouseEnter={() => setActive(i)}
-                onMouseLeave={() => setActive(null)}
-                onFocus={() => setActive(i)}
-                onBlur={() => setActive(null)}
-                style={{ flexGrow: active === null ? 1 : active === i ? 1.8 : 0.75 }}
-                className="group relative flex min-h-[48vh] flex-col justify-between overflow-hidden rounded-2xl shadow-[0_24px_60px_rgba(10,26,82,0.18)] ring-1 ring-navy/10 transition-[flex-grow] duration-700 ease-expo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/60 lg:h-full lg:min-h-0 lg:basis-0"
-              >
-                {/* Image + grade */}
-                <Image
-                  src={p.image}
-                  alt={p.alt}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 45vw"
-                  priority={p.priority}
-                  className="object-cover transition-transform duration-[1.4s] ease-expo group-hover:scale-[1.08]"
-                />
-                <div aria-hidden="true" className="absolute inset-0 bg-navy-deep/15" />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/25 to-navy-deep/10"
-                />
-                {/* Spotlight wash — the two panels not being hovered dim down
-                    so the active one visually pops. */}
-                <div
-                  aria-hidden="true"
-                  className={`absolute inset-0 bg-navy-deep transition-opacity duration-700 ${
-                    dimmed ? "opacity-45" : "opacity-0"
-                  }`}
-                />
+          {PATHS.map((p) => (
+            <Link
+              key={p.href}
+              href={p.href}
+              data-ssc-card
+              className="group relative flex min-h-[48vh] flex-col justify-between overflow-hidden border-b border-r border-navy/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-navy/60 lg:min-h-[58vh]"
+            >
+              {/* Image + grade */}
+              <Image
+                src={p.image}
+                alt={p.alt}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                priority={p.priority}
+                className="object-cover transition-transform duration-[1.6s] ease-expo group-hover:scale-[1.05]"
+              />
+              <div aria-hidden="true" className="absolute inset-0 bg-navy-deep/15" />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-navy-deep/40 via-navy-deep/10 to-navy-deep/3"
+              />
+              {/* Grain — the same texture as the page splash, scoped to
+                  this card instead of the fixed full-viewport overlay, so
+                  the photo reads as a printed plate rather than a flat
+                  vector. */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-overlay"
+                style={{
+                  backgroundImage:
+                    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+                }}
+              />
 
-                {/* Top meta row — index + eyebrow, magazine-style */}
-                <div className="relative z-10 flex items-center justify-between p-8 md:p-10">
-                  <span className="whitespace-nowrap font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/75">
-                    {p.eyebrow}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="font-display text-[1.6rem] font-light leading-none text-white/45 transition-colors duration-700 group-hover:text-white/80 md:text-[2rem]"
-                  >
-                    {p.n}
-                  </span>
-                </div>
+              {/* Top meta row — eyebrow + a plate number, sized like a
+                  folio mark rather than a UI badge. */}
+              <div className="relative z-10 flex items-center justify-between p-8 md:p-10">
+                <span className="whitespace-nowrap font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/75">
+                  {p.eyebrow}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="font-display text-[2rem] font-light leading-none tracking-tight text-white/40 transition-colors duration-700 group-hover:text-white/75 md:text-[2.4rem]"
+                >
+                  {p.n}
+                </span>
+              </div>
 
-                {/* Bottom — title, line, explore */}
-                <div className="relative z-10 p-8 md:p-10">
-                  <h3
-                    className={`font-display font-light leading-none tracking-tight text-white transition-[font-size] duration-700 ease-expo ${
-                      dimmed
-                        ? "text-[1.6rem] lg:text-[1.5rem]"
-                        : "text-[clamp(2rem,3vw,2.8rem)]"
-                    }`}
-                  >
-                    {p.title}
-                  </h3>
-                  <div
-                    className={`overflow-hidden transition-all duration-500 ease-expo ${
-                      dimmed ? "mt-0 max-h-0 opacity-0" : "mt-5 max-h-40 opacity-100"
-                    }`}
-                  >
-                    <p className="max-w-md font-sans text-[0.9375rem] leading-relaxed text-white/80">
-                      {p.line}
-                    </p>
-                    <span className="mt-7 inline-flex items-center gap-3 font-sans text-[0.75rem] uppercase tracking-wide2 text-white">
-                      Explore
-                      <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 transition-all duration-500 ease-expo group-hover:border-white group-hover:bg-white">
-                        <ArrowRight
-                          strokeWidth={1.5}
-                          className="h-4 w-4 text-white transition-colors duration-500 group-hover:text-navy-deep"
-                        />
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+              {/* Bottom — title, line, a text-link CTA instead of a button */}
+              <div className="relative z-10 p-8 md:p-10">
+                <h3 className="font-display text-[clamp(2rem,3vw,2.8rem)] font-light leading-none tracking-tight text-white">
+                  {p.title}
+                </h3>
+                <p className="mt-5 max-w-md font-sans text-[0.9375rem] leading-relaxed text-white/80">
+                  {p.line}
+                </p>
+                <span className="mt-7 inline-flex items-center gap-2.5 font-sans text-[0.75rem] uppercase tracking-wide2 text-white">
+                  Explore
+                  <ArrowRight
+                    strokeWidth={1.5}
+                    className="h-3.5 w-3.5 transition-transform duration-500 ease-expo group-hover:translate-x-1.5"
+                  />
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="mt-2 block h-px w-8 bg-white/50 transition-all duration-500 ease-expo group-hover:w-16 group-hover:bg-white"
+                />
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

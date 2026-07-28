@@ -140,7 +140,7 @@ export default function ServiceAreasPage() {
       <CTABanner
         eyebrow=""
         heading="Don't see your community? We likely serve it."
-        body="Our territory covers most of Central Florida. If you are in or near Greater Orlando, there is a good chance we already work in your neighborhood."
+        body=""
         light
       />
     </>

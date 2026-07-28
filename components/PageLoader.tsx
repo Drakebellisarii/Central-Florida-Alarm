@@ -25,13 +25,16 @@ const SKIP_SNIPPET =
   `document.documentElement.setAttribute("data-skip-splash","")}catch(e){}`;
 
 /**
- * Full-bleed brand splash shown on the first-ever load. Stays up until fonts
- * have swapped in, the hero footage is buffered deep enough to play its first
- * two shots without stalling, the second mobile hero clip (if present) can
- * start, and the about-section video has its first frame — so the reveal
- * never lands on a stalled hero or a stale poster. Hero.tsx / AboutSection.tsx
- * mark their <video> elements with data-loader-target for this component to
- * find; MAX_WAIT still caps the whole wait on slow connections.
+ * Full-bleed brand splash shown on the first-ever load. Stays up only until
+ * fonts have swapped in and the hero video's first frame is decoded and
+ * paintable (readyState >= HAVE_CURRENT_DATA, i.e. `loadeddata`) — it does
+ * NOT wait for the hero to buffer deep into the clip, and it does NOT wait
+ * on the about-section video. Both of those used to gate the reveal, which
+ * on a cold CDN/cache meant paying most of the hero file's download cost
+ * before anything painted. Hero.tsx marks its primary <video> with
+ * data-loader-target="hero-video" for this component to find; MAX_WAIT still
+ * caps the whole wait on slow connections so a stalled request can't trap
+ * the visitor behind the splash forever.
  *
  * Repeat visits skip the splash completely: everything it would hide is
  * already in the browser cache, so showing it would be pure decoration.
@@ -53,28 +56,14 @@ export function PageLoader() {
     let raf = 0;
     let timeout: ReturnType<typeof setTimeout>;
 
-    // How deep the primary hero footage must be buffered before the reveal —
-    // through the end of the desktop sequence's second shot. Shorter clips
-    // (the mobile chain's opener) just need to be buffered to their end.
-    const HERO_BUFFER_GOAL_S = 15.3;
-
-    const bufferedThrough = (el: HTMLVideoElement, goal: number) => {
-      const target = Math.min(goal, (el.duration || goal) - 0.1);
-      for (let i = 0; i < el.buffered.length; i++) {
-        if (el.buffered.start(i) <= 0.1 && el.buffered.end(i) >= target) {
-          return true;
-        }
-      }
-      return false;
-    };
-
-    const targetReady = (selector: string, bufferGoal?: number) => {
+    // readyState >= 2 (HAVE_CURRENT_DATA) means the current frame is decoded
+    // and paintable — this is the `loadeddata` milestone, not a deep buffer.
+    const targetReady = (selector: string) => {
       const el = document.querySelector<HTMLVideoElement>(selector);
-      // If the element isn't mounted (desktop has no second clip; reduced
-      // motion renders none of them) or errored out, don't block on it.
+      // If the element isn't mounted (reduced motion renders none of them)
+      // or errored out, don't block on it.
       if (!el || el.error !== null) return true;
-      if (el.readyState < 2) return false;
-      return bufferGoal === undefined || bufferedThrough(el, bufferGoal);
+      return el.readyState >= 2;
     };
 
     const fontsReady = () =>
@@ -97,11 +86,7 @@ export function PageLoader() {
     const tick = () => {
       if (cancelled) return;
       const elapsed = Date.now() - start;
-      const ready =
-        fontsReady() &&
-        targetReady('[data-loader-target="hero-video"]', HERO_BUFFER_GOAL_S) &&
-        targetReady('[data-loader-target="hero-video-2"]') &&
-        targetReady('[data-loader-target="about-video"]');
+      const ready = fontsReady() && targetReady('[data-loader-target="hero-video"]');
 
       if ((ready && elapsed >= MIN_VISIBLE_MS) || elapsed >= MAX_WAIT_MS) {
         finish();

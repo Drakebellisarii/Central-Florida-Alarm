@@ -53,14 +53,16 @@ export default function SmartSecurityPage() {
         </p>
       </section>
 
-      {/* All three paths, one shared card treatment */}
+      {/* Three plates, ruled rather than boxed — same catalog grid
+          convention as the homepage showcase and the services section:
+          hairlines, not cards floating in shadow. */}
       <section className="mx-auto max-w-[100rem] px-5 pb-20 sm:px-8 md:px-11 md:pb-28">
-        <div className="mx-auto grid max-w-[87.5rem] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
+        <div className="mx-auto grid max-w-[87.5rem] grid-cols-1 border-l border-t border-navy/15 sm:grid-cols-2 lg:grid-cols-3">
           {PATHS.map((p) => (
             <Link
               key={p.href}
               href={p.href}
-              className="group relative flex min-h-[52vh] flex-col justify-end overflow-hidden rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/50 focus-visible:ring-offset-4 lg:min-h-[60vh]"
+              className="group relative flex min-h-[52vh] flex-col justify-between overflow-hidden border-b border-r border-navy/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-navy/60 lg:min-h-[60vh]"
             >
               {/* Image */}
               <Image
@@ -73,7 +75,7 @@ export default function SmartSecurityPage() {
                 // The cards are the top-of-page focal point; eager-load the
                 // first so it isn't gated behind lazy-loading as the LCP image.
                 priority={p.n === "01"}
-                className="object-cover transition-transform duration-[1.2s] ease-expo group-hover:scale-[1.06]"
+                className="object-cover transition-transform duration-[1.6s] ease-expo group-hover:scale-[1.05]"
               />
 
               {/* Color grade — kept minimal so the photo reads clearly. Only a
@@ -81,41 +83,46 @@ export default function SmartSecurityPage() {
                   from the bottom gradient that anchors the text. */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-navy-deep/10 transition-colors duration-700 group-hover:bg-navy-deep/0"
+                className="absolute inset-0 bg-navy-deep/15"
               />
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/10 to-transparent"
+                className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/25 to-navy-deep/10"
               />
 
-              {/* Big index watermark */}
-              <span
-                aria-hidden="true"
-                className="absolute right-7 top-6 font-display text-[2rem] font-light text-white/40 transition-colors duration-700 group-hover:text-white/70 md:text-[2.5rem]"
-              >
-                {p.n}
-              </span>
-
-              {/* Content */}
-              <div className="relative z-10 p-8 md:p-10">
-                <span className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/70">
+              {/* Top meta row — eyebrow + a plate number, sized like a
+                  folio mark rather than a UI badge. */}
+              <div className="relative z-10 flex items-center justify-between p-8 md:p-10">
+                <span className="whitespace-nowrap font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/75">
                   {p.eyebrow}
                 </span>
-                <h2 className="mt-3 font-display text-[clamp(2.1rem,3.2vw,3rem)] font-light leading-none tracking-tight text-white">
+                <span
+                  aria-hidden="true"
+                  className="font-display text-[2rem] font-light leading-none tracking-tight text-white/40 transition-colors duration-700 group-hover:text-white/75 md:text-[2.4rem]"
+                >
+                  {p.n}
+                </span>
+              </div>
+
+              {/* Bottom — title, line, a text-link CTA instead of a button */}
+              <div className="relative z-10 p-8 md:p-10">
+                <h2 className="font-display text-[clamp(2.1rem,3.2vw,3rem)] font-light leading-none tracking-tight text-white">
                   {p.title}
                 </h2>
                 <p className="mt-5 max-w-md font-sans text-[0.9375rem] leading-relaxed text-white/75">
                   {p.line}
                 </p>
-                <span className="mt-7 inline-flex items-center gap-3 font-sans text-[0.75rem] uppercase tracking-wide2 text-white">
+                <span className="mt-7 inline-flex items-center gap-2.5 font-sans text-[0.75rem] uppercase tracking-wide2 text-white">
                   Explore
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40 transition-all duration-500 ease-expo group-hover:border-white group-hover:bg-white">
-                    <ArrowRight
-                      strokeWidth={1.5}
-                      className="h-4 w-4 text-white transition-colors duration-500 group-hover:text-navy-deep"
-                    />
-                  </span>
+                  <ArrowRight
+                    strokeWidth={1.5}
+                    className="h-3.5 w-3.5 transition-transform duration-500 ease-expo group-hover:translate-x-1.5"
+                  />
                 </span>
+                <span
+                  aria-hidden="true"
+                  className="mt-2 block h-px w-8 bg-white/50 transition-all duration-500 ease-expo group-hover:w-16 group-hover:bg-white"
+                />
               </div>
             </Link>
           ))}

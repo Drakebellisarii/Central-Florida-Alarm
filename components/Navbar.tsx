@@ -15,9 +15,9 @@ const NAV_HEIGHT_FALLBACK = 76;
 /**
  * Two-state header. Fully transparent over a page's dark hero, settling
  * into a solid white bar the moment content rises to meet it:
- *  - #nav-solid-marker (top of the About section on the home page) reaching
- *    the bottom of the bar, or
- *  - #nav-sentinel (top of an inner page's hero) scrolling out of view.
+ *  - #nav-sentinel (top of a page's hero) scrolling out of view, or
+ *  - #nav-solid-marker, for any page that needs the solid state to kick in
+ *    at a specific point instead (unused today, kept as an escape hatch).
  * Pages with neither marker get the solid bar permanently.
  */
 export function Navbar() {
@@ -124,8 +124,8 @@ export function Navbar() {
             <NavLink href="/service-areas" solid={solid}>
               Service Areas
             </NavLink>
-            <NavLink href="/blog" solid={solid}>
-              Blog
+            <NavLink href="/faq" solid={solid}>
+              FAQ
             </NavLink>
             <NavLink href="/contact" solid={solid}>
               Contact
@@ -210,7 +210,7 @@ export function Navbar() {
                 {[
                   { href: "/smart-security", label: "Smart Security" },
                   { href: "/service-areas", label: "Service Areas" },
-                  { href: "/blog", label: "Blog" },
+                  { href: "/faq", label: "FAQ" },
                   { href: "/contact", label: "Contact" },
                 ].map((item) => (
                   <Link

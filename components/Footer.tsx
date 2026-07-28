@@ -24,10 +24,7 @@ export function Footer() {
               className="h-20 w-auto"
             />
             <p className="mt-6 font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40">
-              Since 1968 &nbsp;&middot;&nbsp; One Mission &nbsp;&middot;&nbsp; Quality
-            </p>
-            <p className="mt-5 max-w-xs font-sans text-lg font-light leading-snug text-white/60">
-              The systems disappear into the property. The trust is what you keep.
+              An Atlantic Company
             </p>
 
             <address className="mt-8 flex flex-col gap-4 not-italic">
@@ -132,10 +129,10 @@ export function Footer() {
               Contact
             </Link>
             <Link
-              href="/blog"
+              href="/faq"
               className="font-sans text-[0.75rem] text-white/40 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
             >
-              Blog
+              FAQ
             </Link>
             <Link
               href="/privacy"

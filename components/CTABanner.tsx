@@ -50,13 +50,15 @@ export function CTABanner({
             >
               {heading}
             </h2>
-            <p
-              className={`mt-4 max-w-md font-sans text-[0.875rem] leading-relaxed ${
-                light ? "text-stone" : "text-white/45"
-              }`}
-            >
-              {body}
-            </p>
+            {body && (
+              <p
+                className={`mt-4 max-w-md font-sans text-[0.875rem] leading-relaxed ${
+                  light ? "text-stone" : "text-white/45"
+                }`}
+              >
+                {body}
+              </p>
+            )}
           </Reveal>
 
           <Reveal index={1} className="md:col-span-5">

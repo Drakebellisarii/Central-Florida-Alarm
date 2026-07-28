@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
+import type { FAQ } from "@/lib/services";
 
-export type LuxuryFAQ = { q: string; a: string };
-
-export function LuxuryFAQAccordion({ faqs }: { faqs: LuxuryFAQ[] }) {
+export function LightFAQAccordion({ faqs }: { faqs: FAQ[] }) {
   const [open, setOpen] = useState<number | null>(0);
   const reduce = useReducedMotion();
 

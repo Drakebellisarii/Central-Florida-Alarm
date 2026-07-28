@@ -15,27 +15,38 @@ const BRANDS: Brand[] = [
   { src: "/logos/norm-control4.png", alt: "Control4", w: 288, h: 81, cls: "h-8" },
   { src: "/logos/norm-ubiquiti.png", alt: "Ubiquiti", w: 751, h: 230, cls: "h-8" },
   { src: "/logos/norm-josh.png", alt: "Josh.ai", w: 2000, h: 680, cls: "h-7" },
-  { src: "/logos/norm-alarm.png", alt: "Alarm.com", w: 306, h: 182, cls: "h-11" },
+  { src: "/logos/norm-alarm.png", alt: "Alarm.com", w: 306, h: 182, cls: "h-10" },
   { src: "/logos/norm-crestron.png", alt: "Crestron", w: 447, h: 52, cls: "h-6" },
   { src: "/logos/norm-ovrc.png", alt: "OvrC", w: 501, h: 161, cls: "h-8" },
+  { src: "/logos/norm-silent-knight.png", alt: "Silent Knight", w: 835, h: 326, cls: "h-9" },
   { src: "/logos/norm-hartmann-forbes.png", alt: "Hartmann & Forbes", w: 1896, h: 549, cls: "h-8" },
   { src: "/logos/norm-magnatrack.png", alt: "MagnaTrack by Progressive Screens", w: 1498, h: 289, cls: "h-7" },
+  { src: "/logos/norm-alibi.png", alt: "Alibi Security", w: 288, h: 71, cls: "h-8" },
+  { src: "/logos/norm-napco.png", alt: "Napco Security Technologies", w: 200, h: 33, cls: "h-8" },
+  { src: "/logos/norm-integra.png", alt: "Integra", w: 451, h: 77, cls: "h-7" },
+  { src: "/logos/norm-bo.png", alt: "Bang & Olufsen", w: 900, h: 154, cls: "h-7" },
+  { src: "/logos/norm-dsc.png", alt: "DSC", w: 623, h: 128, cls: "h-7" },
 ];
+
+// Shared hover treatment — full color throughout, hovering just brings each
+// mark up to full opacity so the row still feels calm at rest.
+const MARK_FILTER =
+  "opacity-70 transition-opacity duration-300 ease-expo group-hover:opacity-100";
 
 function BrandMark({ b, decorative = false }: { b: Brand; decorative?: boolean }) {
   return (
-    <li className="flex shrink-0 items-center" aria-hidden={decorative || undefined}>
-      <div className="flex h-32 items-center px-10">
-        <Image
-          src={b.src}
-          alt={decorative ? "" : b.alt}
-          width={b.w}
-          height={b.h}
-          draggable={false}
-          className={`${b.cls} w-auto select-none opacity-70 transition-all duration-300 ease-expo hover:-translate-y-0.5 hover:scale-110 hover:opacity-100`}
-        />
-      </div>
-      <span aria-hidden className="h-14 w-px shrink-0 bg-navy/10" />
+    <li
+      className="group flex h-24 shrink-0 items-center px-8 md:px-10"
+      aria-hidden={decorative || undefined}
+    >
+      <Image
+        src={b.src}
+        alt={decorative ? "" : b.alt}
+        width={b.w}
+        height={b.h}
+        draggable={false}
+        className={`${b.cls} w-auto select-none ${MARK_FILTER}`}
+      />
     </li>
   );
 }
@@ -51,7 +62,9 @@ function BrandMark({ b, decorative = false }: { b: Brand; decorative?: boolean }
  * Reuses the site's established seamless-loop marquee mechanics (see
  * FloatingLogos / .logo-marquee-track in globals.css): doubled list, slides
  * exactly one group width, pauses on hover, and holds still under
- * prefers-reduced-motion (falls back to a static wrapped row).
+ * prefers-reduced-motion (falls back to a static wrapped row). Kept as one
+ * compact ribbon — tight vertical padding, no per-mark dividers, whitespace
+ * alone separates one mark from the next.
  */
 export function PartnerMarquee() {
   const reduce = useReducedMotion();
@@ -59,11 +72,11 @@ export function PartnerMarquee() {
   // Left/right dissolve so the row fades into the plate rather than
   // hard-clipping at the (full-bleed) edges.
   const edgeMask =
-    "linear-gradient(to right, transparent, #000 6%, #000 94%, transparent)";
+    "linear-gradient(to right, transparent, #000 8%, #000 92%, transparent)";
 
   return (
-    <div className="logo-strip relative bg-white pb-8 pt-6 md:pb-10 md:pt-8">
-      <p className="mb-5 text-center font-sans text-[0.6875rem] uppercase tracking-eyebrow text-navy/40 md:mb-6">
+    <div className="relative bg-white pb-7 pt-5 md:pb-8 md:pt-6">
+      <p className="mb-3 text-center font-sans text-[0.6875rem] uppercase tracking-eyebrow text-navy/40 md:mb-4">
         The brands we work with
       </p>
 
@@ -72,15 +85,15 @@ export function PartnerMarquee() {
         style={{ WebkitMaskImage: edgeMask, maskImage: edgeMask }}
       >
         {reduce ? (
-          <ul className="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-6 px-10">
+          <ul className="flex w-full flex-wrap items-center justify-center gap-x-2 gap-y-3 px-10">
             {BRANDS.map((b) => (
-              <li key={b.alt} className="flex h-20 shrink-0 items-center px-8">
+              <li key={b.alt} className="group flex h-20 shrink-0 items-center px-6">
                 <Image
                   src={b.src}
                   alt={b.alt}
                   width={b.w}
                   height={b.h}
-                  className={`${b.cls} w-auto select-none opacity-80`}
+                  className={`${b.cls} w-auto select-none ${MARK_FILTER}`}
                 />
               </li>
             ))}

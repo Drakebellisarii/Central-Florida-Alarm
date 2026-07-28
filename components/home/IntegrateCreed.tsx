@@ -5,18 +5,19 @@ import { PartnerMarquee } from "@/components/home/PartnerMarquee";
 
 /**
  * Brand creed, typeset as a dictionary entry — because integration is the
- * whole business. The "Since 1968 · One Mission · Quality" motto sits above
- * the headword, then the word is broken into syllables with a pronunciation,
- * part of speech, and a numbered sense, exactly like a printed lexicon.
+ * whole business. A true two-column spread: headword + pronunciation sit in
+ * a narrow left column, the definition and closing line fill a wider right
+ * column, the two separated by one deliberate rule (a column divider, like
+ * a printed lexicon's index rule) instead of scattered decorative hairlines.
  */
 const CREED = ["Since 1968", "One Mission", "Quality"];
 
 export function IntegrateCreed() {
   return (
     <section className="relative overflow-hidden border-t border-white/10 bg-navy-deep">
-      <div className="mx-auto max-w-[93.75rem] px-5 py-16 sm:px-8 md:px-11 md:py-20">
+      <div className="mx-auto max-w-[87.5rem] px-5 py-20 sm:px-8 md:px-11 md:py-28">
 
-        {/* Motto — the brand line, sitting above the headword */}
+        {/* Motto — the brand line, sitting above the entry */}
         <Reveal>
           {/* Must never wrap on phones: nowrap + viewport-scaled size, gaps,
               and tracking keep all three words on one line down to ~320px. */}
@@ -32,41 +33,55 @@ export function IntegrateCreed() {
           </div>
         </Reveal>
 
-        {/* Dictionary entry */}
-        <Reveal index={1}>
-          <div className="mt-8 max-w-3xl">
-            <h2 className="font-display text-[clamp(2.4rem,9vw,5.25rem)] font-light leading-[0.92] tracking-tight text-white">
-              in&middot;te&middot;grate
-            </h2>
+        {/* Dictionary entry — two columns sharing one top edge */}
+        <div className="mt-16 grid grid-cols-1 lg:mt-24 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-x-16 xl:gap-x-24">
 
-            <p className="mt-4 flex flex-wrap items-baseline gap-x-5 gap-y-1 font-sans text-[0.8125rem] text-bone/50 sm:text-[0.875rem]">
-              <span className="tracking-wide">/ˈin-tə-ˌgrāt/</span>
-              <span className="italic text-bone/40">verb</span>
-            </p>
-
-            <div className="mt-7 h-px w-16 bg-white/25" />
-
-            <div className="mt-7 flex gap-4 sm:gap-5">
-              <span className="mt-[0.35em] shrink-0 font-sans text-[0.875rem] text-bone/40 sm:text-[0.9375rem]">
-                1
-              </span>
-              <p className="font-display text-[clamp(1.35rem,3.6vw,2.1rem)] font-light leading-[1.3] tracking-tight text-white/85">
-                to bring together or incorporate parts into a whole.
+          {/* Left — headword, pronunciation, and part of speech held tight
+              together as one group. */}
+          <Reveal index={1}>
+            <div className="lg:pr-10 xl:pr-14">
+              <h2 className="font-display text-[clamp(3.4rem,11vw,7.75rem)] font-light leading-[0.86] tracking-tight text-white">
+                in&middot;te&middot;grate
+              </h2>
+              <p className="mt-5 flex flex-wrap items-baseline gap-x-4 font-sans text-[0.875rem] text-bone-dim sm:text-[0.9375rem]">
+                <span className="tracking-wide">/ˈin-tə-ˌgrāt/</span>
+                <span className="italic text-bone-dim/70">verb</span>
               </p>
             </div>
+          </Reveal>
 
-            <p className="mt-10 max-w-lg font-sans text-[0.875rem] leading-relaxed text-bone/45 sm:text-[0.9375rem]">
-              Which is exactly what we are. Not a single brand or a box on a
-              shelf: the team that makes every system in the home speak as one.
-            </p>
-          </div>
-        </Reveal>
+          {/* The one deliberate divider allowed — short, and only where the
+              layout stacks to a single column; the lg+ column rule (a border
+              on the right column, which is always the taller of the two, so
+              it naturally spans the full row without any stretch tricks)
+              takes over from there. */}
+          <div className="my-10 h-px w-12 bg-white/15 lg:hidden" />
 
+          {/* Right — definition first (the payoff), closing line after (the
+              resolution), generously separated from the entry on its left. */}
+          <Reveal index={2}>
+            <div className="lg:border-l lg:border-white/10 lg:pl-10 lg:pt-4 xl:pl-14 xl:pt-5">
+              <p className="flex items-baseline gap-4">
+                <span className="font-sans text-[0.9375rem] font-medium text-bronze">
+                  1
+                </span>
+                <span className="font-display text-[clamp(1.8rem,4vw,2.75rem)] font-light leading-[1.22] tracking-tight text-white">
+                  to bring together or incorporate parts into a whole.
+                </span>
+              </p>
+              <p className="mt-9 max-w-lg font-sans text-[0.9375rem] leading-relaxed text-bone-dim md:text-[1rem]">
+                Which is exactly what we are. Not a single brand or a box on a
+                shelf: the team that makes every system in the home speak as
+                one.
+              </p>
+            </div>
+          </Reveal>
+        </div>
       </div>
 
       {/* Flush against the content above — no padding, no gap. The hard cut
           from this dark section to the marquee's white plate is the divider
-          into ServicesSection below; see PartnerMarquee for the rest of it. */}
+          into the section below; see PartnerMarquee for the rest of it. */}
       <PartnerMarquee />
     </section>
   );

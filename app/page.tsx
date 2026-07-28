@@ -2,7 +2,7 @@ import { PageLoader } from "@/components/PageLoader";
 import { Hero } from "@/components/home/Hero";
 import { AboutSection } from "@/components/home/AboutSection";
 import { IntegrateCreed } from "@/components/home/IntegrateCreed";
-import { ServicesSection } from "@/components/home/ServicesSection";
+import { TestimonialSpotlight } from "@/components/home/TestimonialSpotlight";
 import { SmartSecurityShowcase } from "@/components/home/SmartSecurityShowcase";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { ServiceAreasSection } from "@/components/home/ServiceAreasSection";
@@ -17,31 +17,18 @@ export default function HomePage() {
       <PageLoader />
 
       {/*
-        Hero + Showcase share a positioning context. The hero footage
-        autoplays once and rests on the finished estate while the hero pins
-        itself (sticky top-0); as you scroll, the opaque Showcase panel rises
-        up and slides over the held final frame — this is the main
-        objective of the site, so it earns the same real estate About used
-        to occupy. The sticky scope ends with this wrapper, so the hero
-        releases once the Showcase has scrolled past.
+        Hero plays once and rests on its final frame, then hands off to the
+        showcase with a plain, ordinary scroll — no pinning, no panel
+        sliding over anything. The hero's own bottom-edge gradient (see
+        Hero.tsx) fades the footage into the showcase's warm off-white, so
+        the cut reads as a continuation instead of a scroll-jacked reveal.
       */}
-      <div className="relative">
-        <Hero />
+      <Hero />
+      <SmartSecurityShowcase />
 
-        {/* z-20 + opaque bg lets the Showcase cover the pinned hero; its top
-            shadow reads as a panel sliding up over the scene. The nav marker
-            sits at the top of this wrapper so the navbar turns solid the
-            moment it reaches the top of the viewport. */}
-        <div className="relative z-20">
-          <div id="nav-solid-marker" aria-hidden className="absolute inset-x-0 top-0" />
-          <SmartSecurityShowcase />
-        </div>
-      </div>
-
-      {/* Rest of the site — normal scroll from here */}
-      <AboutSection />
+     <TestimonialSpotlight />
       <IntegrateCreed />
-      <ServicesSection />
+       <AboutSection />
       <TestimonialsSection />
       <ServiceAreasSection />
 

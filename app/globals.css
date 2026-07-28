@@ -6,13 +6,6 @@
   --navy-deep: #0A1A52;
   --bronze: #1E3FA0;
   --ink-deep: #080b11;
-  --frame-inset: 16px;
-}
-
-@media (min-width: 768px) {
-  :root {
-    --frame-inset: 22px;
-  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -25,22 +18,18 @@
 /* white. Breakpoints themselves are px-based and unaffected.          */
 /* ------------------------------------------------------------------ */
 @media (min-width: 1920px) {
-  :root { --frame-inset: 28px; }
   html { font-size: 17px; }
 }
 
 @media (min-width: 2300px) {
-  :root { --frame-inset: 34px; }
   html { font-size: 20px; }
 }
 
 @media (min-width: 3000px) {
-  :root { --frame-inset: 44px; }
   html { font-size: 25px; }
 }
 
 @media (min-width: 3800px) {
-  :root { --frame-inset: 56px; }
   html { font-size: 31px; }
 }
 

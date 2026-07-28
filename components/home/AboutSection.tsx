@@ -1,143 +1,78 @@
-"use client";
-
-import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { FEATURED_TESTIMONIAL } from "@/lib/content";
+import { Eyebrow } from "@/components/Eyebrow";
+import { Reveal } from "@/components/Reveal";
+import { MISSION_STATEMENT } from "@/lib/content";
+import { BUSINESS } from "@/lib/seo";
 
-// Four accreditation marks, all constrained to one optical height and
-// desaturated so the mix of teal, navy, and black logos reads as one family.
-const ACCREDITATIONS = [
-  { src: "/images/GOBA.png", alt: "Greater Orlando Builders Association", width: 120, height: 60 },
-  { src: "/images/GOBA-Logo.png", alt: "GOBA Custom Home & Remodeling Council", width: 135, height: 56 },
-  { src: "/images/MCBC_Logo.jpg", alt: "Master Custom Builder Council", width: 200, height: 60 },
-  { src: "/images/Lutron-platinum.png", alt: "Lutron Platinum Dealer 2026", width: 200, height: 184 },
-];
+const ABOUT_TEXT =
+  "We are a local, family-run team serving Central Florida's residential and commercial market. We specialize in all facets of security, Lutron lighting and shades, audio and video, rock solid networks, and smart automation systems. We listen first, keep things simple, show up when we say we will, and answer the phone long after the sale. Our goal is straightforward, make your technology dependable and easy to use, and do it with a neighbor's mindset. We'd love to work with you.";
+
+// Shared eyebrow type ramp — Our Mission and the photo caption read at
+// identical size/tracking/weight so the section's small-label moments feel
+// like one system, not separate guesses.
+const EYEBROW_TYPE = "font-sans text-[0.6875rem] uppercase tracking-eyebrow";
 
 export function AboutSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // On mobile the video is below the fold and won't autoplay until the
-    // user scrolls to it — watch for it entering the viewport and play then.
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          const p = video.play();
-          if (p) p.catch(() => {});
-        }
-      },
-      { threshold: 0.1 }
-    );
-    io.observe(video);
-
-    return () => {
-      io.disconnect();
-    };
-  }, []);
-
   return (
-    <section className="relative flex min-h-[100dvh] flex-col bg-white lg:flex-row">
+    <section
+      id="about"
+      className="relative overflow-hidden border-b border-navy/10 bg-white pb-24 md:pb-32"
+    >
+      {/* Body — asymmetric, full-bleed left. Deliberately NOT wrapped in the
+          page's centered max-w container: the photo runs to the true left
+          edge of the viewport, the copy (headline included) holds its own
+          right-hand column. */}
+      <div className="pt-16 grid grid-cols-1 lg:pt-20 lg:grid-cols-[48%_1fr]">
 
-      {/* ── Left — the testimonial is the sole content of this column ──── */}
-      <div className="order-2 flex min-w-0 flex-col justify-center px-6 py-16 sm:px-8 md:px-10 md:py-16 lg:order-1 lg:w-[42%] lg:justify-end lg:px-16 lg:py-20 xl:px-20">
+        {/* Left — the heritage photo. Flat rectangle: no border, no radius,
+            no shadow, no frame. */}
+        <Reveal index={1}>
+          <div className="relative aspect-[3/4] w-full lg:aspect-auto lg:h-full lg:min-h-[36rem] xl:min-h-[42rem]">
+            <Image
+              src="/images/retro-about-v2.webp"
+              alt="The original Central Florida Automation Services work truck, loaded with cable spools and ladders"
+              fill
+              sizes="(max-width: 1024px) 100vw, 48vw"
+              className="object-cover"
+            />
+          </div>
+        </Reveal>
 
-        {/* Mission statement moved to the three-card section above — this
-            column now opens directly on the testimonial, with more room to
-            breathe. */}
-        <p className="reveal-scroll font-sans text-[0.6875rem] uppercase tracking-[0.18em] text-navy/50">
-          In Their Words
-        </p>
+        {/* Right — headline, mission, and story. One deliberate stack, with
+            noticeably more air between blocks than within them. */}
+        <div className="flex flex-col justify-center px-5 py-16 sm:px-8 md:px-10 lg:px-16 lg:py-20 xl:px-20 xl:py-24">
+          <div className="max-w-[34rem]">
 
-        {/* Pull-quote + body — one client testimonial, split by weight
-            rather than by card/avatar chrome. The decorative opening mark
-            reads as texture behind the pull-quote, not as punctuation. */}
-        <blockquote className="reveal-scroll relative mt-6">
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -left-3.5 -top-[1.875rem] select-none font-display text-[5rem] leading-none text-navy-deep/[0.07] lg:text-[6.875rem]"
-          >
-            &ldquo;
-          </span>
+            <Reveal>
+              <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+                <h2 className="font-display text-[clamp(2.3rem,4.6vw,3.9rem)] font-light leading-[1.02] tracking-tight text-navy-deep">
+                  Who we <em className="font-light italic text-navy-light">are.</em>
+                </h2>
+                <span className={`${EYEBROW_TYPE} pb-1 text-navy/50`}>
+                  Est. {BUSINESS.founded}
+                </span>
+              </div>
+            </Reveal>
 
-          <p className="relative max-w-[19em] font-display text-[1.375rem] leading-[1.42] tracking-tight text-navy-deep lg:text-[1.6875rem]">
-            {FEATURED_TESTIMONIAL.pullQuote}
-          </p>
+            <Reveal index={1}>
+              <Eyebrow className="mt-12 md:mt-14">Our Mission</Eyebrow>
+              <blockquote className="mt-6 border-l-2 border-navy-light pl-6">
+                <p className="font-display text-[1.6rem] font-light leading-[1.4] tracking-tight text-navy-deep md:text-[1.9rem]">
+                  {MISSION_STATEMENT}
+                </p>
+              </blockquote>
+            </Reveal>
 
-          <p className="relative mt-5 max-w-[34em] font-display text-[0.9375rem] leading-[1.75] text-stone">
-            {FEATURED_TESTIMONIAL.body}
-          </p>
-        </blockquote>
+            <Reveal index={2}>
+              <p className="mt-12 font-sans text-[0.9375rem] leading-[1.7] text-slate-600 md:text-[1rem]">
+                {ABOUT_TEXT}
+              </p>
+            </Reveal>
 
-        <div className="reveal-scroll mt-8">
-          <cite className="block not-italic">
-            <span className="block font-display text-[1.1875rem] text-navy-deep">
-              {FEATURED_TESTIMONIAL.name}
-            </span>
-            <span className="mt-1 block font-sans text-[0.8125rem] font-medium text-navy/70">
-              {FEATURED_TESTIMONIAL.role}
-            </span>
-          </cite>
-        </div>
-
-        {/* Accreditations. A real grid, not a wrapping flex row — that
-            guarantees the four marks always land 2x2 or 1x4, never an
-            orphaned 3-then-1. Sized for legibility first: the MCBC and
-            Lutron marks carry small-print text that disappears below this
-            height. Full color per client request, no dividers. */}
-        <div className="reveal-scroll mt-10 border-t border-navy/10 pt-[1.625rem] lg:mt-12">
-          <div className="flex flex-col items-start gap-4">
-            <span className="shrink-0 whitespace-nowrap font-sans text-[0.65625rem] uppercase tracking-wide2 text-stone">
-              Accredited By
-            </span>
-            <div className="grid grid-cols-2 items-center gap-x-6 gap-y-5 sm:grid-cols-4 lg:grid-cols-2">
-              {ACCREDITATIONS.map((logo) => (
-                <div
-                  key={logo.alt}
-                  className="flex h-12 min-w-0 items-center transition-transform duration-500 ease-expo hover:scale-125 xl:h-16"
-                >
-                  <Image
-                    src={logo.src}
-                    alt={logo.alt}
-                    width={logo.width}
-                    height={logo.height}
-                    className="h-full w-auto max-w-full object-contain"
-                  />
-                </div>
-              ))}
-            </div>
           </div>
         </div>
 
       </div>
-
-      {/* ── Right — portrait video. Inset top/bottom at lg+ so it reads as
-          placed rather than as background, while still bleeding off the
-          right edge of the viewport; a contained 4:3 plate above the text
-          on narrower screens. */}
-      <div className="relative order-1 flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-navy-deep lg:order-2 lg:aspect-auto lg:my-20 lg:h-auto lg:w-[58%]">
-        <div className="grain absolute inset-0 opacity-30" />
-        {/* Container fills the right panel — video is cropped to match once
-            it's re-exported at the panel's portrait aspect ratio. */}
-        <div className="relative z-10 h-full w-full overflow-hidden">
-          <video
-            ref={videoRef}
-            data-loader-target="about-video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster="/images/blinds-poster.jpg"
-            className="absolute inset-0 h-full w-full object-cover"
-          >
-            <source src="/CFAS-Blind2.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
-
     </section>
   );
 }
