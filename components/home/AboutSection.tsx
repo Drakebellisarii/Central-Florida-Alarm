@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/Reveal";
-import { MISSION_STATEMENT } from "@/lib/content";
+import { MISSION_STATEMENT, CULTURE } from "@/lib/content";
 import { BUSINESS } from "@/lib/seo";
 
 const ABOUT_TEXT =
@@ -55,12 +55,21 @@ export function AboutSection() {
             </Reveal>
 
             <Reveal index={1}>
-              <Eyebrow className="mt-12 md:mt-14">Our Mission</Eyebrow>
-              <blockquote className="mt-6 border-l-2 border-navy-light pl-6">
-                <p className="font-display text-[1.6rem] font-light leading-[1.4] tracking-tight text-navy-deep md:text-[1.9rem]">
+              <div className="mt-12 md:mt-14">
+                <Eyebrow size="0.8125rem">Our Mission</Eyebrow>
+                <p className="mt-5 font-display text-[1.5rem] font-light leading-[1.42] tracking-tight text-navy-deep md:text-[1.8rem]">
                   {MISSION_STATEMENT}
                 </p>
-              </blockquote>
+              </div>
+
+              <div className="mt-8 flex items-baseline gap-x-4 gap-y-1 border-t border-navy/10 pt-6 flex-wrap md:mt-10">
+                <span className="shrink-0 font-sans text-[0.75rem] uppercase tracking-wide2 text-navy/45">
+                  Our culture
+                </span>
+                <p className="font-display text-[1.05rem] italic leading-snug text-navy-light md:text-[1.15rem]">
+                  {CULTURE}
+                </p>
+              </div>
             </Reveal>
 
             <Reveal index={2}>

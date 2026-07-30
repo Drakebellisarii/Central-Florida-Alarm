@@ -137,7 +137,7 @@ export default function SmartHomePage() {
 
         <div aria-hidden className="absolute inset-0 overflow-hidden">
           <video
-            className="sh-parallax h-full w-full object-cover opacity-25"
+            className="sh-parallax h-full w-full object-cover opacity-35 md:opacity-25"
             poster={`${DIR}/hero-poster.jpg`}
             autoPlay
             muted
@@ -147,10 +147,20 @@ export default function SmartHomePage() {
             <source src={`${DIR}/Smart-Home-Hero.mp4`} type="video/mp4" />
           </video>
         </div>
-        {/* Left-to-right directional scrim — heaviest where the copy sits, near-clear on the right */}
+        {/* Left-to-right directional scrim — heaviest where the copy sits,
+            near-clear on the right. On phones the whole gradient compresses
+            into a narrow viewport, so the desktop ramp reads as one dramatic
+            wall of navy — mobile gets its own gentler, more even scrim. */}
         <div
           aria-hidden
-          className="absolute inset-0"
+          className="absolute inset-0 md:hidden"
+          style={{
+            background: "linear-gradient(to right, rgba(10,26,82,0.55) 0%, rgba(10,26,82,0.38) 35%, rgba(10,26,82,0.12) 70%, transparent 90%)"
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 hidden md:block"
           style={{
             background: "linear-gradient(to right, rgba(10,26,82,0.85) 0%, rgba(10,26,82,0.65) 25%, rgba(10,26,82,0.15) 55%, transparent 75%)"
           }}
@@ -371,7 +381,7 @@ export default function SmartHomePage() {
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-navy-deep/80 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-t from-navy-deep/60 via-transparent to-transparent"
                   />
                   <div className="absolute bottom-0 left-0 p-7">
                     <span className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/60">
@@ -468,7 +478,7 @@ export default function SmartHomePage() {
                   alt="A finger pressing a smart video doorbell beside a keyless lock"
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover opacity-75 transition-transform duration-[1.2s] ease-expo group-hover:scale-[1.05]"
+                  className="object-cover opacity-90 transition-transform duration-[1.2s] ease-expo group-hover:scale-[1.05]"
                 />
               </ManagementCard>
             </Reveal>
@@ -484,7 +494,7 @@ export default function SmartHomePage() {
                   src={`${DIR}/amb-kitchen.mp4`}
                   poster={`${DIR}/amb-kitchen-poster.jpg`}
                   posterAlt="A couple enjoying coffee in a connected kitchen"
-                  className="absolute inset-0 h-full w-full object-cover opacity-75 transition-transform duration-[1.2s] ease-expo group-hover:scale-[1.05]"
+                  className="absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-[1.2s] ease-expo group-hover:scale-[1.05]"
                 />
               </ManagementCard>
             </Reveal>
@@ -500,7 +510,7 @@ export default function SmartHomePage() {
                   src={`${DIR}/amb-entry.mp4`}
                   poster={`${DIR}/amb-entry-poster.jpg`}
                   posterAlt="Light filling a modern entryway as someone arrives home"
-                  className="absolute inset-0 h-full w-full object-cover opacity-75 transition-transform duration-[1.2s] ease-expo group-hover:scale-[1.05]"
+                  className="absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-[1.2s] ease-expo group-hover:scale-[1.05]"
                 />
               </ManagementCard>
             </Reveal>
@@ -518,7 +528,7 @@ export default function SmartHomePage() {
                   alt="A CFAS technician installing a ceiling camera in a living room"
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 66vw"
-                  className="object-cover opacity-75 transition-transform duration-[1.2s] ease-expo group-hover:scale-[1.05]"
+                  className="object-cover opacity-90 transition-transform duration-[1.2s] ease-expo group-hover:scale-[1.05]"
                 />
               </ManagementCard>
             </Reveal>
@@ -588,9 +598,11 @@ function ManagementCard({
       }`}
     >
       {children}
+      {/* Kept lighter than a full navy ramp on purpose — the photography
+          should read as photography; only the caption zone needs the grade. */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/40 to-transparent"
+        className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/25 to-transparent"
       />
       <div className="relative z-10 p-8">
         <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30 text-white">

@@ -98,7 +98,7 @@ export function SmartSecurityShowcase() {
             it into the ruled grid below. */}
         <div data-ssc-intro className="mb-12 text-center md:mb-16">
           <h2 className="mx-auto max-w-2xl font-display text-[clamp(2.1rem,4.2vw,3.6rem)] font-light leading-[1.05] tracking-tight text-navy-deep">
-            Explore Your options
+            Explore Your Options
           </h2>
         </div>
 
@@ -129,7 +129,7 @@ export function SmartSecurityShowcase() {
               <div aria-hidden="true" className="absolute inset-0 bg-navy-deep/15" />
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-navy-deep/40 via-navy-deep/10 to-navy-deep/3"
+                className="absolute inset-0 bg-gradient-to-t from-navy-deep/40 via-navy-deep/10 to-transparent"
               />
               {/* Grain — the same texture as the page splash, scoped to
                   this card instead of the fixed full-viewport overlay, so

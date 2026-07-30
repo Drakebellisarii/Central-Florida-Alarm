@@ -126,19 +126,11 @@ function AreaMarkers({
   );
 }
 
+// Split the index into the two marquee columns — the first scrolls upward,
+// the second downward, so the pair reads as one slowly breathing list.
 const half = Math.ceil(AREAS.length / 2);
 const COL1 = AREAS.slice(0, half);   // scrolls upward
 const COL2 = AREAS.slice(half);      // scrolls downward
-
-function MapController({ target }: { target: { lat: number; lng: number } | null }) {
-  const map = useMap();
-  useEffect(() => {
-    if (!map || !target) return;
-    map.panTo(target);
-    map.setZoom(11);
-  }, [map, target]);
-  return null;
-}
 
 function AreaRow({
   area,
@@ -166,6 +158,20 @@ function AreaRow({
       </span>
     </button>
   );
+}
+
+function MapController({ target }: { target: { lat: number; lng: number } | null }) {
+  const map = useMap();
+  useEffect(() => {
+    if (!map || !target) return;
+    map.panTo(target);
+    map.setZoom(11);
+  }, [map, target]);
+  return null;
+}
+
+function formatCoords(coords: { lat: number; lng: number }) {
+  return `${Math.abs(coords.lat).toFixed(4)}° N · ${Math.abs(coords.lng).toFixed(4)}° W`;
 }
 
 export function ServiceAreasSection() {
@@ -203,7 +209,7 @@ export function ServiceAreasSection() {
   const [selectedSlug, setSelectedSlug] = useState(areasWithCoords[0]?.slug ?? "");
   const selected = areasWithCoords.find((a) => a.slug === selectedSlug) ?? areasWithCoords[0];
 
-  // Duplicate items for seamless loop (skipped when reduced motion)
+  // Duplicate items for the seamless loop (skipped when reduced motion)
   const col1Items = reduce ? COL1 : [...COL1, ...COL1];
   const col2Items = reduce ? COL2 : [...COL2, ...COL2];
 
@@ -242,19 +248,13 @@ export function ServiceAreasSection() {
           <div className="flex flex-col">
 
             <div data-areas-header className="mb-8">
-              <span className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-navy/30">
-                Service Areas
-              </span>
-              <h2 className="mt-3 font-display text-[clamp(1.9rem,3vw,2.8rem)] font-light leading-[1.05] tracking-tight text-navy-deep">
+              <h2 className="font-display text-[clamp(1.9rem,3vw,2.8rem)] font-light leading-[1.05] tracking-tight text-navy-deep">
                 From the Lakes to the Ocean,{" "}
-                <em className="italic text-navy/40">and every fine home in between.</em>
+                <em className="italic">and every fine home in between.</em>
               </h2>
-              <p className="mt-4 font-sans text-[0.9375rem] leading-relaxed text-slate-500">
-                Serving Central Florida&rsquo;s finest homes since 1968.
-              </p>
             </div>
 
-            {/* Dual vertical marquees */}
+            {/* Dual vertical marquees — selecting a community pans the map */}
             <div className="flex h-[18.75rem] overflow-hidden border-t border-slate-100">
 
               {/* Column 1 — scrolls up */}
@@ -287,16 +287,22 @@ export function ServiceAreasSection() {
 
             </div>
 
-            <Link
-              href="/service-areas"
-              className="group mt-8 inline-flex w-fit items-center gap-2 font-sans text-[0.6875rem] uppercase tracking-wide2 text-navy transition-colors hover:text-navy-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30"
-            >
-              View all service areas
-              <ArrowUpRight
-                strokeWidth={1.25}
-                className="h-3.5 w-3.5 transition-transform duration-300 ease-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-            </Link>
+            {/* Drafting-sheet footer: live coordinates + index link */}
+            <div className="mt-9 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-slate-100 pt-5">
+              <span className="font-sans text-[0.6875rem] uppercase tracking-wide2 tabular-nums text-navy/35">
+                {selected?.name}&ensp;{selected ? formatCoords(selected.coords) : ""}
+              </span>
+              <Link
+                href="/service-areas"
+                className="group inline-flex items-center gap-2 font-sans text-[0.6875rem] uppercase tracking-wide2 text-navy transition-colors hover:text-navy-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30"
+              >
+                View all service areas
+                <ArrowUpRight
+                  strokeWidth={1.25}
+                  className="h-3.5 w-3.5 transition-transform duration-300 ease-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </Link>
+            </div>
           </div>
 
           {/* ── Right: map rectangle ── */}

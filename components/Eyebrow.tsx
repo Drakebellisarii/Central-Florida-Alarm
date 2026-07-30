@@ -8,16 +8,19 @@ export function Eyebrow({
   children,
   className = "",
   dark = false,
+  size = "0.6875rem",
 }: {
   children: ReactNode;
   className?: string;
   dark?: boolean;
+  size?: string;
 }) {
   return (
     <span
-      className={`inline-block font-sans text-[0.6875rem] uppercase tracking-eyebrow ${
+      className={`inline-block font-sans uppercase tracking-eyebrow ${
         dark ? "text-white/50" : "text-navy/70"
       } ${className}`}
+      style={{ fontSize: size }}
     >
       {children}
     </span>

@@ -39,7 +39,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "How much does it cost in Central Florida?",
-        a: "Pricing depends on gear and features, but we offer competitive system pricing with affordable monthly monitoring plans.",
+        a: "Pricing depends on gear and features, but we offer competitive system pricing with affordable monthly monitoring plans with NO LONG-TERM  MONITORING CONTRACTS.",
       },
       {
         q: "Can I control it from my phone?",
@@ -55,7 +55,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "Why professional monitoring over self-monitoring?",
-        a: "You get 24/7 response from trained professionals who can dispatch help even if you can't respond.",
+        a: "You get LOCAL 24/7 response from trained professionals who can dispatch help even if you can't respond.",
       },
       {
         q: "Can I get alerts when my kids get home?",
@@ -79,7 +79,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "Can I visit the local monitoring center?",
-        a: "Absolutely. We can arrange a facility tour. Just let us know.",
+        a: "Absolutely. We can arrange a facility tour. Just let our consultant know when you would like to do that.",
       },
       {
         q: "Do you offer free consultations?",
@@ -91,7 +91,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "Why CFAS?",
-        a: "We were the first ADC provider in Florida. We fully understand the product, coupled with expert design, competitive monitoring, and dependable local service.",
+        a: "We were the first Alarm.com provider in Florida. We fully understand the product, coupled with expert design, competitive monitoring, and dependable local service.",
       },
     ],
   },
@@ -131,7 +131,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "What is MagnaTrack and why is it popular?",
-        a: "MagnaTrack motorized screens provide shade, insect protection, privacy, and weather resistance while maintaining your view.",
+        a: "MagnaTrack motorized screens provide shade, insect protection, privacy, and weather resistance while maintaining your view. Our screens provide patented magnetic technology assuring minimal maintenance.",
       },
       {
         q: "Can you design a dedicated home theater or media room?",
@@ -158,8 +158,8 @@ const CATEGORIES: Category[] = [
         a: "Yes, we provide ongoing local support, updates, and preventive maintenance.",
       },
       {
-        q: "Why choose Atlantic Companies for luxury smart home integration in Northeast Florida?",
-        a: "Since 1968, Atlantic Companies has delivered bespoke technology solutions with expert design, installation, and white glove service across Northeast Florida and Central Florida.",
+        q: "Why choose Central Florida Automation Services for luxury smart home integration in Central Florida?",
+        a: "Since 1968, Central Florida Automation Services has delivered bespoke technology solutions with expert design, installation, and white glove service across Central Florida.",
       },
     ],
   },
@@ -179,7 +179,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "Do you offer 24/7 monitoring?",
-        a: "Yes, our UL-listed partners monitor 24/7.",
+        a: "Yes. Our communication center, along with two redundant backup centers, is at the forefront with state of the art monitoring technology. Our 24/7 monitoring centers have some of the most stringent guidelines in the industry pertaining to operator certification.",
       },
       {
         q: "What happens during power or internet outages?",
@@ -187,7 +187,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "Can I manage multiple locations?",
-        a: "Yes, you can view and control all sites from the ADC dashboard.",
+        a: "Yes, you can view and control all sites from the Alarm.com dashboard.",
       },
       {
         q: "How do I manage employee access?",
@@ -195,11 +195,11 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "Do you offer video analytics?",
-        a: "Yes, including person and vehicle detection, line-crossing alerts, and LPR options.",
+        a: "Yes, including person and vehicle detection, line-crossing alerts, and License Plate Reader options.",
       },
       {
         q: "What about ongoing service?",
-        a: "We provide preventative maintenance and fast local support.",
+        a: "We provide preventative maintenance as well as fast local support. Service to our customers is paramount.",
       },
       {
         q: "How long does installation take?",
@@ -223,7 +223,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "Do you offer on-site assessments?",
-        a: "Yes, we provide site surveys to identify risks and design solutions.",
+        a: "Yes, we provide site surveys to identify risks and design solutions. Give us a call or fill out the contact form and we will be in touch soon.",
       },
     ],
   },

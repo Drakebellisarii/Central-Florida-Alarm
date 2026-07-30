@@ -61,9 +61,7 @@ export function buildMetadata({
   image,
 }: MetaInput): Metadata {
   const url = `${SITE_URL}${path}`;
-  const ogImage =
-    image ??
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80";
+  const ogImage = image ?? `${SITE_URL}/images/og-home.jpg`;
 
   return {
     title,

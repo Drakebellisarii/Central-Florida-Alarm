@@ -179,7 +179,7 @@ export default function SmartBusinessPage() {
 
         <div aria-hidden className="absolute inset-0 overflow-hidden">
           <SBHeroVideo
-            className="h-full w-full scale-105 object-cover opacity-75"
+            className="h-full w-full scale-105 object-cover opacity-70"
             poster={`${DIR}/amb-access-poster.jpg`}
             desktopSrc={`${DIR}/amb-access.mp4`}
             mobileSrc="/Smart-biz.mp4"
@@ -191,7 +191,7 @@ export default function SmartBusinessPage() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to right, rgba(10,26,82,0.48) 0%, rgba(10,26,82,0.26) 35%, rgba(10,26,82,0.09) 62%, transparent 80%)",
+              "linear-gradient(to right, rgba(10,26,82,0.58) 0%, rgba(10,26,82,0.34) 35%, rgba(10,26,82,0.14) 62%, rgba(10,26,82,0.04) 85%)",
           }}
         />
         {/* Bottom lift for text legibility */}

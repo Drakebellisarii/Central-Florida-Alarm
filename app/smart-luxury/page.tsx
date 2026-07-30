@@ -18,7 +18,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, BUSINESS } from "@/lib/seo";
 import { NavSentinel } from "@/components/NavSentinel";
 import { SLMotion } from "@/components/smart-luxury/SLMotion";
 
@@ -32,9 +32,8 @@ export const metadata: Metadata = buildMetadata({
 const DIR = "/Smart-Luxury";
 
 const MANIFESTO = [
-  "No two homes are the same.",
-  "So no two systems are either —",
-  "we build from the ground up, every time.",
+  "At this level, no two homes are the same.",
+  "No two systems should be either.",
 ];
 
 type Feature = {
@@ -106,25 +105,38 @@ const FEATURES: Feature[] = [
   },
 ];
 
-type Room = {
-  title: string;
-  body: string;
+type TriptychPanel = {
+  word: string;
   image: string;
+  mobileImage: string;
   alt: string;
+  caption: string;
 };
 
-const ROOMS: Room[] = [
+const TRIPTYCH: TriptychPanel[] = [
   {
-    title: "The room learns your evening.",
-    body: "A Lutron scene shifts every fixture at once, tuned to how this room is actually used after dark.",
-    image: `${DIR}/Luxury-1.png`,
-    alt: "A great room at blue hour, warm lamplight against a lakefront view lined with palms",
+    word: "Inside",
+    image: `${DIR}/Inside.webp`,
+    mobileImage: `${DIR}/Inside-Mobile.webp`,
+    alt: "A curved home theater with a motorized screen and cove lighting",
+    caption:
+      "One touch drops the screen, dims the room to reference black, and brings the sound up to match.",
   },
   {
-    title: "The light adjusts before you do.",
-    body: "Motorized shades and electrochromic glass move together, softening the room before the glare ever arrives.",
-    image: `${DIR}/Luxury-2.png`,
-    alt: "A glass corner shifting from clear to tinted beside a woven shade, overlooking turquoise water and palms",
+    word: "Outside",
+    image: `${DIR}/Outside.webp`,
+    mobileImage: `${DIR}/Outside-Mobile.webp`,
+    alt: "A motorized lanai screen retracting over an infinity pool as a storm moves in over the water",
+    caption:
+      "Motorized screens read the weather before you do, retracting for the view and closing before the first drop falls.",
+  },
+  {
+    word: "Everywhere",
+    image: `${DIR}/Everewhere-Lux.webp`,
+    mobileImage: `${DIR}/Everywhere-Mobile.webp`,
+    alt: "A two-story great room with a floating staircase, open to the kitchen and the pool beyond",
+    caption:
+      "Every room runs the same logic, from the front stair to the water beyond the glass.",
   },
 ];
 
@@ -141,22 +153,28 @@ export default function SmartLuxuryPage() {
         <NavSentinel />
 
         <div aria-hidden className="absolute inset-0 overflow-hidden">
-          <video
+          <Image
             data-sl-hero-media
-            className="h-full w-full scale-105 object-cover opacity-90"
-            poster={`${DIR}/hero-poster.jpg`}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-          >
-            <source src="/Luxury-Hero.mp4" type="video/mp4" />
-          </video>
+            src={`${DIR}/Luxury-Mobile-Hero.webp`}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="scale-105 object-cover opacity-90 sm:hidden"
+          />
+          <Image
+            data-sl-hero-media
+            src={`${DIR}/LUX-HERO-IMG.webp`}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="hidden scale-105 object-cover opacity-90 sm:block"
+          />
         </div>
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-navy-deep/30 via-navy-deep/08 to-navy-deep/18"
+          className="absolute inset-0 bg-gradient-to-t from-navy-deep/30 to-transparent"
         />
 
         <div
@@ -166,7 +184,7 @@ export default function SmartLuxuryPage() {
           <h1 className="reveal-load rd-1 font-hero text-[clamp(2.8rem,7vw,6rem)] font-light leading-[1.02] tracking-tight text-white">
             One-of-one, by design.
           </h1>
-          <p className="reveal-load rd-2 mt-6 font-sans text-[0.8125rem] uppercase tracking-wide2 text-white/55">
+          <p className="reveal-load rd-2 mt-6 font-sans text-[1.0625rem] font-medium uppercase tracking-wide2 text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.55)]">
             No package. No template. Built once, for one house.
           </p>
           <Link
@@ -211,73 +229,71 @@ export default function SmartLuxuryPage() {
         </div>
       </section>
 
-      {/* ============================ THE ROOMS ============================ */}
-      <section className="border-t border-navy/10 bg-white py-28 md:py-36">
-        <div className="mx-auto max-w-[75rem] px-5 sm:px-8 md:px-11">
-          <div data-sl-rise>
-            <h2 className="max-w-xl font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-light leading-tight tracking-tight text-navy-deep">
-              One home, every mood.
-            </h2>
-          </div>
-
+      {/* ================== INSIDE / OUTSIDE / EVERYWHERE ================== */}
+      <section data-sl-triptych className="relative bg-navy-deep">
+        {TRIPTYCH.map((t, i) => (
           <div
-            data-sl-diptych
-            className="mt-16 grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-2"
-          >
-            {ROOMS.map((r) => (
-              <div key={r.title}>
-                <div className="relative aspect-[3/4] overflow-hidden rounded-sm bg-navy-deep/[0.04]">
-                  <Image
-                    src={r.image}
-                    alt={r.alt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
-                  />
-                </div>
-                <h3 className="mt-6 font-display text-[1.4rem] font-light leading-snug tracking-tight text-navy-deep">
-                  {r.title}
-                </h3>
-                <p className="mt-2 max-w-sm font-sans text-[0.9375rem] leading-relaxed text-slate-600">
-                  {r.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ==================== FULL-BLEED BAND ================ */}
-      <section className="border-t border-navy/10 bg-white pb-28 pt-20 md:pb-36 md:pt-28">
-        <div className="mx-auto max-w-[75rem] px-5 sm:px-8 md:px-11">
-          <div
-            data-sl-diagonal-reveal
-            className="relative aspect-[16/9] overflow-hidden rounded-sm"
+            key={t.word}
+            data-sl-triptych-panel
+            className="relative flex h-[100dvh] items-end overflow-hidden"
           >
             <Image
-              src={`${DIR}/Luxury-3.png`}
-              alt="A primary suite overlooking the beach at dusk, with the home's automation panel showing the room already secured, cooled, and dimmed"
+              data-sl-triptych-img
+              src={t.mobileImage}
+              alt={t.alt}
               fill
-              sizes="(max-width: 1200px) 100vw, 75rem"
-              className="object-cover"
+              priority={i === 0}
+              sizes="100vw"
+              className="object-cover sm:hidden"
+            />
+            <Image
+              data-sl-triptych-img
+              src={t.image}
+              alt={t.alt}
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              className="hidden object-cover sm:block"
             />
             <div
               aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"
+              className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/20 to-transparent"
             />
             <div
-              data-sl-diagonal-panel
-              aria-hidden
-              className="absolute inset-0 -z-10 bg-navy-deep"
-            />
-            <p className="absolute bottom-0 left-0 max-w-sm p-6 font-display text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-tight tracking-tight text-white md:p-8">
-              Secure, 72°, and already dimmed — before you&rsquo;ve sat down.
-            </p>
+              data-sl-triptych-copy
+              className="relative z-10 w-full px-5 pb-16 sm:px-8 md:px-11 md:pb-24"
+            >
+              <div className="mx-auto max-w-[75rem]">
+                <span className="font-sans text-[0.75rem] uppercase tracking-wide2 text-white/45">
+                  0{i + 1} / 03
+                </span>
+                <h2 className="mt-3 font-hero text-[clamp(3.2rem,10vw,8rem)] font-light leading-[0.9] tracking-tight text-white">
+                  {t.word}
+                </h2>
+                <p className="mt-5 max-w-md font-sans text-[1rem] leading-relaxed text-white/70">
+                  {t.caption}
+                </p>
+              </div>
+            </div>
           </div>
+        ))}
+
+        {/* Progress ticks — shown and driven by SLMotion only when the
+            pinned crossfade actually runs; stays hidden otherwise so the
+            reduced-motion fallback (three plain stacked panels) never
+            shows an indicator with nothing to indicate. */}
+        <div
+          data-sl-triptych-ticks
+          aria-hidden="true"
+          className="pointer-events-none absolute right-5 top-1/2 z-10 hidden -translate-y-1/2 flex-col gap-3 sm:right-8 md:right-11"
+        >
+          {TRIPTYCH.map((t) => (
+            <span key={t.word} data-sl-triptych-tick className="h-8 w-px bg-white/25" />
+          ))}
         </div>
       </section>
 
-      {/* ============================ MANIFESTO ============================ */}
+      {/* ======================== MANIFESTO / CONTACT ======================== */}
       <section className="border-t border-navy/10 bg-white py-28 md:py-40">
         <div className="mx-auto max-w-[75rem] px-5 sm:px-8 md:px-11">
           <div className="space-y-1 md:space-y-2">
@@ -291,6 +307,58 @@ export default function SmartLuxuryPage() {
                 </div>
               </div>
             ))}
+
+            {/* The call to act reads as the statement's own next line —
+                same mask-reveal, just larger and alive under the cursor. */}
+            <div className="overflow-hidden pt-2 md:pt-3">
+              <div data-sl-mask-line>
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-4 font-hero text-[clamp(2.2rem,5.4vw,4.4rem)] font-light leading-[1.04] tracking-tight text-bronze transition-colors duration-500 hover:text-navy-deep"
+                >
+                  Let&rsquo;s work together
+                  <ArrowUpRight
+                    strokeWidth={1}
+                    className="h-[0.6em] w-[0.6em] shrink-0 transition-transform duration-500 ease-expo group-hover:translate-x-2 group-hover:-translate-y-2"
+                  />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact masthead — quiet, editorial, the way a magazine signs off */}
+          <div
+            data-sl-rise
+            className="mt-16 flex flex-col gap-6 border-t border-navy/10 pt-8 sm:flex-row sm:items-center sm:justify-between md:mt-24"
+          >
+            <p className="max-w-sm font-sans text-[0.9375rem] leading-relaxed text-slate-600">
+              One conversation, before the first drawing is final.
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-10">
+              <a
+                href={BUSINESS.phoneHref}
+                className="group flex items-baseline gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/30"
+              >
+                <span className="font-sans text-[0.6875rem] uppercase tracking-wide2 text-navy/40">
+                  Call
+                </span>
+                <span className="font-display text-[1.15rem] tracking-tight text-navy-deep transition-colors duration-300 group-hover:text-bronze">
+                  {BUSINESS.phone}
+                </span>
+              </a>
+              <span className="hidden h-4 w-px bg-navy/15 sm:block" />
+              <a
+                href={BUSINESS.emailHref}
+                className="group flex items-baseline gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-logo/30"
+              >
+                <span className="font-sans text-[0.6875rem] uppercase tracking-wide2 text-navy/40">
+                  Email
+                </span>
+                <span className="font-display text-[1.15rem] tracking-tight text-navy-deep transition-colors duration-300 group-hover:text-bronze">
+                  {BUSINESS.email}
+                </span>
+              </a>
+            </div>
           </div>
         </div>
       </section>

@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { BUSINESS } from "@/lib/seo";
 
@@ -24,8 +23,23 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [solid, setSolid] = useState(false);
   const pathname = usePathname();
-  const reduce = useReducedMotion();
   const headerRef = useRef<HTMLElement>(null);
+
+  // CSS-only enter/exit for the mobile overlay (no framer-motion — this
+  // component sits in the root layout, so anything it imports ships to
+  // every route). Stays mounted a beat after close so the fade-out plays.
+  const [menuMounted, setMenuMounted] = useState(false);
+  const [menuEntered, setMenuEntered] = useState(false);
+  useEffect(() => {
+    if (mobileOpen) {
+      setMenuMounted(true);
+      const id = requestAnimationFrame(() => setMenuEntered(true));
+      return () => cancelAnimationFrame(id);
+    }
+    setMenuEntered(false);
+    const t = setTimeout(() => setMenuMounted(false), 350);
+    return () => clearTimeout(t);
+  }, [mobileOpen]);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -178,15 +192,12 @@ export function Navbar() {
       </header>
 
       {/* Mobile overlay */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={reduce ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={reduce ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-50 flex flex-col bg-navy-deep lg:hidden"
-          >
+      {menuMounted && (
+        <div
+          className={`fixed inset-0 z-50 flex flex-col bg-navy-deep transition-opacity duration-[350ms] ease-expo motion-reduce:transition-none lg:hidden ${
+            menuEntered ? "opacity-100" : "opacity-0"
+          }`}
+        >
             <div className="flex h-[4.75rem] items-center justify-between border-b border-white/[0.07] px-5 sm:px-8">
               <Image
                 src="/images/cfas-logo-light.png"
@@ -224,11 +235,10 @@ export function Navbar() {
                 ))}
               </div>
 
-              <motion.div
-                initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
-                className="mt-6 space-y-3 border-t border-white/10 pt-8"
+              <div
+                className={`mt-6 space-y-3 border-t border-white/10 pt-8 transition-all duration-500 ease-expo delay-[180ms] motion-reduce:transition-none motion-reduce:delay-0 ${
+                  menuEntered ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+                }`}
               >
                 <Link
                   href="/repair-request"
@@ -246,11 +256,10 @@ export function Navbar() {
                   {BUSINESS.street}<br />
                   {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
                 </p>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
     </>
   );
 }

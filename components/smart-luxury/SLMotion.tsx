@@ -91,39 +91,91 @@ export function SLMotion() {
         );
       });
 
-      // Diagonal wipe for the full-bleed band.
-      gsap.utils.toArray<HTMLElement>("[data-sl-diagonal-reveal]").forEach((el) => {
-        const panel = el.querySelector<HTMLElement>("[data-sl-diagonal-panel]");
-        if (!panel) return;
-        gsap.set(panel, { zIndex: 20, skewX: -12 });
-        gsap.fromTo(
-          panel,
-          { xPercent: 0 },
-          {
-            xPercent: 130,
-            duration: 1.6,
-            ease: "power4.inOut",
-            scrollTrigger: { trigger: el, start: "top 72%" },
-          }
-        );
-      });
+      // Inside / Outside / Everywhere — pinned, scroll-scrubbed crossfade.
+      // Default markup is three plain stacked full-height panels (a fine,
+      // fully accessible fallback on its own); this promotes them to an
+      // absolutely-stacked deck and pins the section for one viewport-height
+      // of scroll per panel, only when motion is allowed.
+      const triptych = document.querySelector<HTMLElement>("[data-sl-triptych]");
+      const panels = gsap.utils.toArray<HTMLElement>(
+        "[data-sl-triptych-panel]",
+        triptych ?? undefined
+      );
+      if (triptych && panels.length > 1) {
+        const ticksWrap = triptych.querySelector<HTMLElement>("[data-sl-triptych-ticks]");
+        const ticks = gsap.utils.toArray<HTMLElement>("[data-sl-triptych-tick]", triptych);
 
-      // Diptych: the two photos settle in with a slight offset stagger.
-      gsap.utils.toArray<HTMLElement>("[data-sl-diptych]").forEach((el) => {
-        gsap.fromTo(
-          el.children,
-          { opacity: 0, y: 44, scale: 0.96 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1.15,
-            ease: "power3.out",
-            stagger: 0.2,
-            scrollTrigger: { trigger: el, start: "top 80%" },
+        gsap.set(triptych, { height: "100dvh" });
+        gsap.set(panels, { position: "absolute", inset: 0, opacity: 0 });
+        gsap.set(panels[0], { opacity: 1 });
+        if (ticksWrap) gsap.set(ticksWrap, { display: "flex" });
+        gsap.set(ticks, { backgroundColor: "rgba(255,255,255,0.25)" });
+        if (ticks[0]) gsap.set(ticks[0], { backgroundColor: "rgba(255,255,255,0.85)" });
+
+        const imgs: Element[] = [];
+        const copies: Element[] = [];
+        panels.forEach((panel) => {
+          // Each panel renders a mobile + desktop <Image>, one hidden by
+          // CSS per breakpoint — both get the same tween, harmless since
+          // only one is ever visible at a time.
+          panel
+            .querySelectorAll("[data-sl-triptych-img]")
+            .forEach((img) => imgs.push(img));
+          const copy = panel.querySelector("[data-sl-triptych-copy]");
+          if (copy) copies.push(copy);
+        });
+        gsap.set(imgs, { scale: 1.16 });
+        gsap.set(copies, { opacity: 0, y: 26 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triptych,
+            start: "top top",
+            end: () => `+=${window.innerHeight * panels.length}`,
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+          },
+        });
+
+        panels.forEach((panel, i) => {
+          const panelImgs = panel.querySelectorAll("[data-sl-triptych-img]");
+          const copy = panel.querySelector("[data-sl-triptych-copy]");
+          const tick = ticks[i];
+
+          // Hold on this panel: Ken Burns pull-back, copy rises in.
+          if (panelImgs.length) {
+            tl.to(panelImgs, { scale: 1, duration: 1, ease: "none" }, i);
           }
-        );
-      });
+          if (copy) {
+            tl.to(copy, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, i);
+          }
+
+          // Crossfade the last third of this panel's segment into the next.
+          if (i < panels.length - 1) {
+            const next = panels[i + 1];
+            const nextCopy = next.querySelector("[data-sl-triptych-copy]");
+            tl.to(panel, { opacity: 0, duration: 0.3, ease: "none" }, i + 0.7);
+            tl.to(next, { opacity: 1, duration: 0.3, ease: "none" }, i + 0.7);
+            if (copy) tl.to(copy, { opacity: 0, duration: 0.3, ease: "none" }, i + 0.7);
+            if (tick) {
+              tl.to(tick, { backgroundColor: "rgba(255,255,255,0.25)", duration: 0.01 }, i + 0.7);
+            }
+            if (ticks[i + 1]) {
+              tl.to(
+                ticks[i + 1],
+                { backgroundColor: "rgba(255,255,255,0.85)", duration: 0.01 },
+                i + 0.7
+              );
+            }
+            // Reset next panel's own entrance state so it plays again as it
+            // becomes active (its copy already fell to opacity 0 above only
+            // via the *previous* panel's exit tween on shared elements —
+            // this keeps next's copy rise starting from the same place).
+            if (nextCopy) tl.set(nextCopy, { opacity: 0, y: 26 }, i + 0.7);
+          }
+        });
+      }
     });
 
     return () => ctx.revert();

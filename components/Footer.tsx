@@ -4,6 +4,21 @@ import { Facebook, Instagram, Phone, MapPin, Mail } from "lucide-react";
 import { BUSINESS } from "@/lib/seo";
 import { SERVICE_NAV } from "@/lib/content";
 
+const SOLUTIONS = [
+  { name: "Smart Security", href: "/smart-security" },
+  { name: "Smart Home", href: "/smart-home" },
+  { name: "Smart Business", href: "/smart-business" },
+  { name: "Smart Luxury", href: "/smart-luxury" },
+];
+
+const COMPANY = [
+  { name: "Service Areas", href: "/service-areas" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Contact", href: "/contact" },
+  { name: "Existing Clients", href: "/existing-clients" },
+  { name: "Repair Request", href: "/repair-request" },
+];
+
 export function Footer() {
   const year = new Date().getFullYear();
   const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -12,10 +27,10 @@ export function Footer() {
 
   return (
     <footer className="relative border-t border-white/10 bg-navy-deep">
-      <div className="mx-auto max-w-[93.75rem] px-5 pb-12 pt-12 sm:px-8 md:px-11 md:pb-16 md:pt-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-x-8 md:gap-y-12 lg:gap-10">
+      <div className="mx-auto max-w-[93.75rem] px-5 pb-12 pt-14 sm:px-8 md:px-11 md:pb-16 md:pt-20">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 lg:gap-8">
           {/* Brand + NAP */}
-          <div className="md:col-span-12 md:mb-2 lg:col-span-6 lg:mb-0">
+          <div className="sm:col-span-2 md:col-span-4 lg:col-span-4 lg:pr-8">
             <Image
               src="/images/cfas-logo-light.png"
               alt="Central Florida Automation Services"
@@ -85,58 +100,58 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Services — links disabled for now */}
-          <div className="md:col-span-6 lg:col-span-3 lg:mt-16">
-            <h2 className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40">
-              Services
-            </h2>
-            <ul className="mt-5 space-y-2.5">
-              {SERVICE_NAV.map((s) => (
-                <li key={s.href} className="font-sans text-[0.8125rem] text-white/55">
-                  {s.name}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Solutions — the four pillar pages */}
+          <FooterColumn title="Solutions" className="lg:col-span-2">
+            {SOLUTIONS.map((s) => (
+              <li key={s.href}>
+                <FooterLink href={s.href}>{s.name}</FooterLink>
+              </li>
+            ))}
+          </FooterColumn>
+
+          {/* Services — informational only, no detail pages */}
+          <FooterColumn title="Services" className="lg:col-span-2">
+            {SERVICE_NAV.map((s) => (
+              <li
+                key={s.href}
+                className="font-sans text-[0.8125rem] text-white/55"
+              >
+                {s.name}
+              </li>
+            ))}
+          </FooterColumn>
+
+          {/* Company */}
+          <FooterColumn title="Company" className="lg:col-span-2">
+            {COMPANY.map((s) => (
+              <li key={s.href}>
+                <FooterLink href={s.href}>{s.name}</FooterLink>
+              </li>
+            ))}
+          </FooterColumn>
 
           {/* Credentials */}
-          <div className="md:col-span-6 lg:col-span-3 lg:mt-16">
-            <h2 className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40">
-              Licensed and Insured
-            </h2>
-            <ul className="mt-5 space-y-2.5 font-sans text-[0.8125rem] text-white/55">
-              {BUSINESS.licenses.map((lic) => (
-                <li key={lic}>
-                  <span className="text-white/40">FL</span> {lic}
-                </li>
-              ))}
-              <li>
-                <span className="text-white/40">GA</span> LU405163
+          <FooterColumn title="Licensed and Insured" className="lg:col-span-2">
+            {BUSINESS.licenses.map((lic) => (
+              <li key={lic} className="font-sans text-[0.8125rem] text-white/55">
+                <span className="text-white/40">FL</span> {lic}
               </li>
-            </ul>
-          </div>
+            ))}
+            <li className="font-sans text-[0.8125rem] text-white/55">
+              <span className="text-white/40">GA</span> LU405163
+            </li>
+          </FooterColumn>
         </div>
 
-        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
+        {/* Bottom bar */}
+        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5">
             <p className="font-sans text-[0.75rem] text-white/30">
               &copy; {year} {BUSINESS.name}. All rights reserved.
             </p>
             <Link
-              href="/contact"
-              className="font-sans text-[0.75rem] text-white/40 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-            >
-              Contact
-            </Link>
-            <Link
-              href="/faq"
-              className="font-sans text-[0.75rem] text-white/40 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-            >
-              FAQ
-            </Link>
-            <Link
               href="/privacy"
-              className="font-sans text-[0.75rem] text-white/40 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+              className="whitespace-nowrap font-sans text-[0.75rem] text-white/40 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
             >
               Privacy Policy
             </Link>
@@ -147,6 +162,42 @@ export function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({
+  title,
+  className,
+  children,
+}: {
+  title: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={className}>
+      <h2 className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/40">
+        {title}
+      </h2>
+      <ul className="mt-5 space-y-2.5">{children}</ul>
+    </div>
+  );
+}
+
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className="font-sans text-[0.8125rem] text-white/55 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+    >
+      {children}
+    </Link>
   );
 }
 

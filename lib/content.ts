@@ -34,6 +34,10 @@ export const STATS = [
   { value: "24/7", label: "Monitoring and support", since: "Always answered" },
 ];
 
+export const CULTURE = 
+  "Provide our customers with exceptional service.";
+
+
 /* Nav helpers built from the data so links never drift out of sync */
 export const SERVICE_NAV = SERVICES.map((s) => ({
   name: s.name,

@@ -8,13 +8,13 @@ const BRANDS = [
   { src: "/logos/norm-lutron.png",   alt: "Lutron",    w: 536,  h: 80,  cls: "h-4" },
   { src: "/logos/norm-sonos.png",    alt: "Sonos",     w: 510,  h: 102, cls: "h-4" },
   { src: "/logos/norm-control4.png", alt: "Control4",  w: 288,  h: 81,  cls: "h-5" },
-  { src: "/logos/norm-ubiquiti.png", alt: "Ubiquiti",  w: 751,  h: 230, cls: "h-5" },
-  { src: "/logos/norm-josh.png",     alt: "Josh.ai",   w: 2000, h: 680, cls: "h-4" },
+  { src: "/logos/norm-ubiquiti.png", alt: "Ubiquiti",  w: 718,  h: 220, cls: "h-5" },
+  { src: "/logos/norm-josh.png",     alt: "Josh.ai",   w: 647,  h: 220, cls: "h-4" },
   { src: "/logos/norm-crestron.png", alt: "Crestron",  w: 447,  h: 52,  cls: "h-3" },
   { src: "/logos/norm-ovrc.png",     alt: "OvrC",      w: 501,  h: 161, cls: "h-5" },
   { src: "/logos/norm-alarm.png",    alt: "Alarm.com", w: 306,  h: 182, cls: "h-7" },
-  { src: "/logos/norm-hartmann-forbes.png", alt: "Hartmann & Forbes", w: 1896, h: 549, cls: "h-7 sm:h-8" },
-  { src: "/logos/norm-magnatrack.png",      alt: "MagnaTrack by Progressive Screens", w: 1498, h: 289, cls: "h-6 sm:h-7" },
+  { src: "/logos/norm-hartmann-forbes.png", alt: "Hartmann & Forbes", w: 760, h: 220, cls: "h-7 sm:h-8" },
+  { src: "/logos/norm-magnatrack.png",      alt: "MagnaTrack by Progressive Screens", w: 1140, h: 220, cls: "h-6 sm:h-7" },
 ];
 
 // Drop-shadow makes white logos readable over both light and dark backgrounds.

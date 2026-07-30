@@ -266,6 +266,15 @@ body {
   to   { transform: translateX(300%); }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .loader-breathe {
+    animation: loader-breathe 2.4s ease-in-out infinite;
+  }
+  .loader-current {
+    animation: loader-current 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Service-areas vertical marquees                                     */
 /* ------------------------------------------------------------------ */
@@ -290,15 +299,6 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .area-col-up, .area-col-down { animation: none; }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .loader-breathe {
-    animation: loader-breathe 2.4s ease-in-out infinite;
-  }
-  .loader-current {
-    animation: loader-current 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  }
 }
 
 /* ------------------------------------------------------------------ */

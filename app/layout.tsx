@@ -87,7 +87,7 @@ export const metadata: Metadata = {
       "Premium smart home automation and security integration for Greater Orlando estates and businesses since 1968.",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
+        url: "/images/og-home.jpg",
         width: 1200,
         height: 630,
         alt: "A custom Orlando home integrated by Central Florida Automation Services",
@@ -95,7 +95,8 @@ export const metadata: Metadata = {
     ],
   },
   robots: { index: true, follow: true },
-  icons: { icon: "/images/cfas-logo.png" },
+  // Icons come from the app/ file conventions (favicon.ico, icon.png,
+  // apple-icon.png) — no icons field needed here.
 };
 
 export default function RootLayout({

@@ -26,11 +26,11 @@ const SKIP_SNIPPET =
 
 /**
  * Full-bleed brand splash shown on the first-ever load. Stays up only until
- * fonts have swapped in and the hero video's first frame is decoded and
- * paintable (readyState >= HAVE_CURRENT_DATA, i.e. `loadeddata`) — it does
- * NOT wait for the hero to buffer deep into the clip, and it does NOT wait
- * on the about-section video. Both of those used to gate the reveal, which
- * on a cold CDN/cache meant paying most of the hero file's download cost
+ * fonts have swapped in and the hero video is playable (readyState >=
+ * HAVE_FUTURE_DATA) — it does NOT wait for the hero to buffer to the end,
+ * and it does NOT wait on any below-fold video (testimonial/about clips
+ * load lazily on scroll). Those used to gate the reveal, which on a cold
+ * CDN/cache meant paying most of the hero file's download cost
  * before anything painted. Hero.tsx marks its primary <video> with
  * data-loader-target="hero-video" for this component to find; MAX_WAIT still
  * caps the whole wait on slow connections so a stalled request can't trap
@@ -56,14 +56,16 @@ export function PageLoader() {
     let raf = 0;
     let timeout: ReturnType<typeof setTimeout>;
 
-    // readyState >= 2 (HAVE_CURRENT_DATA) means the current frame is decoded
-    // and paintable — this is the `loadeddata` milestone, not a deep buffer.
+    // readyState >= 3 (HAVE_FUTURE_DATA) means the hero can actually start
+    // playing — frames beyond the current one are buffered. Deliberately not
+    // 4 (canplaythrough): that can take the whole file on slow connections,
+    // and MAX_WAIT would fire first anyway.
     const targetReady = (selector: string) => {
       const el = document.querySelector<HTMLVideoElement>(selector);
       // If the element isn't mounted (reduced motion renders none of them)
       // or errored out, don't block on it.
       if (!el || el.error !== null) return true;
-      return el.readyState >= 2;
+      return el.readyState >= 3;
     };
 
     const fontsReady = () =>

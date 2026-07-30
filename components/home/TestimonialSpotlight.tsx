@@ -113,13 +113,17 @@ export function TestimonialSpotlight() {
         {/* Container fills the right panel — video is cropped to match once
             it's re-exported at the panel's portrait aspect ratio. */}
         <div className="relative z-10 h-full w-full overflow-hidden">
+          {/* No autoPlay and preload="none": the clip stays off the wire on
+              first load so it never competes with the hero for bandwidth —
+              the IntersectionObserver above starts it (which triggers the
+              fetch) as the section scrolls into view; the poster paints
+              until then. */}
           <video
             ref={videoRef}
-            autoPlay
             muted
             loop
             playsInline
-            preload="auto"
+            preload="none"
             poster="/images/blinds-poster.jpg"
             className="absolute inset-0 h-full w-full object-cover"
           >

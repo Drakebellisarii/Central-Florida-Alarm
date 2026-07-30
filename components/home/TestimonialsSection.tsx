@@ -1,5 +1,5 @@
 import { getGoogleReviews } from "@/lib/googleReviews";
-import { TestimonialsClient } from "@/components/home/TestimonialsClient";
+import { GoogleReviews } from "@/components/home/GoogleReviews";
 
 // Server wrapper: Google Places data is fetched here (revalidated daily,
 // see lib/googleReviews.ts) and handed to the client component as a plain
@@ -15,5 +15,5 @@ export async function TestimonialsSection() {
     ? `https://www.google.com/maps/place/?q=place_id:${placeId}`
     : undefined;
 
-  return <TestimonialsClient reviews={reviews} writeHref={writeHref} viewHref={viewHref} />;
+  return <GoogleReviews reviews={reviews} writeHref={writeHref} viewHref={viewHref} />;
 }
