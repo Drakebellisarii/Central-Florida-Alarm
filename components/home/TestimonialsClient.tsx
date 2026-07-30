@@ -135,7 +135,7 @@ export function TestimonialsClient({
 
   return (
     <section
-      className="relative isolate flex min-h-[36rem] flex-col justify-end overflow-hidden bg-navy-deep md:min-h-[42rem]"
+      className="relative isolate flex min-h-[40rem] flex-col items-center justify-center overflow-hidden bg-navy-deep md:min-h-[46rem]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -169,46 +169,37 @@ export function TestimonialsClient({
         )}
       </div>
 
-      {/* ── Directional scrim — anchored bottom-left where the copy sits,
-          the same device the Hero uses, so this reads as a deliberate
-          bookend to it rather than a generic dark wash. ──────────────── */}
+      {/* ── A single, even tint plus a soft edge vignette — subtle color
+          grading rather than a directional UI scrim, since the copy is
+          now centered instead of anchored to one corner. ──────────────── */}
+      <div aria-hidden="true" className="absolute inset-0 bg-navy-deep/40" />
       <div
         aria-hidden="true"
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 90% 80% at 0% 100%, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.38) 40%, rgba(0,0,0,0.1) 66%, transparent 82%)",
+            "radial-gradient(ellipse 75% 65% at 50% 50%, transparent 0%, rgba(5,12,40,0.18) 60%, rgba(5,12,40,0.48) 100%)",
         }}
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.22) 32%, transparent 60%)",
-        }}
+        className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/30 to-transparent"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-1/2"
-        style={{
-          background:
-            "linear-gradient(to top, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.08) 60%, transparent 100%)",
-        }}
+        className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/35 to-transparent"
       />
 
-      {/* ── Copy — bottom-left, on the scene ────────────────────────── */}
-      <div className="relative z-10 mx-auto w-full max-w-[93.75rem] px-5 pb-14 sm:px-8 sm:pb-16 md:px-11 md:pb-20">
-        <div className="max-w-xl">
-
+      {/* ── Copy — centered, on the scene ────────────────────────── */}
+      <div className="relative z-10 mx-auto w-full max-w-[93.75rem] px-5 py-16 text-center sm:px-8 md:px-11">
+        <div className="mx-auto max-w-2xl">
           <p className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/50">
             Client Trust
           </p>
 
-          {/* Google Business Profile — the credibility signal, up top and
-              left-aligned rather than centered like a badge. */}
+          {/* Google Business Profile — the credibility signal, centered up top. */}
           {reviews && (
-            <div className="mt-5 flex items-center gap-3.5">
+            <div className="mt-5 flex items-center justify-center gap-3.5">
               <GoogleG className="h-8 w-8 shrink-0" />
               <div className="flex items-baseline gap-2.5">
                 <span className="font-numeral text-[2.25rem] font-light leading-none text-white">
@@ -252,14 +243,14 @@ export function TestimonialsClient({
 
           {activeReview && (
             <>
-              <div aria-hidden className="mt-8 h-px w-12 bg-white/25" />
+              <div aria-hidden className="mx-auto mt-8 h-px w-12 bg-white/25" />
 
               {/* Editorial pull-quote, set directly on the scene — a real
                   serif quotation mark for texture, not card chrome. */}
-              <div className="relative mt-8 min-h-[8.5rem]">
+              <div className="relative mt-8 min-h-[9rem]">
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute -left-1 -top-6 select-none font-display text-[4rem] leading-none text-white/[0.12]"
+                  className="pointer-events-none absolute left-1/2 -top-8 -translate-x-1/2 select-none font-display text-[4.5rem] leading-none text-white/[0.14]"
                 >
                   &ldquo;
                 </span>
@@ -271,11 +262,11 @@ export function TestimonialsClient({
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.45, ease: EASE }}
                   >
-                    <blockquote className="relative font-display text-[clamp(1.25rem,2.4vw,1.625rem)] font-light leading-[1.4] tracking-tight text-white">
+                    <blockquote className="relative mx-auto max-w-xl font-display text-[clamp(1.3rem,2.6vw,1.75rem)] font-light leading-[1.45] tracking-tight text-white">
                       {truncateQuote(activeReview.text)}
                     </blockquote>
 
-                    <figcaption className="relative mt-5 flex items-baseline gap-2.5">
+                    <figcaption className="relative mt-5 flex items-baseline justify-center gap-2.5">
                       <span className="font-sans text-[0.875rem] tracking-wide text-white">
                         {activeReview.authorName}
                       </span>
@@ -290,7 +281,7 @@ export function TestimonialsClient({
               {/* Pagination — thin dots, not app-style buttons; arrows are
                   quiet affordances either side. */}
               {featuredReviews.length > 1 && (
-                <div className="mt-8 flex items-center gap-5">
+                <div className="mt-8 flex items-center justify-center gap-5">
                   <button
                     onClick={prev}
                     aria-label="Previous review"
