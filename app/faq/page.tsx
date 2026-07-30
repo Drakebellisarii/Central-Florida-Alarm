@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { buildMetadata, localBusinessLd, breadcrumbLd, BUSINESS, PRIMARY_BRANDS } from "@/lib/seo";
-import { STATS } from "@/lib/content";
+import { buildMetadata, localBusinessLd, breadcrumbLd } from "@/lib/seo";
 import { NavSentinel } from "@/components/NavSentinel";
 import { JsonLd } from "@/components/JsonLd";
-import { LightFAQAccordion } from "@/components/LightFAQAccordion";
+import { FaqCategory } from "@/components/FaqCategory";
 import type { FAQ } from "@/lib/services";
 
 const crumbs = [
@@ -15,44 +14,218 @@ const crumbs = [
 export const metadata: Metadata = buildMetadata({
   title: "FAQ | Central Florida Automation Services",
   description:
-    "Answers to common questions about smart home and business integration, service areas, brands we install, licensing, and what to expect from CFAS.",
+    "Answers about smart home security, luxury home automation, and business security systems from Central Florida Automation Services and Atlantic Companies.",
   path: "/faq",
 });
 
-const installs = STATS.find((s) => s.label === "Installations")?.value ?? BUSINESS.installations;
+type Category = {
+  id: string;
+  index: string;
+  eyebrow: string;
+  title: string;
+  faqs: FAQ[];
+};
 
-const FAQS: FAQ[] = [
+const CATEGORIES: Category[] = [
   {
-    q: "What areas do you serve?",
-    a: `We're based in ${BUSINESS.city} and serve ${BUSINESS.region} and Central Florida, plus properties across the state and into Georgia. If you're unsure whether your address falls inside our service area, reach out through our contact page and we'll tell you plainly.`,
+    id: "smart-home",
+    index: "01 / 03",
+    eyebrow: "FAQ",
+    title: "Smart Home & Security",
+    faqs: [
+      {
+        q: "What is Alarm.com, and how does it make my home smarter and safer?",
+        a: "It's an award-winning platform that brings security, video, smart locks, lighting, thermostats, garage doors, and mobile control into one simple app.",
+      },
+      {
+        q: "How much does it cost in Central Florida?",
+        a: "Pricing depends on gear and features, but we offer competitive system pricing with affordable monthly monitoring plans.",
+      },
+      {
+        q: "Can I control it from my phone?",
+        a: "Yes, arm or disarm, lock doors, view cameras, get instant notifications, and manage your smart home from almost anywhere.",
+      },
+      {
+        q: "Will it work if my internet goes down?",
+        a: "Yes. Alarm signals use a secure cellular connection to reach the monitoring center.",
+      },
+      {
+        q: "What can I integrate?",
+        a: "Smart locks, lighting, thermostats, garage doors, video doorbells, indoor or outdoor cameras, water sensors, and more.",
+      },
+      {
+        q: "Why professional monitoring over self-monitoring?",
+        a: "You get 24/7 response from trained professionals who can dispatch help even if you can't respond.",
+      },
+      {
+        q: "Can I get alerts when my kids get home?",
+        a: "Yes, get a notification when a specific user disarms the system or unlocks a door.",
+      },
+      {
+        q: "Do cameras record all the time?",
+        a: "You can choose continuous recording where supported, or use smart analytics to capture people, vehicles, or important events, so you find key moments faster.",
+      },
+      {
+        q: "Can I automate lights, locks, and thermostats?",
+        a: "Absolutely. Create scenes that lock doors, adjust lighting, close the garage, and set the temperature on a schedule or when you arm or disarm.",
+      },
+      {
+        q: "Is it good for second homes?",
+        a: "Yes, it's ideal for vacation properties. Check in, get alerts, view video, and control the home from anywhere.",
+      },
+      {
+        q: "What happens in a power outage?",
+        a: "The system has a backup battery and cellular communication to keep you protected.",
+      },
+      {
+        q: "Can I visit the local monitoring center?",
+        a: "Absolutely. We can arrange a facility tour. Just let us know.",
+      },
+      {
+        q: "Do you offer free consultations?",
+        a: "Yes, we provide a professional in-home consultation to recommend the right solution.",
+      },
+      {
+        q: "Why go local versus national?",
+        a: "We are a local family-run business. You get personalized service, faster response, and support from a team that knows Central Florida.",
+      },
+      {
+        q: "Why CFAS?",
+        a: "We were the first ADC provider in Florida. We fully understand the product, coupled with expert design, competitive monitoring, and dependable local service.",
+      },
+    ],
   },
   {
-    q: "What does “smart home” or “smart business” integration actually mean?",
-    a: "It means every system in your property — lighting, shades, security, audio/video, climate, and networking — is designed to work as one, controlled from a single app or keypad instead of a shelf of separate remotes. That's the whole business: not selling individual gadgets, but making everything speak the same language.",
+    id: "luxury",
+    index: "02 / 03",
+    eyebrow: "FAQ",
+    title: "Smart Luxury",
+    faqs: [
+      {
+        q: "What is a luxury smart home system and how is it different from basic smart devices?",
+        a: "A luxury smart home system integrates lighting, shades, climate, security, audio, video, and networking into one seamless platform. Unlike standalone gadgets, it's custom designed for reliability and simplicity.",
+      },
+      {
+        q: "How does Lutron lighting control improve comfort, energy savings, and design?",
+        a: "Lutron lighting creates personalized scenes, saves energy, extends bulb life, and enhances design with elegant keypads.",
+      },
+      {
+        q: "What are the benefits of Lutron motorized shades for privacy and energy efficiency?",
+        a: "Lutron motorized shades add privacy, reduce glare, protect furnishings from UV, and improve efficiency by adjusting automatically.",
+      },
+      {
+        q: "Can I control my lighting, shades, security, and entertainment from one app?",
+        a: "Yes, we unify all systems into a single intuitive app or interface, including voice control if desired.",
+      },
+      {
+        q: "Why is a robust, professionally designed network so important in a smart home?",
+        a: "A strong enterprise-grade network is the foundation, ensuring every device performs reliably.",
+      },
+      {
+        q: "What makes a professionally installed home automation system better than DIY products?",
+        a: "Professionally installed systems offer superior reliability, security, and long-term support.",
+      },
+      {
+        q: "Can outdoor living spaces be automated too?",
+        a: "Absolutely, from outdoor audio and TVs to lighting, Wi-Fi, and MagnaTrack screens, we can fully automate outdoor living.",
+      },
+      {
+        q: "What is MagnaTrack and why is it popular?",
+        a: "MagnaTrack motorized screens provide shade, insect protection, privacy, and weather resistance while maintaining your view.",
+      },
+      {
+        q: "Can you design a dedicated home theater or media room?",
+        a: "Yes, we design custom theaters and media rooms with immersive sound, acoustic treatments, luxury seating, and simple control.",
+      },
+      {
+        q: "What security features can be integrated into a smart home?",
+        a: "Alarms, cameras, smart locks, video doorbells, environmental sensors, and instant mobile alerts.",
+      },
+      {
+        q: "Can my smart home be controlled remotely when I travel?",
+        a: "Yes, secure remote access lets you monitor and control your home from anywhere.",
+      },
+      {
+        q: "Will a smart home increase my property value?",
+        a: "Professionally integrated technology is a sought-after feature in luxury real estate and may enhance market appeal.",
+      },
+      {
+        q: "Can you work with my architect, builder, or interior designer?",
+        a: "Absolutely, we collaborate from planning through final walk through.",
+      },
+      {
+        q: "Do you provide ongoing support after installation?",
+        a: "Yes, we provide ongoing local support, updates, and preventive maintenance.",
+      },
+      {
+        q: "Why choose Atlantic Companies for luxury smart home integration in Northeast Florida?",
+        a: "Since 1968, Atlantic Companies has delivered bespoke technology solutions with expert design, installation, and white glove service across Northeast Florida and Central Florida.",
+      },
+    ],
   },
   {
-    q: "Do you work with new construction, remodels, and existing homes?",
-    a: "All three. We're most efficient when we're brought in during the design or pre-wire phase of new construction or a major remodel, but a large share of our work is retrofitting fully-built homes and businesses with systems that don't require opening walls.",
-  },
-  {
-    q: "What brands and systems do you install?",
-    a: `Our core platform is built around ${PRIMARY_BRANDS.join(", ")}, along with Hartmann & Forbes shading fabrics — we're a Lutron Platinum Dealer. We select the brand for each system based on what performs best for that specific application, not a one-size-fits-all catalog.`,
-  },
-  {
-    q: "What happens after installation — is there ongoing support?",
-    a: "Support doesn't end at the invoice. The technicians who designed and installed your system are the ones who answer the phone for service afterward, and our monitoring team is on call 24/7. Existing clients can also submit a repair request directly through our site.",
-  },
-  {
-    q: "How does the process start?",
-    a: "With a conversation. Reach out through our contact page with a bit about your property and what you're hoping to solve, and we'll walk the plans with you from there — a site visit, a proposal, and a design built around how you actually use the space.",
-  },
-  {
-    q: "Are you licensed and insured?",
-    a: `Yes. We hold Florida low-voltage licenses ${BUSINESS.licenses.join(", ")}, plus a Georgia license (LU405163), and we're fully insured for residential and commercial work.`,
-  },
-  {
-    q: "How long has CFAS been in business?",
-    a: `Since ${BUSINESS.founded}. We've grown from a single install crew into a team with three offices and more than ${installs} installations behind us, but the standard we hold ourselves to hasn't changed.`,
+    id: "business",
+    index: "03 / 03",
+    eyebrow: "FAQ",
+    title: "Business Security",
+    faqs: [
+      {
+        q: "What types of business security systems do you install?",
+        a: "We design and install tailored solutions for offices, retail, warehouses, and multi-site operations.",
+      },
+      {
+        q: "Can alarms, cameras, and access control be integrated?",
+        a: "Yes, into a single easy-to-manage alarm platform.",
+      },
+      {
+        q: "Do you offer 24/7 monitoring?",
+        a: "Yes, our UL-listed partners monitor 24/7.",
+      },
+      {
+        q: "What happens during power or internet outages?",
+        a: "Battery and cellular backups help keep critical protection online.",
+      },
+      {
+        q: "Can I manage multiple locations?",
+        a: "Yes, you can view and control all sites from the ADC dashboard.",
+      },
+      {
+        q: "How do I manage employee access?",
+        a: "Quickly add, change, or remove credentials; set permissions by role or schedule.",
+      },
+      {
+        q: "Do you offer video analytics?",
+        a: "Yes, including person and vehicle detection, line-crossing alerts, and LPR options.",
+      },
+      {
+        q: "What about ongoing service?",
+        a: "We provide preventative maintenance and fast local support.",
+      },
+      {
+        q: "How long does installation take?",
+        a: "Most projects are completed with minimal disruption; timing depends on scope.",
+      },
+      {
+        q: "Are your technicians licensed and insured?",
+        a: "Yes. They're trained, background checked, and focused on quality and service.",
+      },
+      {
+        q: "Can the system scale with growth?",
+        a: "Yes, add doors, cameras, and sites over time.",
+      },
+      {
+        q: "Do you monitor system health?",
+        a: "Remote diagnostics and proactive service alerts are available.",
+      },
+      {
+        q: "How do you address cybersecurity?",
+        a: "We follow best practices for secure credentials, encryption, and updates.",
+      },
+      {
+        q: "Do you offer on-site assessments?",
+        a: "Yes, we provide site surveys to identify risks and design solutions.",
+      },
+    ],
   },
 ];
 
@@ -62,27 +235,28 @@ export default function FaqPage() {
       <JsonLd data={localBusinessLd()} />
       <JsonLd data={breadcrumbLd(crumbs)} />
 
-      <section className="relative min-h-[100svh] bg-white">
+      <section className="relative bg-white">
         <NavSentinel />
 
-        {/* Blue hero / heading band */}
+        {/* Blue hero / heading band — the title, nothing else */}
         <div className="bg-navy-deep">
           <div className="mx-auto max-w-[93.75rem] px-5 pb-16 pt-36 sm:px-8 md:px-11 md:pb-20 md:pt-44 short:pb-10 short:pt-24">
-            <h1 className="max-w-3xl font-hero text-[clamp(2.4rem,5vw,4rem)] font-light leading-[1.0] tracking-tight text-white">
+            <h1 className="whitespace-nowrap font-hero text-[clamp(1.5rem,4.8vw,3.25rem)] font-light leading-[1.0] tracking-tight text-white">
               Frequently Asked Questions
             </h1>
-            <p className="mt-6 max-w-xl font-sans text-[1.0625rem] leading-relaxed text-white/70">
-              Straight answers about how we work, what we install, and what
-              to expect from the first call to years down the road.
-            </p>
           </div>
         </div>
 
-        {/* FAQ list */}
-        <div className="mx-auto max-w-[56rem] px-5 py-24 sm:px-8 md:px-11 md:py-32">
-          <LightFAQAccordion faqs={FAQS} />
+        {/* Chapters — each its own collapsible section, closed by default,
+            so all three are visible together the moment the page loads. */}
+        <div className="mx-auto max-w-[56rem] px-5 pt-20 sm:px-8 md:px-11 md:pt-28">
+          {CATEGORIES.map((cat, i) => (
+            <div key={cat.id} className={i > 0 ? "border-t border-navy/10" : ""}>
+              <FaqCategory {...cat} />
+            </div>
+          ))}
 
-          <p className="mt-14 font-sans text-[0.9375rem] leading-relaxed text-slate-500">
+          <p className="border-t border-navy/10 py-16 font-sans text-[0.9375rem] leading-relaxed text-slate-500 md:py-20">
             Still have a question?{" "}
             <Link
               href="/contact"

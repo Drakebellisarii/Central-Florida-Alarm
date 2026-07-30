@@ -161,7 +161,7 @@ function AreaRow({
       ) : (
         <span className="h-3 w-3 shrink-0" />
       )}
-      <span className={`font-sans text-[0.8125rem] leading-snug ${selected ? "font-medium text-navy-deep" : ""}`}>
+      <span className={`font-display text-[0.9375rem] leading-snug ${selected ? "text-navy-deep" : ""}`}>
         {area.name}
       </span>
     </button>
@@ -249,6 +249,9 @@ export function ServiceAreasSection() {
                 From the Lakes to the Ocean,{" "}
                 <em className="italic text-navy/40">and every fine home in between.</em>
               </h2>
+              <p className="mt-4 font-sans text-[0.9375rem] leading-relaxed text-slate-500">
+                Serving Central Florida&rsquo;s finest homes since 1968.
+              </p>
             </div>
 
             {/* Dual vertical marquees */}

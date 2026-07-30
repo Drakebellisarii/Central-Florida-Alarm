@@ -5,17 +5,17 @@ import { PartnerMarquee } from "@/components/home/PartnerMarquee";
 
 /**
  * Brand creed, typeset as a dictionary entry — because integration is the
- * whole business. A true two-column spread: headword + pronunciation sit in
- * a narrow left column, the definition and closing line fill a wider right
- * column, the two separated by one deliberate rule (a column divider, like
- * a printed lexicon's index rule) instead of scattered decorative hairlines.
+ * whole business. One left-anchored column: headword, pronunciation,
+ * definition, and closing line, stacked with deliberate, escalating
+ * spacing — tight within a group, generous between them — rather than
+ * spread across the section's full width.
  */
 const CREED = ["Since 1968", "One Mission", "Quality"];
 
 export function IntegrateCreed() {
   return (
     <section className="relative overflow-hidden border-t border-white/10 bg-navy-deep">
-      <div className="mx-auto max-w-[87.5rem] px-5 py-20 sm:px-8 md:px-11 md:py-28">
+      <div className="mx-auto max-w-[87.5rem] px-5 py-14 sm:px-8 md:px-11 md:py-20">
 
         {/* Motto — the brand line, sitting above the entry */}
         <Reveal>
@@ -33,48 +33,38 @@ export function IntegrateCreed() {
           </div>
         </Reveal>
 
-        {/* Dictionary entry — two columns sharing one top edge */}
-        <div className="mt-16 grid grid-cols-1 lg:mt-24 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-x-16 xl:gap-x-24">
+        {/* Dictionary entry — one column, held to the left with room to
+            breathe rather than stretched across the full section width. */}
+        <div className="mt-10 max-w-xl lg:mt-12">
 
-          {/* Left — headword, pronunciation, and part of speech held tight
-              together as one group. */}
           <Reveal index={1}>
-            <div className="lg:pr-10 xl:pr-14">
-              <h2 className="font-display text-[clamp(3.4rem,11vw,7.75rem)] font-light leading-[0.86] tracking-tight text-white">
-                in&middot;te&middot;grate
-              </h2>
-              <p className="mt-5 flex flex-wrap items-baseline gap-x-4 font-sans text-[0.875rem] text-bone-dim sm:text-[0.9375rem]">
-                <span className="tracking-wide">/ˈin-tə-ˌgrāt/</span>
-                <span className="italic text-bone-dim/70">verb</span>
-              </p>
-            </div>
+            <h2 className="font-display text-[clamp(2.6rem,6.5vw,4.5rem)] font-light leading-[0.9] tracking-tight text-white">
+              in&middot;te&middot;grate
+            </h2>
+            <p className="mt-4 flex flex-wrap items-baseline gap-x-4 font-sans text-[0.8125rem] text-bone-dim sm:text-[0.875rem]">
+              <span className="tracking-wide">/ˈin-tə-ˌgrāt/</span>
+              <span className="italic text-bone-dim/70">verb</span>
+            </p>
           </Reveal>
 
-          {/* The one deliberate divider allowed — short, and only where the
-              layout stacks to a single column; the lg+ column rule (a border
-              on the right column, which is always the taller of the two, so
-              it naturally spans the full row without any stretch tricks)
-              takes over from there. */}
-          <div className="my-10 h-px w-12 bg-white/15 lg:hidden" />
+          {/* The one deliberate divider — short, accent-colored, marking the
+              seam between the entry and the definition. */}
+          <div className="my-7 h-px w-10 bg-bronze/50" />
 
-          {/* Right — definition first (the payoff), closing line after (the
-              resolution), generously separated from the entry on its left. */}
           <Reveal index={2}>
-            <div className="lg:border-l lg:border-white/10 lg:pl-10 lg:pt-4 xl:pl-14 xl:pt-5">
-              <p className="flex items-baseline gap-4">
-                <span className="font-sans text-[0.9375rem] font-medium text-bronze">
-                  1
-                </span>
-                <span className="font-display text-[clamp(1.8rem,4vw,2.75rem)] font-light leading-[1.22] tracking-tight text-white">
-                  to bring together or incorporate parts into a whole.
-                </span>
-              </p>
-              <p className="mt-9 max-w-lg font-sans text-[0.9375rem] leading-relaxed text-bone-dim md:text-[1rem]">
-                Which is exactly what we are. Not a single brand or a box on a
-                shelf: the team that makes every system in the home speak as
-                one.
-              </p>
-            </div>
+            <p className="flex items-baseline gap-3">
+              <span className="font-sans text-[0.8125rem] font-medium text-bronze">
+                1
+              </span>
+              <span className="font-display text-[clamp(1.25rem,2.6vw,1.75rem)] font-light leading-[1.3] tracking-tight text-white">
+                to bring together or incorporate parts into a whole.
+              </span>
+            </p>
+            <p className="mt-5 font-sans text-[0.875rem] leading-relaxed text-bone-dim">
+              Which is exactly what we are. Not a single brand or a box on a
+              shelf: the team that makes every system in the home speak as
+              one.
+            </p>
           </Reveal>
         </div>
       </div>

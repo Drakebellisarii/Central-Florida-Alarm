@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import {
+  ArrowUpRight,
   Lightbulb,
   Blinds,
   Layers,
@@ -18,169 +19,278 @@ import {
 } from "lucide-react";
 
 import { buildMetadata } from "@/lib/seo";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { LightFAQAccordion } from "@/components/LightFAQAccordion";
-import type { FAQ } from "@/lib/services";
+import { NavSentinel } from "@/components/NavSentinel";
+import { SLMotion } from "@/components/smart-luxury/SLMotion";
 
 export const metadata: Metadata = buildMetadata({
   title: "Smart Luxury Integration | Central Florida Automation Services",
   description:
-    "Lutron lighting, motorized shades, private cinema, smart glass, and whole-property integration — the full smart luxury catalog for Central Florida's finest homes.",
+    "Fully custom smart home integration for Central Florida's finest estates — lighting, shading, theater, and security, designed once for one house, never templated.",
   path: "/smart-luxury",
 });
 
-const crumbs = [
-  { name: "Home", path: "/" },
-  { name: "Smart Security", path: "/smart-security" },
-  { name: "Smart Luxury", path: "/smart-luxury" },
+const DIR = "/Smart-Luxury";
+
+const MANIFESTO = [
+  "No two homes are the same.",
+  "So no two systems are either —",
+  "we build from the ground up, every time.",
 ];
 
-type Offering = {
+type Feature = {
   icon: LucideIcon;
-  label: string;
+  title: string;
   body: string;
 };
 
-const OFFERINGS: Offering[] = [
+const FEATURES: Feature[] = [
   {
     icon: Lightbulb,
-    label: "Lutron Lighting Control",
+    title: "Lutron Lighting Control",
     body: "Engraved keypads, tunable scenes, and dimming curves that flatter the architecture at every hour of the day.",
   },
   {
     icon: Blinds,
-    label: "Motorized Shades & Drapes",
+    title: "Motorized Shades & Drapes",
     body: "Silent, perfectly aligned shades that temper the Florida sun on a schedule, at a keypad, or at a single touch.",
   },
   {
     icon: Layers,
-    label: "Hartmann & Forbes",
+    title: "Hartmann & Forbes",
     body: "Natural woven and solar fabrics, specified window by window for the way they hold light as much as keep it out.",
   },
   {
     icon: MonitorPlay,
-    label: "Audio / Video",
+    title: "Audio / Video",
     body: "Whole-home music, private cinema, and displays that vanish into the millwork until they are summoned.",
   },
   {
     icon: Wifi,
-    label: "Fiber Networks & WiFi",
+    title: "Fiber Networks & WiFi",
     body: "The wired and wireless backbone every other system in the property quietly depends on, built to enterprise standard.",
   },
   {
     icon: ShieldCheck,
-    label: "Life Safety & Surveillance",
+    title: "Life Safety & Surveillance",
     body: "Intrusion, fire, CO, and camera systems engineered into the property and watched around the clock.",
   },
   {
     icon: Workflow,
-    label: "Automation Control",
+    title: "Automation Control",
     body: "One processor, one interface, one quiet logic running every system in the home from a single source.",
   },
   {
     icon: Blend,
-    label: "Smart Glass / Tint",
+    title: "Smart Glass / Tint",
     body: "Electrochromic glass that moves from clear to private at a touch, or on a schedule of its own.",
   },
   {
     icon: PanelBottom,
-    label: "Magna Track Screens",
+    title: "Magna Track Screens",
     body: "Heavy-duty motorized lanai screens that stand against the weather, then retract completely out of sight.",
   },
   {
     icon: LayoutGrid,
-    label: "Full Home Integration",
+    title: "Full Home Integration",
     body: "Every system, every brand, every room, resolved into one seamless and reliable whole.",
   },
   {
     icon: Wrench,
-    label: "Service After the Sale",
+    title: "Service After the Sale",
     body: "The team that designed and installed your system is the one that answers the phone, years after the truck leaves.",
   },
   {
     icon: BellRing,
-    label: "24/7 Alarm Monitoring",
+    title: "24/7 Alarm Monitoring",
     body: "Help prevent the event with fast local monitoring.",
   },
 ];
 
-// Intentionally empty for now — questions go in once the copy is ready.
-const FAQS: FAQ[] = [];
+type Room = {
+  title: string;
+  body: string;
+  image: string;
+  alt: string;
+};
+
+const ROOMS: Room[] = [
+  {
+    title: "The room learns your evening.",
+    body: "A Lutron scene shifts every fixture at once, tuned to how this room is actually used after dark.",
+    image: `${DIR}/Luxury-1.png`,
+    alt: "A great room at blue hour, warm lamplight against a lakefront view lined with palms",
+  },
+  {
+    title: "The light adjusts before you do.",
+    body: "Motorized shades and electrochromic glass move together, softening the room before the glare ever arrives.",
+    image: `${DIR}/Luxury-2.png`,
+    alt: "A glass corner shifting from clear to tinted beside a woven shade, overlooking turquoise water and palms",
+  },
+];
 
 export default function SmartLuxuryPage() {
   return (
-    <div className="bg-white pt-[4.75rem]">
+    <div className="bg-white">
+      <SLMotion />
 
-      {/* Hero */}
-      <section className="mx-auto max-w-[93.75rem] px-5 pb-12 pt-16 sm:px-8 md:px-11 md:pb-16 md:pt-24">
-        <Breadcrumbs items={crumbs} tone="onLight" />
-        <span className="mt-8 block font-sans text-[0.6875rem] uppercase tracking-eyebrow text-navy/50">
-          For the finer details
-        </span>
-        <h1 className="mt-4 max-w-2xl font-hero text-[clamp(2.6rem,5.5vw,4.6rem)] font-light leading-[1.0] tracking-tight text-navy-deep">
-          Smart Luxury
-        </h1>
-        <p className="mt-6 max-w-xl font-sans text-[1.0625rem] leading-relaxed text-slate-600">
-          What&rsquo;s possible in a fully integrated estate — theaters, wine
-          rooms, motorized art, and smart glass, brought together into one
-          seamless system instead of a shelf of remotes.
-        </p>
-      </section>
+      {/* ============================== HERO ============================== */}
+      <section
+        data-sl-hero
+        className="relative isolate flex min-h-[92vh] flex-col items-center justify-center overflow-hidden bg-navy-deep"
+      >
+        <NavSentinel />
 
-      {/* Catalog — two spacious columns instead of the dense homepage grid,
-          giving each capability room to breathe as its own plate. */}
-      <section className="mx-auto max-w-[75rem] px-5 pb-24 sm:px-8 md:px-10 md:pb-32">
-        <div className="grid grid-cols-1 border-l border-t border-navy/10 lg:grid-cols-2">
-          {OFFERINGS.map((o) => (
-            <div
-              key={o.label}
-              className="group relative flex flex-col border-b border-r border-navy/10 p-10 transition-colors duration-500 hover:bg-navy/[0.025] md:p-14"
-            >
-              <o.icon
-                strokeWidth={1.25}
-                className="h-9 w-9 text-navy-logo/40 transition-colors duration-500 group-hover:text-navy-logo"
-              />
-              <h2 className="mt-8 font-display text-[clamp(1.4rem,2vw,1.75rem)] font-light leading-tight text-navy-deep">
-                {o.label}
-              </h2>
-              <p className="mt-4 max-w-md font-sans text-[0.9375rem] leading-relaxed text-slate-500">
-                {o.body}
-              </p>
-            </div>
-          ))}
+        <div aria-hidden className="absolute inset-0 overflow-hidden">
+          <video
+            data-sl-hero-media
+            className="h-full w-full scale-105 object-cover opacity-90"
+            poster={`${DIR}/hero-poster.jpg`}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source src="/Luxury-Hero.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-t from-navy-deep/30 via-navy-deep/08 to-navy-deep/18"
+        />
 
-          {/* The filled invitation — spans the last row so the grid stays clean. */}
+        <div
+          data-sl-hero-exit
+          className="relative mx-auto w-full max-w-[62rem] px-5 text-center sm:px-8"
+        >
+          <h1 className="reveal-load rd-1 font-hero text-[clamp(2.8rem,7vw,6rem)] font-light leading-[1.02] tracking-tight text-white">
+            One-of-one, by design.
+          </h1>
+          <p className="reveal-load rd-2 mt-6 font-sans text-[0.8125rem] uppercase tracking-wide2 text-white/55">
+            No package. No template. Built once, for one house.
+          </p>
           <Link
             href="/contact"
-            className="group relative flex flex-col justify-between gap-10 border-b border-r border-navy/10 bg-navy-deep p-10 transition-colors duration-500 hover:bg-navy sm:col-span-2 md:p-14 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/60"
+            className="reveal-load rd-3 group mt-10 inline-flex items-center gap-2 border-b border-white/40 pb-1 font-sans text-[0.8125rem] uppercase tracking-wide2 text-white transition-colors hover:border-white"
           >
-            <span className="font-sans text-[0.625rem] uppercase tracking-eyebrow text-white/55">
-              Not sure where to begin
-            </span>
-            <div>
-              <h2 className="font-display text-[clamp(1.4rem,2vw,1.9rem)] font-light leading-tight text-bone">
-                Walk the plans with us.
-              </h2>
-              <span className="mt-5 inline-flex items-center gap-2 font-sans text-[0.6875rem] uppercase tracking-wide2 text-bone/70 transition-colors duration-500 group-hover:text-bone">
-                Contact us
-                <ArrowUpRight
-                  strokeWidth={1.25}
-                  className="h-4 w-4 transition-transform duration-500 ease-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
-              </span>
-            </div>
+            Begin Your Build
+            <ArrowUpRight
+              strokeWidth={1.25}
+              className="h-3.5 w-3.5 transition-transform duration-300 ease-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            />
           </Link>
         </div>
       </section>
 
-      {/* FAQ — kept below the catalog; copy to follow */}
-      <section className="bg-white pb-24 md:pb-32">
-        <div className="mx-auto max-w-[56rem] px-5 sm:px-8 md:px-11">
-          <h2 className="font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-light leading-tight tracking-tight text-navy-deep">
-            Smart Luxury FAQ
-          </h2>
-          <div className="mt-10">
-            <LightFAQAccordion faqs={FAQS} />
+      {/* ============================= FEATURES ============================= */}
+      <section className="bg-white py-28 md:py-36">
+        <div className="mx-auto max-w-[75rem] px-5 sm:px-8 md:px-11">
+          <div data-sl-rise>
+            <h2 className="max-w-xl font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-light leading-tight tracking-tight text-navy-deep">
+              The full system.
+            </h2>
+          </div>
+
+          <div
+            data-sl-flip-grid
+            className="mt-16 grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3"
+            style={{ perspective: "1400px" }}
+          >
+            {FEATURES.map((f) => (
+              <div key={f.title} data-sl-flip className="border-t border-navy/10 pt-6">
+                <f.icon strokeWidth={1.3} className="h-6 w-6 text-navy-logo/70" />
+                <h3 className="mt-5 font-display text-[1.15rem] font-light leading-snug tracking-tight text-navy-deep">
+                  {f.title}
+                </h3>
+                <p className="mt-2 font-sans text-[0.875rem] leading-relaxed text-slate-600">
+                  {f.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================ THE ROOMS ============================ */}
+      <section className="border-t border-navy/10 bg-white py-28 md:py-36">
+        <div className="mx-auto max-w-[75rem] px-5 sm:px-8 md:px-11">
+          <div data-sl-rise>
+            <h2 className="max-w-xl font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-light leading-tight tracking-tight text-navy-deep">
+              One home, every mood.
+            </h2>
+          </div>
+
+          <div
+            data-sl-diptych
+            className="mt-16 grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-2"
+          >
+            {ROOMS.map((r) => (
+              <div key={r.title}>
+                <div className="relative aspect-[3/4] overflow-hidden rounded-sm bg-navy-deep/[0.04]">
+                  <Image
+                    src={r.image}
+                    alt={r.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="mt-6 font-display text-[1.4rem] font-light leading-snug tracking-tight text-navy-deep">
+                  {r.title}
+                </h3>
+                <p className="mt-2 max-w-sm font-sans text-[0.9375rem] leading-relaxed text-slate-600">
+                  {r.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== FULL-BLEED BAND ================ */}
+      <section className="border-t border-navy/10 bg-white pb-28 pt-20 md:pb-36 md:pt-28">
+        <div className="mx-auto max-w-[75rem] px-5 sm:px-8 md:px-11">
+          <div
+            data-sl-diagonal-reveal
+            className="relative aspect-[16/9] overflow-hidden rounded-sm"
+          >
+            <Image
+              src={`${DIR}/Luxury-3.png`}
+              alt="A primary suite overlooking the beach at dusk, with the home's automation panel showing the room already secured, cooled, and dimmed"
+              fill
+              sizes="(max-width: 1200px) 100vw, 75rem"
+              className="object-cover"
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"
+            />
+            <div
+              data-sl-diagonal-panel
+              aria-hidden
+              className="absolute inset-0 -z-10 bg-navy-deep"
+            />
+            <p className="absolute bottom-0 left-0 max-w-sm p-6 font-display text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-tight tracking-tight text-white md:p-8">
+              Secure, 72°, and already dimmed — before you&rsquo;ve sat down.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================ MANIFESTO ============================ */}
+      <section className="border-t border-navy/10 bg-white py-28 md:py-40">
+        <div className="mx-auto max-w-[75rem] px-5 sm:px-8 md:px-11">
+          <div className="space-y-1 md:space-y-2">
+            {MANIFESTO.map((line) => (
+              <div key={line} className="overflow-hidden">
+                <div
+                  data-sl-mask-line
+                  className="font-display text-[clamp(1.9rem,4.4vw,3.6rem)] font-light leading-[1.16] tracking-tight text-navy-deep"
+                >
+                  {line}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

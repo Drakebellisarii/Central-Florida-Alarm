@@ -9,8 +9,16 @@ import { GoogleG, Stars } from "@/components/GoogleReviewIcons";
 const INTERVAL = 7000;
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-function pad(n: number) {
-  return String(n).padStart(2, "0");
+// Most Google reviews are a sentence or two — show those in full, no click
+// required. Only the rare outlier past this length gets cut, at a word
+// boundary with a plain ellipsis, so it never demands an interaction just
+// to read a normal-length quote.
+const MAX_QUOTE_CHARS = 320;
+function truncateQuote(text: string, max = MAX_QUOTE_CHARS) {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${cut.slice(0, lastSpace > 0 ? lastSpace : max)}…`;
 }
 
 export function TestimonialsClient({
@@ -112,6 +120,11 @@ export function TestimonialsClient({
     setActive((i) => (i - 1 + featuredReviews.length) % Math.max(featuredReviews.length, 1));
   }, [featuredReviews.length]);
 
+  const goTo = useCallback((i: number) => {
+    setActive(i);
+    setPaused(false);
+  }, []);
+
   useEffect(() => {
     if (paused || featuredReviews.length < 2) return;
     const id = setTimeout(next, INTERVAL);
@@ -122,13 +135,13 @@ export function TestimonialsClient({
 
   return (
     <section
-      className="relative isolate overflow-hidden bg-navy-deep"
+      className="relative isolate flex min-h-[36rem] flex-col justify-end overflow-hidden bg-navy-deep md:min-h-[42rem]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* Video background — mobile: Phone-Hero.mp4 */}
-      {!isDesktop && (
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* ── Footage — full-bleed, real photography, exactly as it was ──── */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {!isDesktop && (
           <video
             ref={mobileVideoRef}
             autoPlay
@@ -140,12 +153,8 @@ export function TestimonialsClient({
           >
             <source src="/Phone-Hero.mp4" type="video/mp4" />
           </video>
-        </div>
-      )}
-
-      {/* Video background — desktop: Mansion-drone.mp4 */}
-      {isDesktop && (
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        )}
+        {isDesktop && (
           <video
             ref={videoRef}
             autoPlay
@@ -157,127 +166,167 @@ export function TestimonialsClient({
           >
             <source src="/Mansion-drone.mp4" type="video/mp4" />
           </video>
-        </div>
-      )}
+        )}
+      </div>
 
-      {/* Overlays — slightly heavier than before for legibility over both videos */}
-      <div aria-hidden="true" className="absolute inset-0 bg-navy-deep/60" />
-      <div aria-hidden="true" className="absolute inset-0 bg-black/30" />
-      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20" />
+      {/* ── Directional scrim — anchored bottom-left where the copy sits,
+          the same device the Hero uses, so this reads as a deliberate
+          bookend to it rather than a generic dark wash. ──────────────── */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 90% 80% at 0% 100%, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.38) 40%, rgba(0,0,0,0.1) 66%, transparent 82%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.22) 32%, transparent 60%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-1/2"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.08) 60%, transparent 100%)",
+        }}
+      />
 
-      <div className="relative z-10 mx-auto flex max-w-[75rem] flex-col items-center px-6 py-16 text-center sm:px-10 sm:py-20 md:py-24 lg:px-16">
+      {/* ── Copy — bottom-left, on the scene ────────────────────────── */}
+      <div className="relative z-10 mx-auto w-full max-w-[93.75rem] px-5 pb-14 sm:px-8 sm:pb-16 md:px-11 md:pb-20">
+        <div className="max-w-xl">
 
-        <p className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/45">
-          Client Trust
-        </p>
+          <p className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/50">
+            Client Trust
+          </p>
 
-        {/* Google Business Profile — the first thing read in this section,
-            sized like a masthead figure rather than a footnote badge. */}
-        {reviews && (
-          <div className="mt-5 flex flex-col items-center gap-3">
-            <div className="flex items-center gap-3.5 sm:gap-4">
-              <GoogleG className="h-8 w-8 shrink-0 sm:h-9 sm:w-9" />
-              <span className="font-numeral text-[2.75rem] font-light leading-none text-white sm:text-[3.25rem]">
-                {reviews.rating.toFixed(1)}
-              </span>
+          {/* Google Business Profile — the credibility signal, up top and
+              left-aligned rather than centered like a badge. */}
+          {reviews && (
+            <div className="mt-5 flex items-center gap-3.5">
+              <GoogleG className="h-8 w-8 shrink-0" />
+              <div className="flex items-baseline gap-2.5">
+                <span className="font-numeral text-[2.25rem] font-light leading-none text-white">
+                  {reviews.rating.toFixed(1)}
+                </span>
+                <Stars rating={reviews.rating} size="h-3.5 w-3.5" emptyClassName="fill-white/15" />
+              </div>
             </div>
-            <Stars rating={reviews.rating} size="h-4 w-4 sm:h-[1.125rem] sm:w-[1.125rem]" />
-            <span className="font-sans text-[0.875rem] text-white/55">
+          )}
+          {reviews && (
+            <p className="mt-2 font-sans text-[0.8125rem] text-white/55">
               {reviews.totalReviews.toLocaleString()} Google reviews
-            </span>
-
-            {(writeHref || viewHref) && (
-              <div className="mt-1 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-sans text-[0.6875rem] uppercase tracking-wide2">
-                {writeHref && (
-                  <a
-                    href={writeHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/50 underline decoration-white/25 underline-offset-4 transition-colors duration-300 hover:text-white hover:decoration-white/60"
-                  >
-                    Leave a review
-                  </a>
-                )}
-                {viewHref && (
+              {viewHref && (
+                <>
+                  {" "}&middot;{" "}
                   <a
                     href={viewHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white/50 underline decoration-white/25 underline-offset-4 transition-colors duration-300 hover:text-white hover:decoration-white/60"
+                    className="text-white/70 underline decoration-white/25 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
                   >
-                    View all reviews
+                    View all
                   </a>
-                )}
-              </div>
-            )}
-          </div>
-        )}
+                </>
+              )}
+              {writeHref && (
+                <>
+                  {" "}&middot;{" "}
+                  <a
+                    href={writeHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/70 underline decoration-white/25 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
+                  >
+                    Leave a review
+                  </a>
+                </>
+              )}
+            </p>
+          )}
 
-        {activeReview && (
-          <>
-            <div aria-hidden className="mt-10 h-px w-16 bg-gradient-to-r from-transparent via-white/20 to-transparent sm:mt-12" />
+          {activeReview && (
+            <>
+              <div aria-hidden className="mt-8 h-px w-12 bg-white/25" />
 
-            {/* Editorial pull-quote — no card, no chrome, set directly on
-                the scene like a magazine spread. */}
-            <div className="relative mt-10 max-w-4xl sm:mt-12">
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute -top-11 left-1/2 -translate-x-1/2 select-none font-display text-[4.25rem] leading-none text-white/[0.09] sm:-top-12 sm:text-[5.5rem]"
-              >
-                &ldquo;
-              </span>
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={active}
-                  initial={mounted ? { opacity: 0, y: 10 } : false}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.6, ease: EASE }}
+              {/* Editorial pull-quote, set directly on the scene — a real
+                  serif quotation mark for texture, not card chrome. */}
+              <div className="relative mt-8 min-h-[8.5rem]">
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -left-1 -top-6 select-none font-display text-[4rem] leading-none text-white/[0.12]"
                 >
-                  <blockquote className="font-display text-[clamp(1.0625rem,2vw,1.5rem)] font-light leading-[1.55] tracking-tight text-white">
-                    {activeReview.text}
-                  </blockquote>
-
-                  <figcaption className="mt-6 flex flex-col items-center gap-2.5">
-                    <span aria-hidden className="h-px w-8 bg-white/25" />
-                    <span className="font-sans text-[0.8125rem] tracking-wide text-white">
-                      {activeReview.authorName}
-                    </span>
-                    <span className="font-sans text-[0.625rem] uppercase tracking-eyebrow text-white/40">
-                      Google Review &middot; {activeReview.relativeTime}
-                    </span>
-                  </figcaption>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Pagination — a magazine folio marker, not app-style dots. */}
-            {featuredReviews.length > 1 && (
-              <div className="mt-8 flex items-center gap-6 sm:mt-9">
-                <button
-                  onClick={() => { prev(); setPaused(false); }}
-                  aria-label="Previous review"
-                  className="text-white/35 transition-colors duration-300 hover:text-white"
-                >
-                  <ChevronLeft strokeWidth={1.25} className="h-4 w-4" />
-                </button>
-                <span className="font-sans text-[0.75rem] tabular-nums tracking-[0.15em] text-white/40">
-                  <span className="text-white">{pad(active + 1)}</span>
-                  <span className="mx-2 text-white/25">&mdash;</span>
-                  {pad(featuredReviews.length)}
+                  &ldquo;
                 </span>
-                <button
-                  onClick={() => { next(); setPaused(false); }}
-                  aria-label="Next review"
-                  className="text-white/35 transition-colors duration-300 hover:text-white"
-                >
-                  <ChevronRight strokeWidth={1.25} className="h-4 w-4" />
-                </button>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={active}
+                    initial={mounted ? { opacity: 0, y: 8 } : false}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.45, ease: EASE }}
+                  >
+                    <blockquote className="relative font-display text-[clamp(1.25rem,2.4vw,1.625rem)] font-light leading-[1.4] tracking-tight text-white">
+                      {truncateQuote(activeReview.text)}
+                    </blockquote>
+
+                    <figcaption className="relative mt-5 flex items-baseline gap-2.5">
+                      <span className="font-sans text-[0.875rem] tracking-wide text-white">
+                        {activeReview.authorName}
+                      </span>
+                      <span className="font-sans text-[0.625rem] uppercase tracking-eyebrow text-white/40">
+                        {activeReview.relativeTime}
+                      </span>
+                    </figcaption>
+                  </motion.div>
+                </AnimatePresence>
               </div>
-            )}
-          </>
-        )}
+
+              {/* Pagination — thin dots, not app-style buttons; arrows are
+                  quiet affordances either side. */}
+              {featuredReviews.length > 1 && (
+                <div className="mt-8 flex items-center gap-5">
+                  <button
+                    onClick={prev}
+                    aria-label="Previous review"
+                    className="text-white/35 transition-colors duration-300 hover:text-white"
+                  >
+                    <ChevronLeft strokeWidth={1.5} className="h-4 w-4" />
+                  </button>
+                  <div className="flex items-center gap-2">
+                    {featuredReviews.map((r, i) => (
+                      <button
+                        key={r.authorName}
+                        onClick={() => goTo(i)}
+                        aria-label={`Show review ${i + 1} of ${featuredReviews.length}`}
+                        aria-current={i === active}
+                        className="p-1"
+                      >
+                        <span
+                          className={`block h-1.5 rounded-full transition-all duration-300 ${
+                            i === active ? "w-5 bg-white" : "w-1.5 bg-white/30"
+                          }`}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                  <button
+                    onClick={next}
+                    aria-label="Next review"
+                    className="text-white/35 transition-colors duration-300 hover:text-white"
+                  >
+                    <ChevronRight strokeWidth={1.5} className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ShieldCheck,
   BadgeCheck,
@@ -17,6 +18,7 @@ import {
   Lightbulb,
   Wrench,
   Check,
+  ArrowUpRight,
 } from "lucide-react";
 
 import { buildMetadata } from "@/lib/seo";
@@ -135,14 +137,14 @@ export default function SmartHomePage() {
 
         <div aria-hidden className="absolute inset-0 overflow-hidden">
           <video
-            className="sh-parallax h-full w-full object-cover opacity-40"
+            className="sh-parallax h-full w-full object-cover opacity-25"
             poster={`${DIR}/hero-poster.jpg`}
             autoPlay
             muted
             playsInline
             preload="auto"
           >
-            <source src="/CFAS.mp4" type="video/mp4" />
+            <source src={`${DIR}/Smart-Home-Hero.mp4`} type="video/mp4" />
           </video>
         </div>
         {/* Left-to-right directional scrim — heaviest where the copy sits, near-clear on the right */}
@@ -150,14 +152,13 @@ export default function SmartHomePage() {
           aria-hidden
           className="absolute inset-0"
           style={{
-            background:
-              "linear-gradient(to right, rgba(10,26,82,0.78) 0%, rgba(10,26,82,0.48) 35%, rgba(10,26,82,0.14) 62%, transparent 80%)",
+            background: "linear-gradient(to right, rgba(10,26,82,0.85) 0%, rgba(10,26,82,0.65) 25%, rgba(10,26,82,0.15) 55%, transparent 75%)"
           }}
         />
         {/* Bottom lift for text legibility */}
         <div
           aria-hidden
-          className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-navy-deep/60 via-navy-deep/15 to-transparent"
+          className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-navy-deep/35 via-navy-deep/10 to-transparent"
         />
 
         <div className="relative mx-auto w-full max-w-[93.75rem] px-5 pb-16 pt-40 sm:px-8 md:px-11 md:pb-20 short:pb-10 short:pt-24">
@@ -193,6 +194,17 @@ export default function SmartHomePage() {
             lighting, and climate. Designed and installed by CFAS
             Craftspeople, Central Florida&apos;s first Alarm.com provider.
           </p>
+
+          <Link
+            href="/faq#smart-home"
+            className="reveal-load rd-4 group mt-8 inline-flex items-center gap-2 font-sans text-[0.75rem] uppercase tracking-wide2 text-white/70 transition-colors hover:text-white"
+          >
+            View Frequently Asked Questions
+            <ArrowUpRight
+              strokeWidth={1.25}
+              className="h-3.5 w-3.5 transition-transform duration-300 ease-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            />
+          </Link>
         </div>
       </section>
 
