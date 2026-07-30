@@ -6,11 +6,14 @@ import { FEATURED_TESTIMONIAL } from "@/lib/content";
 
 // Four accreditation marks, all constrained to one optical height and
 // desaturated so the mix of teal, navy, and black logos reads as one family.
+// Each mark carries its own display height so the set reads at one optical
+// weight: the near-square Lutron badge needs far more height than the wide
+// wordmarks to register as the same size at a glance.
 const ACCREDITATIONS = [
-  { src: "/images/GOBA.png", alt: "Greater Orlando Builders Association", width: 120, height: 60 },
-  { src: "/images/GOBA-Logo.png", alt: "GOBA Custom Home & Remodeling Council", width: 135, height: 56 },
-  { src: "/images/MCBC_Logo.jpg", alt: "Master Custom Builder Council", width: 200, height: 60 },
-  { src: "/images/Lutron-platinum.png", alt: "Lutron Platinum Dealer 2026", width: 200, height: 184 },
+  { src: "/images/GOBA.png", alt: "Greater Orlando Builders Association", width: 120, height: 60, cls: "h-10 md:h-12" },
+  { src: "/images/GOBA-Logo.png", alt: "GOBA Custom Home & Remodeling Council", width: 135, height: 56, cls: "h-10 md:h-12" },
+  { src: "/images/MCBC_Logo.jpg", alt: "Master Custom Builder Council", width: 200, height: 60, cls: "h-10 md:h-12" },
+  { src: "/images/Lutron-platinum.png", alt: "Lutron Platinum Dealer 2026", width: 200, height: 184, cls: "h-14 md:h-16" },
 ];
 
 export function TestimonialSpotlight() {
@@ -79,25 +82,31 @@ export function TestimonialSpotlight() {
           </cite>
         </div>
 
-        {/* Accreditations — a still, evenly-spaced badge row. No motion here:
-            IntegrateCreed's PartnerMarquee already scrolls a much longer
-            brand row a short scroll below this section, so a second moving
-            strip this close would just compete with it. Four marks is few
-            enough to simply lay flat and let each one be read at rest. */}
+        {/* Accreditations — a ruled 2×2 plate rather than a sticker row:
+            each mark centered in its own hairline-divided cell, large enough
+            to actually read, whitespace and rules doing the framing. Still,
+            no motion: PartnerMarquee already scrolls a longer brand row a
+            short scroll below, so a second moving strip would compete. */}
         <div className="reveal-scroll mt-10 border-t border-navy/10 pt-[1.625rem] lg:mt-12">
           <span className="shrink-0 whitespace-nowrap font-sans text-[0.65625rem] uppercase tracking-wide2 text-stone">
             Accredited By
           </span>
-          <div className="mt-5 flex flex-wrap items-center gap-x-9 gap-y-5">
-            {ACCREDITATIONS.map((logo) => (
-              <Image
+          <div className="mt-5 grid grid-cols-2">
+            {ACCREDITATIONS.map((logo, i) => (
+              <div
                 key={logo.alt}
-                src={logo.src}
-                alt={logo.alt}
-                width={logo.width}
-                height={logo.height}
-                className="h-9 w-auto object-contain"
-              />
+                className={`group flex items-center justify-center px-4 py-5 md:py-6 ${
+                  i < 2 ? "border-b border-navy/10" : ""
+                } ${i % 2 === 0 ? "border-r border-navy/10" : ""}`}
+              >
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={logo.width}
+                  height={logo.height}
+                  className={`${logo.cls} w-auto object-contain transition-transform duration-500 ease-expo group-hover:scale-110`}
+                />
+              </div>
             ))}
           </div>
         </div>
