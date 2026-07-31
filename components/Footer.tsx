@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Phone, MapPin, Mail } from "lucide-react";
 import { BUSINESS } from "@/lib/seo";
-import { SERVICE_NAV } from "@/lib/content";
 
 const SOLUTIONS = [
   { name: "Smart Security", href: "/smart-security" },
@@ -28,9 +27,11 @@ export function Footer() {
   return (
     <footer className="relative border-t border-white/10 bg-navy-deep">
       <div className="mx-auto max-w-[93.75rem] px-5 pb-12 pt-14 sm:px-8 md:px-11 md:pb-16 md:pt-20">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 lg:gap-8">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-12 lg:grid-cols-12 lg:gap-8">
           {/* Brand + NAP */}
-          <div className="sm:col-span-2 md:col-span-4 lg:col-span-4 lg:pr-8">
+          {/* No extra right padding — the grid's own gap-8 separates this from
+              the link columns, and the width it would cost wraps the address. */}
+          <div className="lg:col-span-4">
             <Image
               src="/images/cfas-logo-light.png"
               alt="Central Florida Automation Services"
@@ -100,47 +101,41 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Solutions — the four pillar pages */}
-          <FooterColumn title="Solutions" className="lg:col-span-2">
-            {SOLUTIONS.map((s) => (
-              <li key={s.href}>
-                <FooterLink href={s.href}>{s.name}</FooterLink>
-              </li>
-            ))}
-          </FooterColumn>
+          {/* The three link columns share the remaining width as equal thirds:
+              side by side from sm up, and filling cols 5–12 at lg so the row
+              reads as one evenly spaced group rather than a block pinned to
+              the right edge. */}
+          <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-3 lg:col-span-8">
+            {/* Solutions — the four pillar pages */}
+            <FooterColumn title="Solutions">
+              {SOLUTIONS.map((s) => (
+                <li key={s.href}>
+                  <FooterLink href={s.href}>{s.name}</FooterLink>
+                </li>
+              ))}
+            </FooterColumn>
 
-          {/* Services — informational only, no detail pages */}
-          <FooterColumn title="Services" className="lg:col-span-2">
-            {SERVICE_NAV.map((s) => (
-              <li
-                key={s.href}
-                className="font-sans text-[0.8125rem] text-white/55"
-              >
-                {s.name}
-              </li>
-            ))}
-          </FooterColumn>
+            {/* Company */}
+            <FooterColumn title="Company">
+              {COMPANY.map((s) => (
+                <li key={s.href}>
+                  <FooterLink href={s.href}>{s.name}</FooterLink>
+                </li>
+              ))}
+            </FooterColumn>
 
-          {/* Company */}
-          <FooterColumn title="Company" className="lg:col-span-2">
-            {COMPANY.map((s) => (
-              <li key={s.href}>
-                <FooterLink href={s.href}>{s.name}</FooterLink>
+            {/* Credentials */}
+            <FooterColumn title="Licensed and Insured">
+              {BUSINESS.licenses.map((lic) => (
+                <li key={lic} className="font-sans text-[0.8125rem] text-white/55">
+                  <span className="text-white/40">FL</span> {lic}
+                </li>
+              ))}
+              <li className="font-sans text-[0.8125rem] text-white/55">
+                <span className="text-white/40">GA</span> LU405163
               </li>
-            ))}
-          </FooterColumn>
-
-          {/* Credentials */}
-          <FooterColumn title="Licensed and Insured" className="lg:col-span-2">
-            {BUSINESS.licenses.map((lic) => (
-              <li key={lic} className="font-sans text-[0.8125rem] text-white/55">
-                <span className="text-white/40">FL</span> {lic}
-              </li>
-            ))}
-            <li className="font-sans text-[0.8125rem] text-white/55">
-              <span className="text-white/40">GA</span> LU405163
-            </li>
-          </FooterColumn>
+            </FooterColumn>
+          </div>
         </div>
 
         {/* Bottom bar */}

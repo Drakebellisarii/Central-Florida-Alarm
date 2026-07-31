@@ -4,7 +4,14 @@ import type { Metadata } from "next";
 /* Business constants (single source of truth for NAP + brand facts)  */
 /* ------------------------------------------------------------------ */
 
-export const SITE_URL = "https://www.centralfloridaautomation.com";
+// Canonical origin for the whole site — canonicals, OG/Twitter tags, sitemap,
+// robots, and every JSON-LD url derive from this. Must match the domain that
+// actually serves the site (the apex 301s to www), or Google is told the real
+// pages live somewhere else.
+export const SITE_URL = "https://www.cfalarm.com";
+
+/** Bare host for display in body copy ("cfalarm.com"). */
+export const SITE_HOST = SITE_URL.replace(/^https?:\/\/(www\.)?/, "");
 
 export const BUSINESS = {
   name: "Central Florida Automation Services",
@@ -18,6 +25,8 @@ export const BUSINESS = {
   emailHref: "mailto:info@cfalarm.com",
   officeEmail: "info@cfalarm.com",
   salesEmail: "Kory@smarthome.biz",
+  // Routing only — where repair/service form submissions land. Not displayed.
+  serviceEmail: "service@cfalarm.com",
   street: "5125 Adanson St, Suite 200",
   city: "Orlando",
   state: "FL",
@@ -25,7 +34,7 @@ export const BUSINESS = {
   zip: "32804",
   region: "Greater Orlando",
   geo: { lat: 28.5847, lng: -81.3712 },
-  licenses: ["EF0001226", "EF20002121", "EF20002120"],
+  licenses: ["EF0001226", "EF20002121", "EF20002120", "EF2000570"],
   installations: "50,000+",
   social: {
     facebook:

@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { Check, ArrowUpRight, Loader2 } from "lucide-react";
+import { trackEvent } from "@/components/Analytics";
+import { FormGuardFields } from "@/components/FormGuardFields";
+import { readServerMessage } from "@/lib/formFields";
 
 // All forms post to this one API route, which emails the submission
 // through Outlook/Microsoft 365 — see app/api/send/route.ts.
@@ -20,6 +23,8 @@ const fieldBase =
 export function ServiceRequestForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Errors>({});
+  // Set only when the server sends copy worth showing (the rate-limit note).
+  const [serverError, setServerError] = useState<string | null>(null);
 
   function validate(form: HTMLFormElement): Errors {
     const data = new FormData(form);
@@ -52,6 +57,7 @@ export function ServiceRequestForm() {
     }
 
     setStatus("submitting");
+    setServerError(null);
     try {
       const data = new FormData(form);
       const res = await fetch(SEND_ENDPOINT, {
@@ -59,9 +65,14 @@ export function ServiceRequestForm() {
         body: data,
         headers: { Accept: "application/json" },
       });
+      if (!res.ok) setServerError(await readServerMessage(res));
       setStatus(res.ok ? "success" : "error");
+      trackEvent(res.ok ? "generate_lead" : "form_error", {
+        form_name: "Service request",
+      });
     } catch {
       setStatus("error");
+      trackEvent("form_error", { form_name: "Service request" });
     }
   }
 
@@ -87,14 +98,15 @@ export function ServiceRequestForm() {
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
       <input type="hidden" name="formType" value="Service request" />
+      <FormGuardFields />
 
       {status === "error" && (
         <p
           role="alert"
           className="border border-red-200 bg-red-50 px-4 py-3 font-sans text-[0.875rem] text-red-700"
         >
-          Something went wrong sending your request. Please call us at 407-839-8485
-          or try again.
+          {serverError ??
+            "Something went wrong sending your request. Please call us at 407-839-8485 or try again."}
         </p>
       )}
 

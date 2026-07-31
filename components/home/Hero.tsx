@@ -260,10 +260,10 @@ export function Hero() {
               Central Florida&apos;s leader
             </span>
             <span className="reveal-load rd-2 block text-[clamp(1.55rem,min(6vw,13vh),3.5rem)] 2xl:text-[clamp(2.5rem,min(5.5vw,12vh),5.25rem)] text-white/80 lg:text-white">
-              in smart home automation
+              in smart home & business 
             </span>
             <span className="reveal-load rd-3 block text-[clamp(1.55rem,min(6vw,13vh),3.5rem)] 2xl:text-[clamp(2.5rem,min(5.5vw,12vh),5.25rem)] text-white/50 lg:text-white">
-              since 1968.
+              automation since 1968.
             </span>
           </h1>
 

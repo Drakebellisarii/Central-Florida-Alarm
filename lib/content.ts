@@ -1,6 +1,5 @@
 /* Shared homepage content: testimonials, stats, and the nav map. */
 
-import { SERVICES } from "./services";
 import { AREAS } from "./areas";
 
 export type Testimonial = {
@@ -39,12 +38,6 @@ export const CULTURE =
 
 
 /* Nav helpers built from the data so links never drift out of sync */
-export const SERVICE_NAV = SERVICES.map((s) => ({
-  name: s.name,
-  href: `/${s.slug}`,
-  summary: s.summary,
-}));
-
 export const AREA_NAV = AREAS.map((a) => ({
   name: a.name,
   href: "/service-areas",

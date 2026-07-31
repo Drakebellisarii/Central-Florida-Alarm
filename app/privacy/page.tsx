@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { buildMetadata, breadcrumbLd, BUSINESS } from "@/lib/seo";
+import { buildMetadata, breadcrumbLd, BUSINESS, SITE_HOST } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { JsonLd } from "@/components/JsonLd";
 
@@ -43,11 +43,8 @@ export default function PrivacyPage() {
                 This Privacy Policy explains how {BUSINESS.name} (&ldquo;
                 {BUSINESS.shortName}
                 ,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;)
-                handles information collected through{" "}
-                {BUSINESS.name.toLowerCase().includes("central")
-                  ? "centralfloridaautomation.com"
-                  : "our website"}{" "}
-                (the &ldquo;Site&rdquo;). We are a Florida-based smart home,
+                handles information collected through {SITE_HOST} (the
+                &ldquo;Site&rdquo;). We are a Florida-based smart home,
                 security, and automation company, and we use the information you
                 share with us only to respond to your inquiries and provide our
                 services.

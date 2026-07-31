@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { Check, ArrowUpRight, ChevronDown, Loader2 } from "lucide-react";
+import { trackEvent } from "@/components/Analytics";
+import { FormGuardFields } from "@/components/FormGuardFields";
+import { readServerMessage } from "@/lib/formFields";
 
 // All forms post to this one API route, which emails the submission
 // through Outlook/Microsoft 365 — see app/api/send/route.ts.
@@ -37,6 +40,8 @@ export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Errors>({});
   const [services, setServices] = useState<string[]>([]);
+  // Set only when the server sends copy worth showing (the rate-limit note).
+  const [serverError, setServerError] = useState<string | null>(null);
 
   function toggleService(name: string) {
     setServices((prev) =>
@@ -75,6 +80,7 @@ export function ContactForm() {
     }
 
     setStatus("submitting");
+    setServerError(null);
     try {
       const data = new FormData(form);
       services.forEach((s) => data.append("services", s));
@@ -85,11 +91,19 @@ export function ContactForm() {
       });
       if (res.ok) {
         setStatus("success");
+        trackEvent("generate_lead", {
+          form_name: "Contact form",
+          project_type: String(data.get("projectType") ?? ""),
+          services: services.join(", "),
+        });
       } else {
+        setServerError(await readServerMessage(res));
         setStatus("error");
+        trackEvent("form_error", { form_name: "Contact form" });
       }
     } catch {
       setStatus("error");
+      trackEvent("form_error", { form_name: "Contact form" });
     }
   }
 
@@ -115,14 +129,15 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
       <input type="hidden" name="formType" value="Contact form" />
+      <FormGuardFields />
 
       {status === "error" && (
         <p
           role="alert"
           className="border border-red-200 bg-red-50 px-4 py-3 font-sans text-[0.875rem] text-red-700"
         >
-          Something went wrong sending your message. Please call us at 407-839-8485
-          or try again.
+          {serverError ??
+            "Something went wrong sending your message. Please call us at 407-839-8485 or try again."}
         </p>
       )}
 

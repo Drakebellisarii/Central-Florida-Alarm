@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Smart Security | Central Florida Automation Services",
   description:
     "Intelligent security designed around how you live and work. Choose Smart Home, Smart Business, or Smart Luxury to see how CFAS protects your space.",
-};
+  path: "/smart-security",
+});
 
 const PATHS = [
   {
