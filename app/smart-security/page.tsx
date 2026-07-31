@@ -25,8 +25,8 @@ const PATHS = [
     eyebrow: "For your business",
     title: "Smart Business",
     line: "Access control, surveillance, and monitoring built for how your business runs.",
-    image: "/images/commercial-smart.webp",
-    alt: "A modern Central Florida commercial building",
+    image: "/images/biz.webp",
+    alt: "The downtown Orlando skyline reflected in Lake Eola at dusk",
   },
   {
     href: "/smart-luxury",

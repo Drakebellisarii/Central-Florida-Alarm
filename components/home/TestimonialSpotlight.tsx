@@ -4,16 +4,17 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { FEATURED_TESTIMONIAL } from "@/lib/content";
 
-// Four accreditation marks, all constrained to one optical height and
-// desaturated so the mix of teal, navy, and black logos reads as one family.
-// Each mark carries its own display height so the set reads at one optical
-// weight: the near-square Lutron badge needs far more height than the wide
-// wordmarks to register as the same size at a glance.
+// Three builder-association marks in one row. Each carries its own height
+// rather than a shared class so the set reads at equal optical weight: the
+// GOBA wordmark's letters fill their box and need the least height, while
+// the Master Custom Builder lockup is mostly a circular seal with small
+// type beside it and needs the most to register at the same size.
+// (The Lutron Platinum Dealer badge lives in AboutSection — it's a
+// manufacturer certification, not a builder-association membership.)
 const ACCREDITATIONS = [
-  { src: "/images/GOBA.png", alt: "Greater Orlando Builders Association", width: 120, height: 60, cls: "h-10 md:h-12" },
-  { src: "/images/GOBA-Logo.png", alt: "GOBA Custom Home & Remodeling Council", width: 135, height: 56, cls: "h-10 md:h-12" },
-  { src: "/images/MCBC_Logo.jpg", alt: "Master Custom Builder Council", width: 200, height: 60, cls: "h-10 md:h-12" },
-  { src: "/images/Lutron-platinum.png", alt: "Lutron Platinum Dealer 2026", width: 200, height: 184, cls: "h-14 md:h-16" },
+  { src: "/images/GOBA.png", alt: "Greater Orlando Builders Association", width: 120, height: 60, cls: "h-8 md:h-9 lg:h-7 xl:h-9" },
+  { src: "/images/GOBA-Logo.png", alt: "GOBA Custom Home & Remodeling Council", width: 135, height: 56, cls: "h-9 md:h-10 lg:h-8 xl:h-10" },
+  { src: "/images/MCBC_Logo.jpg", alt: "Master Custom Builder Council", width: 200, height: 60, cls: "h-10 md:h-11 lg:h-9 xl:h-11" },
 ];
 
 export function TestimonialSpotlight() {
@@ -82,23 +83,17 @@ export function TestimonialSpotlight() {
           </cite>
         </div>
 
-        {/* Accreditations — a ruled 2×2 plate rather than a sticker row:
-            each mark centered in its own hairline-divided cell, large enough
-            to actually read, whitespace and rules doing the framing. Still,
-            no motion: PartnerMarquee already scrolls a longer brand row a
-            short scroll below, so a second moving strip would compete. */}
+        {/* Accreditations — one left-aligned row, whitespace alone separating
+            the marks. No motion at rest: PartnerMarquee scrolls a longer
+            brand row a short scroll below, so a second moving strip this
+            close would compete with it. */}
         <div className="reveal-scroll mt-10 border-t border-navy/10 pt-[1.625rem] lg:mt-12">
           <span className="shrink-0 whitespace-nowrap font-sans text-[0.65625rem] uppercase tracking-wide2 text-stone">
             Accredited By
           </span>
-          <div className="mt-5 grid grid-cols-2">
-            {ACCREDITATIONS.map((logo, i) => (
-              <div
-                key={logo.alt}
-                className={`group flex items-center justify-center px-4 py-5 md:py-6 ${
-                  i < 2 ? "border-b border-navy/10" : ""
-                } ${i % 2 === 0 ? "border-r border-navy/10" : ""}`}
-              >
+          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-6 sm:gap-x-6 md:gap-x-8 lg:gap-x-4 xl:gap-x-5 2xl:gap-x-8">
+            {ACCREDITATIONS.map((logo) => (
+              <span key={logo.alt} className="group flex items-center">
                 <Image
                   src={logo.src}
                   alt={logo.alt}
@@ -106,7 +101,7 @@ export function TestimonialSpotlight() {
                   height={logo.height}
                   className={`${logo.cls} w-auto object-contain transition-transform duration-500 ease-expo group-hover:scale-110`}
                 />
-              </div>
+              </span>
             ))}
           </div>
         </div>

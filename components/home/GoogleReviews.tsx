@@ -1,21 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { GoogleReviewsData } from "@/lib/googleReviews";
 import { GoogleG, Stars } from "@/components/GoogleReviewIcons";
 
-const INTERVAL = 7000;
-const EASE = [0.16, 1, 0.3, 1] as const;
+const INTERVAL = 6000;
 
 // Most Google reviews are a sentence or two — show those in full. A long
 // outlier is cut at the last complete sentence that fits, so every quote
 // ends on a period and reads as a finished statement rather than trailing
 // off in an ellipsis. Word-boundary + ellipsis only as a last resort for a
 // review written as one giant run-on sentence.
-const MAX_QUOTE_CHARS = 300;
-const MIN_SENTENCE_CUT = 90;
+const MAX_QUOTE_CHARS = 260;
+const MIN_SENTENCE_CUT = 80;
 function truncateQuote(text: string, max = MAX_QUOTE_CHARS) {
   if (text.length <= max) return text;
   const cut = text.slice(0, max);
@@ -30,17 +28,22 @@ function truncateQuote(text: string, max = MAX_QUOTE_CHARS) {
 }
 
 /**
- * Google reviews as a centered carousel over full-bleed footage. One calm
- * column on the scene: the Google record (the 4.6 set in the numeral face)
- * up top, one review at a time in the middle with a soft crossfade, and an
- * editorial counter ("02 / 05") with thin arrows instead of dot pagination.
- * A navy grade keeps the type readable while the footage stays alive.
+ * Google reviews as a card carousel over full-bleed footage.
+ *
+ * The layout deliberately works the full width instead of stacking one
+ * centered column: the Google record holds the left of the masthead, the
+ * carousel controls hold the right, and the cards run edge to edge beneath
+ * them. Section height is content-driven (no 100svh), so the footage reads
+ * as a band behind the cards rather than a screen of empty video.
+ *
+ * Sliding is a plain CSS transform on the track — no animation library — so
+ * this ships no framer-motion. Cards per view step 1 → 2 → 3 with the
+ * breakpoints; the track stops at the last full page rather than scrolling
+ * into empty space.
  *
  * The clip stays off the wire until the section nears the viewport
  * (preload="none", played by the IntersectionObserver) so it never competes
- * with the homepage hero for bandwidth. Auto-advances every 7s, pauses
- * while hovered, and the first review is server-rendered visible so the
- * quote never waits on the JS bundle.
+ * with the homepage hero for bandwidth.
  */
 export function GoogleReviews({
   reviews,
@@ -53,17 +56,26 @@ export function GoogleReviews({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [perView, setPerView] = useState(1);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    const apply = () => setIsDesktop(mq.matches);
+    // 3-up waits for xl: at lg the column is narrow enough that three cards
+    // squeeze the quotes to ~6 words a line.
+    const xl = window.matchMedia("(min-width: 1280px)");
+    const md = window.matchMedia("(min-width: 768px)");
+    const apply = () => {
+      setIsDesktop(md.matches);
+      setPerView(xl.matches ? 3 : md.matches ? 2 : 1);
+    };
     apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
+    xl.addEventListener("change", apply);
+    md.addEventListener("change", apply);
+    return () => {
+      xl.removeEventListener("change", apply);
+      md.removeEventListener("change", apply);
+    };
   }, []);
 
   // One ref serves whichever clip is mounted (the key= swap remounts it on
@@ -94,8 +106,7 @@ export function GoogleReviews({
   }, [isDesktop]);
 
   // Every review the Places API hands over (it caps at 5), one per author,
-  // strongest first with a shortest-first tiebreak so the rotation opens on
-  // quotes that read in full.
+  // strongest first with a shortest-first tiebreak.
   const featured = reviews
     ? [...reviews.reviews]
         .sort((a, b) => b.rating - a.rating || a.text.length - b.text.length)
@@ -103,29 +114,37 @@ export function GoogleReviews({
     : [];
 
   const count = featured.length;
+  // Last position that still fills every visible slot — the track never
+  // slides past the final card into blank space.
+  const maxIndex = Math.max(0, count - perView);
+
+  // A breakpoint change can leave the track parked past its new end.
+  useEffect(() => {
+    setActive((a) => Math.min(a, Math.max(0, count - perView)));
+  }, [perView, count]);
+
   const next = useCallback(() => {
-    setActive((i) => (i + 1) % Math.max(count, 1));
-  }, [count]);
+    setActive((i) => (i >= maxIndex ? 0 : i + 1));
+  }, [maxIndex]);
   const prev = useCallback(() => {
-    setActive((i) => (i - 1 + count) % Math.max(count, 1));
-  }, [count]);
+    setActive((i) => (i <= 0 ? maxIndex : i - 1));
+  }, [maxIndex]);
 
   useEffect(() => {
-    if (paused || count < 2) return;
+    if (paused || maxIndex < 1) return;
     const id = setTimeout(next, INTERVAL);
     return () => clearTimeout(id);
-  }, [active, paused, next, count]);
+  }, [active, paused, next, maxIndex]);
 
   if (!reviews || count === 0) return null;
-  const activeReview = featured[active];
 
   return (
     <section
-      className="relative isolate flex min-h-[44rem] flex-col items-center justify-center overflow-hidden bg-navy-deep py-24 md:min-h-[50rem] lg:min-h-[100svh]"
+      className="relative isolate overflow-hidden bg-navy-deep py-20 md:py-24 lg:py-28"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* ── Footage — full-bleed, the section's only surface ───────────── */}
+      {/* ── Footage — full-bleed behind the whole band ─────────────────── */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <video
           key={isDesktop ? "desktop" : "mobile"}
@@ -143,137 +162,123 @@ export function GoogleReviews({
         </video>
       </div>
 
-      {/* ── Grade — an even brand wash, a soft pool of depth behind the
-          centered column, and a cinematic edge vignette. The gradients do
-          all the legibility work: no panel, no card. ────────────────────── */}
-      <div aria-hidden className="absolute inset-0 bg-navy-deep/45" />
+      {/* Grade — an even navy wash plus top/bottom lift, enough to seat the
+          white cards on the scene without flattening the footage. */}
+      <div aria-hidden className="absolute inset-0 bg-navy-deep/55" />
       <div
         aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 62% 58% at 50% 52%, rgba(6,14,45,0.5) 0%, rgba(6,14,45,0.22) 55%, transparent 78%)",
-        }}
+        className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-navy-deep/70 to-transparent"
       />
       <div
         aria-hidden
-        className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-navy-deep/60 to-transparent"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-navy-deep/60 to-transparent"
+        className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-navy-deep/70 to-transparent"
       />
 
-      {/* ── One centered column on the scene ───────────────────────────── */}
-      <div className="relative z-10 mx-auto w-full max-w-[93.75rem] px-5 text-center sm:px-8 md:px-11">
-        <p className="font-sans text-[0.75rem] uppercase tracking-eyebrow text-white/60">
-          Client Trust
-        </p>
+      <div className="relative z-10 mx-auto w-full max-w-[93.75rem] px-5 sm:px-8 md:px-11">
 
-        {/* The Google record — set like a monument, not a metadata row:
-            the mark and the number carry the section's authority. */}
-        <div className="mt-8 flex items-center justify-center gap-5 md:gap-6">
-          <GoogleG className="h-11 w-11 shrink-0 md:h-14 md:w-14" />
-          <span className="font-numeral text-[4.75rem] font-thin leading-none text-white md:text-[6.25rem]">
-            {reviews.rating.toFixed(1)}
-          </span>
-        </div>
-        <Stars
-          rating={reviews.rating}
-          size="h-4 w-4 md:h-5 md:w-5"
-          className="mt-5 justify-center gap-1.5 md:gap-2"
-        />
-        <p className="mt-4 font-sans text-[0.875rem] text-white/65 md:text-[0.9375rem]">
-          {reviews.totalReviews.toLocaleString()} Google reviews
-          {viewHref && (
-            <>
-              {" "}&middot;{" "}
-              <a
-                href={viewHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/80 underline decoration-white/30 underline-offset-4 transition-colors hover:text-white hover:decoration-white/70"
-              >
-                View all
-              </a>
-            </>
-          )}
-          {writeHref && (
-            <>
-              {" "}&middot;{" "}
-              <a
-                href={writeHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/80 underline decoration-white/30 underline-offset-4 transition-colors hover:text-white hover:decoration-white/70"
-              >
-                Leave a review
-              </a>
-            </>
-          )}
-        </p>
-
-        <div aria-hidden className="mx-auto mt-10 h-px w-14 bg-white/30" />
-
-        {/* ── The rotating quote — fixed reserve so the column never
-            jumps between long and short reviews ─────────────────────── */}
-        <div className="relative mx-auto mt-10 flex min-h-[16rem] max-w-[46rem] flex-col justify-center md:min-h-[14rem]">
-          <span
-            aria-hidden
-            className="pointer-events-none absolute left-1/2 -top-9 -translate-x-1/2 select-none font-display text-[4.5rem] leading-none text-white/[0.16]"
-          >
-            &ldquo;
-          </span>
-
-          <AnimatePresence mode="wait">
-            <motion.figure
-              key={active}
-              initial={mounted ? { opacity: 0, y: 10 } : false}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5, ease: EASE }}
-            >
-              <blockquote className="font-display text-[clamp(1.2rem,2.1vw,1.7rem)] font-light leading-[1.5] tracking-tight text-white [text-shadow:0_2px_28px_rgba(0,0,0,0.45)]">
-                {truncateQuote(activeReview.text)}
-              </blockquote>
-              <figcaption className="mt-7 flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1">
-                <Stars rating={activeReview.rating} size="h-2.5 w-2.5" className="translate-y-[-1px]" />
-                <span className="font-sans text-[0.875rem] tracking-wide text-white">
-                  {activeReview.authorName}
-                </span>
-                <span className="font-sans text-[0.625rem] uppercase tracking-eyebrow text-white/45">
-                  {activeReview.relativeTime}
-                </span>
-              </figcaption>
-            </motion.figure>
-          </AnimatePresence>
-        </div>
-
-        {/* ── Controls — thin arrows around an editorial counter ───────── */}
-        {count > 1 && (
-          <div className="mt-10 flex items-center justify-center gap-8">
-            <button
-              onClick={prev}
-              aria-label="Previous review"
-              className="p-2 text-white/40 transition-colors duration-300 hover:text-white"
-            >
-              <ChevronLeft strokeWidth={1.25} className="h-5 w-5" />
-            </button>
-            <p className="font-numeral text-[0.9375rem] font-light tracking-[0.2em] text-white/70">
-              <span className="text-white">{String(active + 1).padStart(2, "0")}</span>
-              <span aria-hidden className="mx-2.5 text-white/35">/</span>
-              <span className="sr-only">of </span>
-              {String(count).padStart(2, "0")}
+        {/* ── Masthead — the record on the left, controls on the right, so
+            the row uses the full width instead of stacking centered. ──── */}
+        <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-7">
+          <div>
+            <p className="font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/55">
+              Client Trust
             </p>
-            <button
-              onClick={next}
-              aria-label="Next review"
-              className="p-2 text-white/40 transition-colors duration-300 hover:text-white"
-            >
-              <ChevronRight strokeWidth={1.25} className="h-5 w-5" />
-            </button>
+            <div className="mt-5 flex items-center gap-4">
+              <GoogleG className="h-9 w-9 shrink-0 md:h-10 md:w-10" />
+              <span className="font-numeral text-[3.25rem] font-thin leading-none text-white md:text-[4rem]">
+                {reviews.rating.toFixed(1)}
+              </span>
+              <Stars rating={reviews.rating} size="h-4 w-4" className="gap-1.5" />
+            </div>
+            <p className="mt-3 font-sans text-[0.8125rem] text-white/60 md:text-[0.875rem]">
+              {reviews.totalReviews.toLocaleString()} Google reviews
+              {viewHref && (
+                <>
+                  {" "}&middot;{" "}
+                  <a
+                    href={viewHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/80 underline decoration-white/30 underline-offset-4 transition-colors hover:text-white hover:decoration-white/70"
+                  >
+                    View all
+                  </a>
+                </>
+              )}
+              {writeHref && (
+                <>
+                  {" "}&middot;{" "}
+                  <a
+                    href={writeHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/80 underline decoration-white/30 underline-offset-4 transition-colors hover:text-white hover:decoration-white/70"
+                  >
+                    Leave a review
+                  </a>
+                </>
+              )}
+            </p>
           </div>
-        )}
+
+          {maxIndex > 0 && (
+            <div className="flex items-center gap-6">
+              <button
+                onClick={prev}
+                aria-label="Previous reviews"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-white/70 transition-colors duration-300 hover:border-white/60 hover:text-white"
+              >
+                <ChevronLeft strokeWidth={1.25} className="h-4 w-4" />
+              </button>
+              <p className="font-numeral text-[0.9375rem] font-light tracking-[0.2em] text-white/70">
+                <span className="text-white">
+                  {String(active + 1).padStart(2, "0")}
+                </span>
+                <span aria-hidden className="mx-2 text-white/35">/</span>
+                <span className="sr-only">of </span>
+                {String(maxIndex + 1).padStart(2, "0")}
+              </p>
+              <button
+                onClick={next}
+                aria-label="Next reviews"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-white/70 transition-colors duration-300 hover:border-white/60 hover:text-white"
+              >
+                <ChevronRight strokeWidth={1.25} className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* ── Cards — the track slides by whole cards on a CSS transform ── */}
+        <div className="mt-10 overflow-hidden md:mt-12">
+          <div
+            className="flex transition-transform duration-700 ease-expo"
+            style={{ transform: `translateX(-${active * (100 / perView)}%)` }}
+          >
+            {featured.map((r) => (
+              <div
+                key={r.authorName}
+                className="shrink-0 px-2.5 md:px-3"
+                style={{ width: `${100 / perView}%` }}
+              >
+                <article className="flex h-full flex-col rounded-sm bg-white p-7 shadow-[0_18px_50px_-24px_rgba(5,12,40,0.6)] md:p-8">
+                  <Stars rating={r.rating} size="h-3.5 w-3.5" emptyClassName="fill-navy/15" />
+                  <blockquote className="mt-6 flex-1 font-display text-[1rem] font-light leading-[1.65] text-navy-deep md:text-[1.0625rem]">
+                    {truncateQuote(r.text)}
+                  </blockquote>
+                  <figcaption className="mt-7 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-navy/10 pt-5">
+                    <span className="font-sans text-[0.875rem] tracking-wide text-navy-deep">
+                      {r.authorName}
+                    </span>
+                    <span className="font-sans text-[0.625rem] uppercase tracking-eyebrow text-navy/45">
+                      {r.relativeTime}
+                    </span>
+                  </figcaption>
+                </article>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

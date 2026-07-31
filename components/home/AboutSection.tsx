@@ -22,17 +22,17 @@ export function AboutSection() {
           page's centered max-w container: the photo runs to the true left
           edge of the viewport, the copy (headline included) holds its own
           right-hand column. */}
-      <div className="pt-16 grid grid-cols-1 lg:pt-20 lg:grid-cols-[48%_1fr]">
+      <div className="pt-16 grid grid-cols-1 lg:pt-20 lg:grid-cols-[42%_1fr]">
 
         {/* Left — the heritage photo. Flat rectangle: no border, no radius,
             no shadow, no frame. */}
         <Reveal index={1}>
-          <div className="relative aspect-[3/4] w-full lg:aspect-auto lg:h-full lg:min-h-[36rem] xl:min-h-[42rem]">
+          <div className="relative aspect-[4/5] w-full lg:aspect-auto lg:h-full lg:min-h-[32rem] xl:min-h-[37rem]">
             <Image
               src="/images/retro-about-v2.webp"
               alt="The original Central Florida Automation Services work truck, loaded with cable spools and ladders"
               fill
-              sizes="(max-width: 1024px) 100vw, 48vw"
+              sizes="(max-width: 1024px) 100vw, 42vw"
               className="object-cover"
             />
           </div>
@@ -76,6 +76,25 @@ export function AboutSection() {
               <p className="mt-12 font-sans text-[0.9375rem] leading-[1.7] text-slate-600 md:text-[1rem]">
                 {ABOUT_TEXT}
               </p>
+            </Reveal>
+
+            {/* Closing credential — built on the same ruled label/content row
+                as "Our culture" above, with the mark held right so it bookends
+                the "Est. 1968" that opens the column. Alt is empty because the
+                label beside it already names the badge. */}
+            <Reveal index={3}>
+              <div className="mt-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-5 border-t border-navy/10 pt-7 md:mt-12">
+                <span className="shrink-0 font-sans text-[0.75rem] uppercase tracking-wide2 text-navy/45">
+                  Lutron Platinum Dealer
+                </span>
+                <Image
+                  src="/images/Lutron-platinum.png"
+                  alt=""
+                  width={200}
+                  height={184}
+                  className="h-16 w-auto shrink-0 object-contain md:h-[4.5rem]"
+                />
+              </div>
             </Reveal>
 
           </div>

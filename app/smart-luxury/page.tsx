@@ -203,10 +203,24 @@ export default function SmartLuxuryPage() {
       {/* ============================= FEATURES ============================= */}
       <section className="bg-white py-28 md:py-36">
         <div className="mx-auto max-w-[75rem] px-5 sm:px-8 md:px-11">
-          <div data-sl-rise>
+          <div
+            data-sl-rise
+            className="flex flex-wrap items-end justify-between gap-x-10 gap-y-8"
+          >
             <h2 className="max-w-xl font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-light leading-tight tracking-tight text-navy-deep">
               The full system.
             </h2>
+            {/* Lutron's top dealer tier, set opposite the heading that opens
+                onto Lutron Lighting Control and Motorized Shades below. The
+                right half of this row is otherwise empty, so the badge gets
+                room to be read rather than competing with dense copy. */}
+            <Image
+              src="/images/Lutron-platinum.png"
+              alt="Lutron Platinum Dealer 2026"
+              width={200}
+              height={184}
+              className="h-20 w-auto object-contain md:h-24"
+            />
           </div>
 
           <div
