@@ -5,6 +5,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SiteFrame } from "@/components/SiteFrame";
+import { Analytics } from "@/components/Analytics";
 import { SITE_URL, BUSINESS } from "@/lib/seo";
 
 // Gloock — heavy display serif, reserved for the hero and page h1s.
@@ -118,6 +119,7 @@ export default function RootLayout({
         <Navbar />
         <main id="content">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

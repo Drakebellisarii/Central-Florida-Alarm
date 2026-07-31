@@ -22,7 +22,7 @@ const CONTACT_SERVICES = [
   "Motorized Shades",
   "Audio and Video",
   "WiFi and Networking",
-  "Magna Track Motorized Shades",
+  "Magna Track Motorized Screens",
 ] as const;
 
 type Errors = Partial<Record<"name" | "email" | "phone" | "projectType" | "message", string>>;

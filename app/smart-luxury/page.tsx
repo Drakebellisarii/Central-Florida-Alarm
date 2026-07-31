@@ -214,13 +214,7 @@ export default function SmartLuxuryPage() {
                 onto Lutron Lighting Control and Motorized Shades below. The
                 right half of this row is otherwise empty, so the badge gets
                 room to be read rather than competing with dense copy. */}
-            <Image
-              src="/images/Lutron-platinum.png"
-              alt="Lutron Platinum Dealer 2026"
-              width={200}
-              height={184}
-              className="h-20 w-auto object-contain md:h-24"
-            />
+            
           </div>
 
           <div

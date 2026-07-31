@@ -105,11 +105,13 @@ export default function PrivacyPage() {
 
             <Block title="Cookies and analytics">
               <p>
-                The Site may use cookies or similar technologies to keep it
+                The Site uses cookies or similar technologies to keep it
                 working properly and to understand how visitors use it. You can
                 set your browser to refuse cookies, though some parts of the Site
-                may not function as intended. If we use analytics in the future,
-                we will use it only to measure aggregate, non-identifying usage.
+                may not function as intended. We use Google Analytics to measure
+                aggregate, non-identifying usage — which pages are visited and
+                how visitors arrive. We do not use it to identify you
+                individually or to sell your information.
               </p>
             </Block>
 

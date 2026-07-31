@@ -107,11 +107,11 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "How does Lutron lighting control improve comfort, energy savings, and design?",
-        a: "Lutron lighting creates personalized scenes, saves energy, extends bulb life, and enhances design with elegant keypads.",
+        a: "Lutron lighting creates personalized scenes, saves energy, extends bulb life, and enhances design with elegant keypads. As a platinum Dealer, Central Florida Automation Services has the experience to design, install and service all custom projects.",
       },
       {
         q: "What are the benefits of Lutron motorized shades for privacy and energy efficiency?",
-        a: "Lutron motorized shades add privacy, reduce glare, protect furnishings from UV, and improve efficiency by adjusting automatically.",
+        a: "Lutron motorized shades add privacy, reduce glare, protect furnishings from UV, and improve efficiency by adjusting automatically. Add an additonal design touch by incorporating Hartmann & Forbes Fabric to the quality Lutron rollers.",
       },
       {
         q: "Can I control my lighting, shades, security, and entertainment from one app?",

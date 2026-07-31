@@ -8,7 +8,6 @@ import { gsap, prefersReducedMotion } from "@/lib/motion";
 
 type Path = {
   href: string;
-  n: string;
   eyebrow: string;
   title: string;
   line: string;
@@ -22,7 +21,6 @@ type Path = {
 const PATHS: Path[] = [
   {
     href: "/smart-home",
-    n: "01",
     eyebrow: "For your home",
     title: "Smart Home",
     line: "Security, cameras, locks, and life-safety woven into the property you live in.",
@@ -32,7 +30,6 @@ const PATHS: Path[] = [
   },
   {
     href: "/smart-business",
-    n: "02",
     eyebrow: "For your business",
     title: "Smart Business",
     line: "Access control, surveillance, and monitoring built for how your business runs.",
@@ -41,10 +38,9 @@ const PATHS: Path[] = [
   },
   {
     href: "/smart-luxury",
-    n: "03",
     eyebrow: "For the finer details",
     title: "Smart Luxury",
-    line: "What's possible in a fully integrated estate — theaters, wine rooms, motorized art, and more, answered plainly.",
+    line: "Theaters, wine rooms, and motorized art, built into a fully integrated estate.",
     image: "/images/smarthome.webp",
     alt: "A modern waterfront Central Florida estate at dusk",
   },
@@ -144,17 +140,11 @@ export function SmartSecurityShowcase() {
                 }}
               />
 
-              {/* Top meta row — eyebrow + a plate number, sized like a
-                  folio mark rather than a UI badge. */}
-              <div className="relative z-10 flex items-center justify-between p-8 md:p-10">
+              {/* Top meta row — the eyebrow alone now that the plate
+                  numbers are gone. */}
+              <div className="relative z-10 flex items-center p-8 md:p-10">
                 <span className="whitespace-nowrap font-sans text-[0.6875rem] uppercase tracking-eyebrow text-white/75">
                   {p.eyebrow}
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="font-display text-[2rem] font-light leading-none tracking-tight text-white/40 transition-colors duration-700 group-hover:text-white/75 md:text-[2.4rem]"
-                >
-                  {p.n}
                 </span>
               </div>
 

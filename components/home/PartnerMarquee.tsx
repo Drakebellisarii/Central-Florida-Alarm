@@ -10,25 +10,28 @@ type Brand = { src: string; alt: string; w: number; h: number; cls: string };
 // Alarm.com needs far more height than a flat wordmark like Crestron to
 // register as the same size at a glance).
 const BRANDS: Brand[] = [
-  { src: "/logos/norm-lutron.png", alt: "Lutron", w: 536, h: 80, cls: "h-7" },
-  { src: "/logos/norm-sonos.png", alt: "Sonos", w: 510, h: 102, cls: "h-7" },
-  { src: "/logos/norm-control4.png", alt: "Control4", w: 288, h: 81, cls: "h-8" },
-  { src: "/logos/norm-ubiquiti.png", alt: "Ubiquiti", w: 718, h: 220, cls: "h-8" },
-  { src: "/logos/norm-josh.png", alt: "Josh.ai", w: 647, h: 220, cls: "h-7" },
-  { src: "/logos/norm-alarm.png", alt: "Alarm.com", w: 306, h: 182, cls: "h-10" },
-  { src: "/logos/norm-crestron.png", alt: "Crestron", w: 447, h: 52, cls: "h-6" },
-  { src: "/logos/norm-ovrc.png", alt: "OvrC", w: 501, h: 161, cls: "h-8" },
-  { src: "/logos/norm-silent-knight.png", alt: "Silent Knight", w: 563, h: 220, cls: "h-9" },
-  { src: "/logos/norm-hartmann-forbes.png", alt: "Hartmann & Forbes", w: 760, h: 220, cls: "h-8" },
-  { src: "/logos/norm-magnatrack.png", alt: "MagnaTrack by Progressive Screens", w: 1140, h: 220, cls: "h-7" },
-  { src: "/logos/norm-alibi.png", alt: "Alibi Security", w: 288, h: 71, cls: "h-8" },
-  { src: "/logos/norm-napco.png", alt: "Napco Security Technologies", w: 200, h: 33, cls: "h-8" },
-  { src: "/logos/norm-integra.png", alt: "Integra", w: 451, h: 77, cls: "h-7" },
-  { src: "/logos/norm-bo.png", alt: "Bang & Olufsen", w: 900, h: 154, cls: "h-7" },
-  { src: "/logos/norm-dsc.png", alt: "DSC", w: 623, h: 128, cls: "h-7" },
-  { src: "/logos/KEF-logo.png", alt: "KEF", w: 685, h: 220, cls: "h-7" },
-  { src: "/logos/ELK-Products-Logo.png", alt: "ELK Products", w: 480, h: 220, cls: "h-8" },
-  { src: "/logos/Stewart-Logo.png", alt: "Stewart", w: 372, h: 88, cls: "h-8" },
+  { src: "/logos/norm-lutron.webp", alt: "Lutron", w: 400, h: 60, cls: "h-7" },
+  { src: "/logos/norm-sonos.webp", alt: "Sonos", w: 400, h: 80, cls: "h-7" },
+  { src: "/logos/norm-control4.webp", alt: "Control4", w: 400, h: 112, cls: "h-8" },
+  { src: "/logos/norm-ubiquiti.webp", alt: "Ubiquiti", w: 400, h: 123, cls: "h-8" },
+  { src: "/logos/norm-josh.webp", alt: "Josh.ai", w: 400, h: 136, cls: "h-7" },
+  { src: "/logos/norm-alarm.webp", alt: "Alarm.com", w: 370, h: 220, cls: "h-10" },
+  { src: "/logos/norm-crestron.webp", alt: "Crestron", w: 400, h: 47, cls: "h-6" },
+  { src: "/logos/norm-ovrc.webp", alt: "OvrC", w: 400, h: 129, cls: "h-8" },
+  { src: "/logos/norm-silent-knight.webp", alt: "Silent Knight", w: 400, h: 156, cls: "h-9" },
+  { src: "/logos/norm-hartmann-forbes.webp", alt: "Hartmann & Forbes", w: 400, h: 116, cls: "h-8" },
+  { src: "/logos/norm-magnatrack.webp", alt: "MagnaTrack by Progressive Screens", w: 400, h: 77, cls: "h-7" },
+  { src: "/logos/norm-alibi.webp", alt: "Alibi Security", w: 400, h: 99, cls: "h-8" },
+  { src: "/logos/norm-napco.webp", alt: "Napco Security Technologies", w: 400, h: 66, cls: "h-8" },
+  { src: "/logos/norm-integra.webp", alt: "Integra", w: 400, h: 68, cls: "h-7" },
+  { src: "/logos/norm-bo.webp", alt: "Bang & Olufsen", w: 400, h: 68, cls: "h-7" },
+  { src: "/logos/norm-dsc.webp", alt: "DSC", w: 400, h: 82, cls: "h-7" },
+  { src: "/logos/KEF-logo.webp", alt: "KEF", w: 400, h: 128, cls: "h-7" },
+  // 8:1 wordmark — same treatment as Crestron, the other very wide flat mark.
+  { src: "/logos/Sonance-Logo.webp", alt: "Sonance", w: 400, h: 50, cls: "h-6" },
+  { src: "/logos/ELK-Products-Logo.webp", alt: "ELK Products", w: 400, h: 183, cls: "h-8" },
+  { src: "/logos/Stewart-Logo.webp", alt: "Stewart", w: 400, h: 95, cls: "h-8" },
+  
 ];
 
 // Shared hover treatment — full color throughout, hovering just brings each
