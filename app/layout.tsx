@@ -66,6 +66,12 @@ const mPlusRounded = localFont({
   ],
   variable: "--font-numeral",
   display: "swap",
+  // Not preloaded: these two weights are only used for the oversized numerals
+  // in the reviews and service-areas sections, both well below the fold. They
+  // were being preloaded at high priority alongside the fonts the hero
+  // actually needs, taking mobile bandwidth from the LCP image. They still
+  // load normally, just without jumping the queue.
+  preload: false,
 });
 
 export const metadata: Metadata = {

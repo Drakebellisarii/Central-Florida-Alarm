@@ -106,11 +106,14 @@ export function Navbar() {
             }`}
           >
             <span className="relative block h-10 w-[7.5rem] sm:h-12 sm:w-[8.75rem]">
+              {/* No `priority` here: this dark mark sits at opacity-0 until
+                  the bar turns solid on scroll, so preloading it only took
+                  bandwidth away from the LCP image during first paint. The
+                  light mark below, which IS visible at the top, keeps it. */}
               <Image
                 src="/images/cfas-logo.png"
                 alt="Central Florida Automation Services"
                 fill
-                priority
                 sizes="(min-width: 1920px) 280px, 140px"
                 className={`object-contain object-left transition-opacity duration-700 ${
                   solid ? "opacity-100" : "opacity-0"

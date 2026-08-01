@@ -53,13 +53,30 @@ const FIRST_POSTER_SRC: Record<DeviceType, string> = {
 // fade below so the outgoing clip is still in motion for the whole dissolve.
 const DISSOLVE_EARLY_S = 1.2;
 
+// Played slightly under speed. Two reasons: it reads calmer and more
+// deliberate, and it lowers the bytes-per-second the network has to keep up
+// with, so a constrained connection is far less likely to stutter.
+const PLAYBACK_RATE = 0.9;
+
+// If the hero still can't play through after this long, give up on the video
+// entirely and hold the poster instead. Matches PageLoader's MAX_WAIT_MS so
+// the splash lifts at the same moment the static image takes over.
+const HERO_TIMEOUT_MS = 8000;
+
 export function Hero() {
   const reduce = useReducedMotion();
 
   // Three-tier device detection: phone / tablet / desktop. TVs and other
   // large landscape displays match the desktop query and get the landscape
   // clip.
-  const [deviceType, setDeviceType] = useState<DeviceType>("mobile");
+  //
+  // Starts null on purpose. It used to default to "mobile", which meant a
+  // desktop visitor mounted the portrait <video preload="auto"> on the first
+  // render and started pulling 4.5MB of footage it would never show, then
+  // remounted and pulled the 12MB landscape clip on top of it. Both clips
+  // downloaded, every desktop visit. Until the media query has actually been
+  // read we render the poster alone, so exactly one clip is ever requested.
+  const [deviceType, setDeviceType] = useState<DeviceType | null>(null);
   useEffect(() => {
     const getType = (): DeviceType => {
       if (window.matchMedia("(min-width: 1024px)").matches) return "desktop";
@@ -99,8 +116,49 @@ export function Hero() {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [settled, setSettled] = useState(false);
+  // Set when the clip still isn't playable after HERO_TIMEOUT_MS. Unmounting
+  // the <video> also aborts its in-flight download, which is the point: on a
+  // connection that slow, the remaining megabytes are pure cost.
+  const [videoTimedOut, setVideoTimedOut] = useState(false);
+
+  // The clip is held back until the page has actually painted. It is several
+  // megabytes and contributes nothing to first paint — the poster is what the
+  // visitor sees — but with preload="auto" it competes for bandwidth with the
+  // poster, fonts and JS that DO block painting. Measured on a throttled
+  // mobile profile, that contention was the single largest remaining drag on
+  // LCP. Waiting for `load` (or a 1.5s backstop, since `load` can be delayed
+  // by other lazy assets) means the hero is on screen first and the footage
+  // fills in behind it a moment later.
+  const [readyForVideo, setReadyForVideo] = useState(false);
   useEffect(() => {
     if (reduce) return;
+    let done = false;
+    const go = () => {
+      if (done) return;
+      done = true;
+      setReadyForVideo(true);
+    };
+    if (document.readyState === "complete") go();
+    else window.addEventListener("load", go, { once: true });
+    const backstop = setTimeout(go, 1500);
+    return () => {
+      window.removeEventListener("load", go);
+      clearTimeout(backstop);
+    };
+  }, [reduce]);
+
+  useEffect(() => {
+    if (reduce || !deviceType || !readyForVideo || videoTimedOut) return;
+    const t = setTimeout(() => {
+      const first = videoRefs.current[0];
+      // readyState < 3 means it can't play forward without stalling.
+      if (!first || first.readyState < 3) setVideoTimedOut(true);
+    }, HERO_TIMEOUT_MS);
+    return () => clearTimeout(t);
+  }, [reduce, deviceType, readyForVideo, videoTimedOut]);
+
+  useEffect(() => {
+    if (reduce || videoTimedOut) return;
     const first = videoRefs.current[0];
     if (!first) return;
     setActiveIndex(0);
@@ -113,6 +171,15 @@ export function Hero() {
     const handlers: [HTMLVideoElement, string, () => void][] = [];
     videoRefs.current.forEach((el, i) => {
       if (!el) return;
+      // playbackRate resets whenever a new source loads, so set it on
+      // metadata rather than once up front.
+      const onMeta = () => {
+        el.playbackRate = PLAYBACK_RATE;
+      };
+      el.addEventListener("loadedmetadata", onMeta);
+      if (el.readyState >= 1) onMeta();
+      handlers.push([el, "loadedmetadata", onMeta]);
+
       const next = videoRefs.current[i + 1];
       // The dissolve starts shortly before this clip ends, so both clips are
       // in motion while the fade runs. Guarded so it only fires once.
@@ -156,7 +223,9 @@ export function Hero() {
     });
     return () =>
       handlers.forEach(([el, evt, fn]) => el.removeEventListener(evt, fn));
-  }, [reduce, deviceType]);
+    // videoTimedOut included so that when the clip is given up on, this
+    // effect re-runs and tears its listeners off the now-unmounted elements.
+  }, [reduce, deviceType, readyForVideo, videoTimedOut]);
 
   return (
     <section className="relative flex min-h-[100dvh] flex-col justify-end overflow-hidden bg-navy-deep pt-[6rem]">
@@ -174,15 +243,34 @@ export function Hero() {
 
       {/* ── Footage — build plays once, interior fades in and plays once,
              then the hero rests on the interior's final frame ─────────── */}
-      <div
-        key={deviceType}
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-      >
-        {/* The first clip is the only thing the loader splash waits on — just
-            its first frame (readyState >= 2), not a deep buffer, and not any
-            later clip. Later clips preload behind the running footage, stay
-            invisible until their turn, then crossfade in on top. */}
-        {(reduce ? CHAIN[deviceType].slice(0, 1) : CHAIN[deviceType]).map(
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* Base still, always mounted and never keyed off deviceType, so it
+            paints the instant it arrives and never unmounts underneath the
+            video. This is the hero's real first paint and what the splash
+            waits on — the clip layers on top once it can play. <picture> so
+            only the matching file is fetched, and the <video> below reuses
+            the exact same URL as its poster, so it costs one request total.
+            It also serves as the permanent fallback if the video times out. */}
+        <picture>
+          <source media="(min-width: 1024px)" srcSet={FIRST_POSTER_SRC.desktop} />
+          <img
+            data-loader-target="hero-poster"
+            src={FIRST_POSTER_SRC.mobile}
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        </picture>
+
+        {/* Mounted only once the device is known, the page has painted, and
+            motion is welcome. Reduced-motion visitors now get no <video> at
+            all rather than one that downloaded in full and never played, so
+            they keep the still and skip several megabytes entirely. Later
+            clips preload behind the running footage, stay invisible until
+            their turn, then crossfade in on top. */}
+        {deviceType !== null && !videoTimedOut && readyForVideo && !reduce &&
+          CHAIN[deviceType].map(
           (src, i) => (
             <video
               key={src}

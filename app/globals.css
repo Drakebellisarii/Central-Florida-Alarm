@@ -54,6 +54,19 @@ html::-webkit-scrollbar {
   }
 }
 
+/* ------------------------------------------------------------------ */
+/* Lenis smooth scroll (homepage trial — see components/SmoothScroll)  */
+/* ------------------------------------------------------------------ */
+/* Lenis ships its own stylesheet (imported by the component, so it only
+   loads where the component mounts). This is the one rule it does NOT
+   provide: Lenis animates the scroll position itself, so the native
+   `scroll-behavior: smooth` set on html above has to be switched off or
+   the browser animates every jump a second time, fighting Lenis. Scoped
+   to .lenis, which Lenis only puts on <html> while it is running. */
+html.lenis {
+  scroll-behavior: auto !important;
+}
+
 body {
   background-color: #ffffff;
   color: var(--navy-deep);
@@ -145,15 +158,19 @@ body {
 /* than visibly frozen. Starts at the video's resting scale (1) so     */
 /* there's no jump the instant the class is applied.                   */
 /* ------------------------------------------------------------------ */
+/* The hero comes to rest, once. This used to be a 22s `infinite` loop that
+   scaled to 1.045 and drifted, which meant the footage never actually
+   stopped — it read as the frame vibrating/creeping around forever after
+   playback ended. Now it eases out of the last frame's slight push and
+   holds there permanently (`forwards`, no iteration count). */
 @keyframes hero-settle {
-  0%, 100% { transform: scale(1) translate3d(0, 0, 0); }
-  50%      { transform: scale(1.045) translate3d(-0.8%, -0.5%, 0); }
+  from { transform: scale(1.025) translate3d(-0.45%, -0.3%, 0); }
+  to   { transform: scale(1) translate3d(0, 0, 0); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .hero-settle {
-    animation: hero-settle 22s ease-in-out infinite;
-    will-change: transform;
+    animation: hero-settle 6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }
 

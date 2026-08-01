@@ -49,9 +49,16 @@ export function Analytics() {
 
   return (
     <>
+      {/* lazyOnload, not afterInteractive: this is ~164KB of third-party
+          JavaScript, and on afterInteractive it competes with the hero for
+          bandwidth during load (Lighthouse flagged both the transfer and a
+          ~320ms connection cost on the critical path). Deferring it to idle
+          takes it off that path entirely. No events are lost — the tiny
+          inline shim below still runs early and queues every gtag() call
+          into dataLayer, which GTM drains once it finally loads. */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
       <Script id="ga-init" strategy="afterInteractive">
         {`

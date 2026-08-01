@@ -26,7 +26,6 @@ const PATHS: Path[] = [
     line: "Security, cameras, locks, and life-safety woven into the property you live in.",
     image: "/images/home.webp",
     alt: "A modern Central Florida home with palm trees and lush landscaping",
-    priority: true,
   },
   {
     href: "/smart-business",

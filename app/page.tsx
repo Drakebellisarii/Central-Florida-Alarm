@@ -1,4 +1,5 @@
 import { PageLoader } from "@/components/PageLoader";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { Hero } from "@/components/home/Hero";
 import { AboutSection } from "@/components/home/AboutSection";
 import { IntegrateCreed } from "@/components/home/IntegrateCreed";
@@ -14,6 +15,9 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={localBusinessLd()} />
+      {/* Smooth-scroll trial, homepage only — remove this line and the
+          import above to take it back out. */}
+      <SmoothScroll />
       <PageLoader />
 
       {/*

@@ -1,16 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 // Anti-flash floor: once the splash has appeared, hold it just long enough
 // that a fast load doesn't strobe it on and straight back off. The splash is
 // cover for real loading, not a brand pause — it exits as soon as it can.
 const MIN_VISIBLE_MS = 400;
-// Safety valve: if a video stalls (slow connection, data-saver mode, a
-// blocked request), release the page anyway rather than trap the visitor
-// behind the splash forever.
-const MAX_WAIT_MS = 6000;
+// Splash cap. Deliberately short: the splash exists to cover the hero's
+// first paint, not to wait out the video. Hero.tsx has its own 8s
+// deadline for swapping the clip out for a still.
+const MAX_WAIT_MS = 2500;
 const POLL_MS = 150;
 // Matches the CSS transition-duration below.
 const EXIT_MS = 700;
@@ -26,15 +25,12 @@ const SKIP_SNIPPET =
 
 /**
  * Full-bleed brand splash shown on the first-ever load. Stays up only until
- * fonts have swapped in and the hero video is playable (readyState >=
- * HAVE_FUTURE_DATA) — it does NOT wait for the hero to buffer to the end,
- * and it does NOT wait on any below-fold video (testimonial/about clips
- * load lazily on scroll). Those used to gate the reveal, which on a cold
- * CDN/cache meant paying most of the hero file's download cost
- * before anything painted. Hero.tsx marks its primary <video> with
- * data-loader-target="hero-video" for this component to find; MAX_WAIT still
- * caps the whole wait on slow connections so a stalled request can't trap
- * the visitor behind the splash forever.
+ * the fonts have swapped in and the hero's poster still has decoded — NOT
+ * until the hero video is playable, which is what it used to wait for and
+ * what made mobile visitors sit on the splash for seconds while a
+ * multi-megabyte clip downloaded behind it. Hero.tsx marks that still with
+ * data-loader-target="hero-poster". MAX_WAIT_MS caps the wait regardless,
+ * and a hard setTimeout below guarantees it even if rAF is throttled.
  *
  * Repeat visits skip the splash completely: everything it would hide is
  * already in the browser cache, so showing it would be pure decoration.
@@ -55,17 +51,25 @@ export function PageLoader() {
     let cancelled = false;
     let raf = 0;
     let timeout: ReturnType<typeof setTimeout>;
+    let exitTimer: ReturnType<typeof setTimeout>;
 
-    // readyState >= 3 (HAVE_FUTURE_DATA) means the hero can actually start
-    // playing — frames beyond the current one are buffered. Deliberately not
-    // 4 (canplaythrough): that can take the whole file on slow connections,
-    // and MAX_WAIT would fire first anyway.
-    const targetReady = (selector: string) => {
-      const el = document.querySelector<HTMLVideoElement>(selector);
-      // If the element isn't mounted (reduced motion renders none of them)
-      // or errored out, don't block on it.
-      if (!el || el.error !== null) return true;
-      return el.readyState >= 3;
+    // Waits on the hero's POSTER, not its video.
+    //
+    // This used to block until the clip had buffered enough to play forward
+    // (readyState >= 3). On mobile that meant holding the splash over a
+    // multi-megabyte download — a Lighthouse run measured 6.1s of pure
+    // "render delay", i.e. six seconds of a visitor staring at the splash
+    // with the page already built behind it. The poster is ~100KB, matches
+    // the clip's first frame exactly, and is the hero's real first paint, so
+    // releasing on it shows the finished page far sooner and the video
+    // simply layers on when it's ready. Hero.tsx keeps its own separate 8s
+    // deadline for giving up on the video entirely.
+    const posterReady = (selector: string) => {
+      const el = document.querySelector<HTMLImageElement>(selector);
+      // Not mounted yet is NOT ready; MAX_WAIT_MS is the escape hatch.
+      if (!el) return false;
+      // naturalWidth guards against `complete` being true for a failed load.
+      return el.complete && el.naturalWidth > 0;
     };
 
     const fontsReady = () =>
@@ -73,22 +77,32 @@ export function PageLoader() {
 
     const finish = () => {
       if (cancelled) return;
+      cancelled = true;
+      clearTimeout(hardStop);
       // The heavy assets are cached now — future visits skip the splash.
       try {
         localStorage.setItem(SEEN_KEY, "1");
       } catch {}
       setPhase("exiting");
-      timeout = setTimeout(() => {
-        if (cancelled) return;
+      exitTimer = setTimeout(() => {
         document.body.style.overflow = "";
         setPhase("done");
       }, EXIT_MS);
     };
 
+    // Hard guarantee, independent of the poll loop below. That loop drives
+    // itself through requestAnimationFrame, which a background/throttled tab
+    // can starve indefinitely — and then the MAX_WAIT check inside it never
+    // runs and the splash never lifts. This timer answers only to setTimeout,
+    // so the page is always released by MAX_WAIT_MS no matter how bad the
+    // connection or how throttled the tab. Hero.tsx swaps to its still image
+    // on the same deadline, so the visitor lands on a complete page.
+    const hardStop = setTimeout(finish, MAX_WAIT_MS);
+
     const tick = () => {
       if (cancelled) return;
       const elapsed = Date.now() - start;
-      const ready = fontsReady() && targetReady('[data-loader-target="hero-video"]');
+      const ready = fontsReady() && posterReady('[data-loader-target="hero-poster"]');
 
       if ((ready && elapsed >= MIN_VISIBLE_MS) || elapsed >= MAX_WAIT_MS) {
         finish();
@@ -104,6 +118,8 @@ export function PageLoader() {
     return () => {
       cancelled = true;
       clearTimeout(timeout);
+      clearTimeout(exitTimer);
+      clearTimeout(hardStop);
       cancelAnimationFrame(raf);
       document.body.style.overflow = "";
     };
@@ -133,12 +149,20 @@ export function PageLoader() {
             exiting ? "scale-105 opacity-0" : "scale-100 opacity-100"
           }`}
         >
-          <Image
+          {/* Deliberately a plain <img>, not next/image. While the splash is
+              up it covers the viewport, so this mark is the page's LCP
+              element — and routing a 6KB file through /_next/image added an
+              optimizer round-trip on the one request that decides the LCP
+              score. Straight at the file, discoverable in the HTML, high
+              priority. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="/images/cfas-logo-light.png"
             alt="Central Florida Automation Services"
             width={220}
             height={109}
-            priority
+            fetchPriority="high"
+            decoding="async"
             className="loader-breathe h-14 w-auto sm:h-16 md:h-20"
           />
 
