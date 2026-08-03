@@ -343,14 +343,14 @@ export function Hero() {
       <div className="relative z-20 mx-auto w-full max-w-[93.75rem] px-5 pb-24 sm:px-8 sm:pb-32 md:px-11 md:pb-36 lg:pb-28 xl:pb-32 2xl:max-w-[110rem] 2xl:pb-40 short:pb-8">
         <div className="max-w-[64rem] 2xl:max-w-[76rem]">
 
-          <h1 className="font-hero font-light leading-[0.95] tracking-[-0.025em] lg:[text-shadow:0_2px_28px_rgba(0,0,0,0.45)]">
+          <h1 className="font-hero font-light leading-[0.95] tracking-[-0.025em] [text-shadow:0_2px_28px_rgba(0,0,0,0.45)]">
             <span className="reveal-load rd-1 block text-[clamp(1.55rem,min(6vw,13vh),3.5rem)] 2xl:text-[clamp(2.5rem,min(5.5vw,12vh),5.25rem)] text-white">
               Central Florida&apos;s leader
             </span>
-            <span className="reveal-load rd-2 block text-[clamp(1.55rem,min(6vw,13vh),3.5rem)] 2xl:text-[clamp(2.5rem,min(5.5vw,12vh),5.25rem)] text-white/80 lg:text-white">
+            <span className="reveal-load rd-2 block text-[clamp(1.55rem,min(6vw,13vh),3.5rem)] 2xl:text-[clamp(2.5rem,min(5.5vw,12vh),5.25rem)] text-white">
               in smart home & business 
             </span>
-            <span className="reveal-load rd-3 block text-[clamp(1.55rem,min(6vw,13vh),3.5rem)] 2xl:text-[clamp(2.5rem,min(5.5vw,12vh),5.25rem)] text-white/50 lg:text-white">
+            <span className="reveal-load rd-3 block text-[clamp(1.55rem,min(6vw,13vh),3.5rem)] 2xl:text-[clamp(2.5rem,min(5.5vw,12vh),5.25rem)] text-white">
               automation since 1968.
             </span>
           </h1>
