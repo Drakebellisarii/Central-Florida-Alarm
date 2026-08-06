@@ -106,12 +106,16 @@ const CATEGORIES: Category[] = [
         a: "A luxury smart home system integrates lighting, shades, climate, security, audio, video, and networking into one seamless platform. Unlike standalone gadgets, it's custom designed for reliability and simplicity.",
       },
       {
-        q: "How does Lutron lighting control improve comfort, energy savings, and design?",
-        a: "Lutron lighting creates personalized scenes, saves energy, extends bulb life, and enhances design with elegant keypads. As a platinum Dealer, Central Florida Automation Services has the experience to design, install and service all custom projects.",
+        q: "What sets Crestron apart from other control systems?",
+        a: "The number one reason would have to be reliablity, then flexibility. Large luxury homes, when incorprating control systems, need the kind of scale and customization Crestron is known for. One main point would be that the Crestron processor or 'brain' runs locally. That local piece is important to create low latency, or fast speed between integrated components, and less reliance on cloud services.",
       },
       {
-        q: "What are the benefits of Lutron motorized shades for privacy and energy efficiency?",
-        a: "Lutron motorized shades add privacy, reduce glare, protect furnishings from UV, and improve efficiency by adjusting automatically. Add an additonal design touch by incorporating Hartmann & Forbes Fabric to the quality Lutron rollers.",
+        q: "How does Crestron or Lutron lighting control improve comfort, energy savings, and design?",
+        a: "Crestron orLutron lighting creates personalized scenes, saves energy, extends bulb life, and enhances design with elegant keypads. As a platinum Dealer, Central Florida Automation Services has the experience to design, install and service all custom projects.",
+      },
+      {
+        q: "What are the benefits of Crestron or Lutron motorized shades for privacy and energy efficiency?",
+        a: "Crestron or Lutron motorized shades add privacy, reduce glare, protect furnishings from UV, and improve efficiency by adjusting automatically. Add an additonal design touch by incorporating Hartmann & Forbes Fabric to the quality Lutron rollers.",
       },
       {
         q: "Can I control my lighting, shades, security, and entertainment from one app?",

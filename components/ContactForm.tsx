@@ -207,6 +207,19 @@ export function ContactForm() {
             />
           </div>
         </Field>
+
+        {/* Full width: a street address doesn't fit a half column, and it
+            keeps the two-column rhythm above from ending on an orphan. */}
+        <Field label="Project Address" htmlFor="address" className="sm:col-span-2">
+          <input
+            id="address"
+            name="address"
+            type="text"
+            autoComplete="street-address"
+            className={fieldBase}
+            placeholder="Street, city, ZIP"
+          />
+        </Field>
       </div>
 
       <fieldset className="flex flex-col gap-3">
@@ -284,16 +297,19 @@ function Field({
   htmlFor,
   error,
   required,
+  className,
   children,
 }: {
   label: string;
   htmlFor: string;
   error?: string;
   required?: boolean;
+  /** Grid overrides — e.g. a full-width field in the two-column row. */
+  className?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className={`flex flex-col gap-2${className ? ` ${className}` : ""}`}>
       <label
         htmlFor={htmlFor}
         className="font-sans text-[0.6875rem] uppercase tracking-wide2 text-slate-500"
