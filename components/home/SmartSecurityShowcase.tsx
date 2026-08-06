@@ -91,9 +91,21 @@ export function SmartSecurityShowcase() {
 
         {/* Masthead — centered above the row, a hairline underneath to tie
             it into the ruled grid below. */}
+        {/* Masthead — a deliberate weight clash. The site's serifs (Gloock,
+            DM Serif Text) each ship a single weight, so `font-bold`/`font-light`
+            on them does nothing; the contrast has to come from pairing faces.
+            "Smarter" takes Gloock, the heaviest display cut on the site, and
+            "spaces" takes M PLUS Rounded at 100 — the only true hairline
+            weight loaded anywhere here. Sizes are tuned separately because the
+            two faces sit very differently on the line. */}
         <div data-ssc-intro className="mb-12 text-center md:mb-16">
-          <h2 className="mx-auto max-w-2xl font-display text-[clamp(2.1rem,4.2vw,3.6rem)] font-light leading-[1.05] tracking-tight text-navy-deep">
-            Explore Your Options
+          <h2 className="mx-auto flex max-w-3xl flex-wrap items-baseline justify-center gap-x-[0.55em] leading-[1.02] text-navy-deep">
+            <span className="font-hero text-[clamp(2.3rem,5vw,4.4rem)] tracking-[-0.02em]">
+              Smarter
+            </span>
+            <span className="font-numeral text-[clamp(2.5rem,5.4vw,4.8rem)] font-thin tracking-[0.01em]">
+              spaces
+            </span>
           </h2>
         </div>
 

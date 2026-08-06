@@ -115,7 +115,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "What are the benefits of Crestron or Lutron motorized shades for privacy and energy efficiency?",
-        a: "Crestron or Lutron motorized shades add privacy, reduce glare, protect furnishings from UV, and improve efficiency by adjusting automatically. Add an additonal design touch by incorporating Hartmann & Forbes Fabric to the quality Lutron rollers.",
+        a: "Crestron or Lutron motorized shades add privacy, reduce glare, protect furnishings from UV, and improve efficiency by adjusting automatically. Add an additonal design touch by incorporating Hartmann & Forbes fabric to the quality Lutron rollers.",
       },
       {
         q: "Can I control my lighting, shades, security, and entertainment from one app?",
