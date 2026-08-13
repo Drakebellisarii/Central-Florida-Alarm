@@ -6,7 +6,7 @@ import { NavSentinel } from "@/components/NavSentinel";
 import { CTAButton } from "@/components/CTAButton";
 
 const SUBTITLE =
-  "We partner with architects, contractors, and interior designers, to enhance the convenience, safety and lifestyle of your home.";
+  "We partner with architects, contractors, and interior designers, to enhance the convenience, safety and lifestyle of your home and business.";
 
 type DeviceType = "mobile" | "tablet" | "desktop";
 

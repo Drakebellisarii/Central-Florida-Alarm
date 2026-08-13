@@ -50,8 +50,8 @@ const CATEGORIES: Category[] = [
         a: "Yes. Alarm signals use a secure cellular connection to reach the monitoring center.",
       },
       {
-        q: "What can I integrate?",
-        a: "Smart locks, lighting, thermostats, garage doors, video doorbells, indoor or outdoor cameras, water sensors, and more.",
+        q: "Do I have to get all the smart home features, or can you just install a basic burglar alarm??",
+        a: "Absolutely, if you just want straightforward burglar alarm with professional monitoring, we do that. No smart features required. And if you ever want to add features later, we can scale with you.",
       },
       {
         q: "Why professional monitoring over self-monitoring?",
