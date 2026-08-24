@@ -6,8 +6,17 @@ import { TriangleAlert, X } from "lucide-react";
 /**
  * Reminder to save the monitoring center's caller-ID numbers. 800-numbers
  * get silently screened as spam, which breaks false-alarm verification
- * calls — so this needs to be seen every time a client lands on this page,
- * not just once.
+ * calls, so it is worth interrupting for.
+ *
+ * Shown on every entry to the pages that mount it (existing clients and
+ * repair request) — deliberately NOT remembered, so a visitor coming back
+ * to the section sees it again. Once dismissed it unmounts completely and
+ * restores body scroll, leaving the page fully clickable.
+ *
+ * Note it is a real modal: while it is up, its backdrop covers the viewport
+ * and a click anywhere outside the card dismisses it rather than reaching
+ * whatever is underneath. That is intended, but it does mean a visitor who
+ * clicks a card button before dismissing spends that click on the alert.
  */
 export function MonitoringNumbersModal() {
   const [open, setOpen] = useState(true);

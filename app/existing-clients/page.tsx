@@ -85,6 +85,11 @@ const CARDS: ActionCard[] = [
     title: "Alarm monitoring customer portal",
     buttons: [{ label: "Learn More", href: "https://myalarms.com/Account/Login?ReturnUrl=%2F" }],
   },
+  {
+    n: 8,
+    title: "Alarm system's owner manuals",
+    buttons: [{ label: "View Manuals", href: "/existing-clients/manuals" }],
+  },
 ];
 
 export default function ExistingClientsPage() {
