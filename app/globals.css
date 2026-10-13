@@ -375,3 +375,45 @@ body {
   }
 }
 
+
+/* ------------------------------------------------------------------ */
+/* Footer site credit                                                  */
+/* ------------------------------------------------------------------ */
+
+/* A band of white light sweeping through the same dim gray as the rest
+   of the line. The image is twice the text's width and repeats, so
+   shifting it by one full image width (100% → -100%) loops with no
+   visible seam. */
+@keyframes credit-shimmer {
+  from { background-position: 100% 50%; }
+  to { background-position: -100% 50%; }
+}
+
+.credit-shimmer {
+  /* Matches the line's text-white/30 at rest. */
+  --credit-rest: rgba(255, 255, 255, 0.3);
+  background-image: linear-gradient(
+    100deg,
+    var(--credit-rest) 0%,
+    var(--credit-rest) 38%,
+    rgba(255, 255, 255, 0.95) 50%,
+    var(--credit-rest) 62%,
+    var(--credit-rest) 100%
+  );
+  background-size: 200% 100%;
+  background-position: 100% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+a:hover > .credit-shimmer,
+a:focus-visible > .credit-shimmer {
+  --credit-rest: rgba(255, 255, 255, 0.8);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .credit-shimmer {
+    animation: credit-shimmer 4.5s linear infinite;
+  }
+}

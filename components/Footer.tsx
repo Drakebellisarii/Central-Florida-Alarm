@@ -155,6 +155,23 @@ export function Footer() {
             {BUSINESS.region} smart home and security integration.
           </p>
         </div>
+
+        {/* Site credit */}
+        <p className="mt-8 text-center font-sans text-[0.6875rem] tracking-wide text-white/30">
+          Designed and Developed by{" "}
+          <a
+            href="https://drakebellisari.com"
+            target="_blank"
+            rel="noopener"
+            className="group relative inline-block align-baseline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+          >
+            <span className="credit-shimmer">drake</span>
+            <span
+              aria-hidden
+              className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-white/60 transition-transform duration-500 ease-expo group-hover:scale-x-100 group-focus-visible:scale-x-100"
+            />
+          </a>
+        </p>
       </div>
     </footer>
   );
